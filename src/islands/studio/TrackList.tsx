@@ -12,7 +12,7 @@ export interface TrackListProps {
 
 export function TrackList({ tracks, activeTrackId, onTrackSelect, onAddTrack, onDeleteTrack, onToggleMute, onToggleSolo }: TrackListProps) {
   return (
-    <div className="w-[180px] md:w-[220px] bg-hw-panel dark:bg-[#111] border-y-2 border-l-2 border-hw-border rounded-l-md flex flex-col shrink-0">
+    <div className="w-[120px] sm:w-[150px] md:w-[220px] bg-hw-panel dark:bg-[#111] border-y-2 border-l-2 border-hw-border rounded-l-md flex flex-col shrink-0">
       {/* Header */}
       <div className="h-6 border-b-2 border-hw-border bg-hw-module-inset flex items-center px-2">
         <span className="text-[9px] font-mono font-bold text-hw-text-muted">TRACKS</span>

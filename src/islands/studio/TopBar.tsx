@@ -27,9 +27,9 @@ export function TopBar(props: TopBarProps) {
   const { isPlaying, isRecording, metronomeEnabled, bpm, timeSignature, currentTimeString } = props;
 
   return (
-    <div className="flex flex-col md:flex-row gap-4 justify-between items-center bg-hw-bg dark:bg-[#050505] p-3 rounded-lg border-2 border-hw-border shadow-inner">
+    <div className="flex flex-col md:flex-row gap-4 justify-between items-stretch md:items-center bg-hw-bg dark:bg-[#050505] p-3 rounded-lg border-2 border-hw-border shadow-inner">
       {/* Left: Branding & Metronome/Key */}
-      <div className="flex items-center gap-4">
+      <div className="flex items-center justify-center gap-2 md:gap-4 flex-wrap">
         <div className="flex flex-col items-center bg-hw-module-inset dark:bg-[#111] p-2 rounded border border-hw-border">
           <span className="text-[10px] font-mono font-bold text-hw-text-muted mb-1">METRONOME</span>
           <button 
@@ -69,8 +69,8 @@ export function TopBar(props: TopBarProps) {
       </div>
 
       {/* Center: Transport Controls */}
-      <div className="flex items-center gap-4 flex-1 justify-center">
-        <div className="flex items-center bg-hw-module-inset dark:bg-[#111] p-2 rounded border border-hw-border gap-2">
+      <div className="flex items-center justify-center gap-2 md:gap-4 flex-1 flex-wrap w-full md:w-auto">
+        <div className="flex items-center bg-hw-module-inset dark:bg-[#111] p-2 rounded border border-hw-border gap-2 shrink-0">
           <button 
             className={`w-10 h-8 rounded border flex items-center justify-center transition-colors font-mono text-xs font-bold ${isPlaying ? 'bg-hw-accent-orange text-white border-hw-accent-orange shadow-[0_0_10px_rgba(255,85,0,0.5)]' : 'bg-[#fff] dark:bg-[#222] text-hw-text-main border-gray-300 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-[#333]'}`}
             onClick={props.onPlayToggle}
@@ -101,8 +101,8 @@ export function TopBar(props: TopBarProps) {
       </div>
 
       {/* Right: Project & Export options */}
-      <div className="flex items-center gap-2">
-        <div className="flex flex-col items-center bg-hw-module-inset dark:bg-[#111] p-2 rounded border border-hw-border">
+      <div className="flex items-center justify-center gap-2 flex-wrap w-full md:w-auto">
+        <div className="flex flex-col items-center bg-hw-module-inset dark:bg-[#111] p-2 rounded border border-hw-border shrink-0">
           <span className="text-[10px] font-mono font-bold text-hw-text-muted mb-1">HISTORY</span>
           <div className="flex gap-2">
              <button 

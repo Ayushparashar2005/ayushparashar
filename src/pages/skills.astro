@@ -16,17 +16,17 @@ const allCerts = await db.select().from(certifications).orderBy(asc(certificatio
     <div class="w-full h-auto lg:h-full flex flex-col lg:flex-row gap-4 p-4">
       
       <!-- Skills Matrix -->
-      <ModulePanel title="TAPE // SKILLS_MATRIX" className="w-full lg:w-1/2 h-[400px] lg:h-full lg:max-h-[800px] shrink-0 min-h-0">
+      <ModulePanel title="TAPE // SKILLS_MATRIX" className="w-full lg:w-1/2 h-auto lg:h-full lg:max-h-[800px] shrink-0 min-h-0">
          <div class="flex flex-col gap-4 h-full p-4 overflow-hidden min-h-0">
             <!-- Hardware Toggles -->
-            <div class="flex gap-4 mb-2 shrink-0 bg-hw-module-inset p-2 rounded border-2 border-hw-border shadow-inner" id="skill-tabs">
-               <button class="text-xs px-4 md:px-8 py-2.5 flex-grow tracking-widest font-bold rounded shadow-sm border border-hw-accent-orange transition-all bg-[#2a1100] text-hw-accent-orange flex items-center justify-center gap-3 relative overflow-hidden" data-tab="Languages">
-                  <div class="w-1.5 h-1.5 rounded-full bg-hw-accent-orange shadow-[0_0_8px_rgba(255,85,0,0.9)] pointer-events-none indicator-led"></div>
-                  <span class="pointer-events-none relative z-10">LANGUAGES</span>
+            <div class="flex gap-2 md:gap-4 mb-2 shrink-0 bg-hw-module-inset p-2 rounded border-2 border-hw-border shadow-inner" id="skill-tabs">
+               <button class="text-[9px] sm:text-xs px-2 md:px-8 py-2.5 flex-1 min-w-0 tracking-widest font-bold rounded shadow-sm border border-hw-accent-orange transition-all bg-[#2a1100] text-hw-accent-orange flex items-center justify-center gap-1 sm:gap-3 relative overflow-hidden" data-tab="Languages">
+                  <div class="w-1.5 h-1.5 rounded-full bg-hw-accent-orange shadow-[0_0_8px_rgba(255,85,0,0.9)] pointer-events-none indicator-led shrink-0"></div>
+                  <span class="pointer-events-none relative z-10 truncate">LANGUAGES</span>
                   <!-- Inner highlight -->
                   <div class="absolute inset-0 shadow-[inset_0_2px_4px_rgba(255,255,255,0.1)] pointer-events-none"></div>
                </button>
-               <button class="text-xs px-4 md:px-8 py-2.5 flex-grow tracking-widest font-bold rounded shadow-sm border border-hw-screw-border transition-all bg-hw-module text-hw-text-muted hover:bg-hw-sticker flex items-center justify-center gap-3 relative overflow-hidden" data-tab="Technologies">
+               <button class="text-[9px] sm:text-xs px-2 md:px-8 py-2.5 flex-1 min-w-0 tracking-widest font-bold rounded shadow-sm border border-hw-screw-border transition-all bg-hw-module text-hw-text-muted hover:bg-hw-sticker flex items-center justify-center gap-1 sm:gap-3 relative overflow-hidden" data-tab="Technologies">
                   <div class="w-1.5 h-1.5 rounded-full bg-hw-screw shadow-inner pointer-events-none indicator-led"></div>
                   <span class="pointer-events-none relative z-10">FRAMEWORKS</span>
                </button>
@@ -58,7 +58,7 @@ const allCerts = await db.select().from(certifications).orderBy(asc(certificatio
       </ModulePanel>
 
       <!-- Certifications -->
-      <ModulePanel title="MEM // CERTIFICATIONS" className="w-full lg:w-1/2 h-[400px] lg:h-full lg:max-h-[800px] shrink-0 min-h-0">
+      <ModulePanel title="MEM // CERTIFICATIONS" className="w-full lg:w-1/2 h-auto lg:h-full lg:max-h-[800px] shrink-0 min-h-0">
          <div class="flex flex-col h-full p-4 overflow-hidden min-h-0">
             <div class="text-xs font-sans font-bold text-hw-text-muted tracking-[0.2em] uppercase border-b-2 border-hw-border pb-3 mb-6 shrink-0 flex items-center gap-3">
               <div class="w-2 h-2 rounded-full bg-hw-text-muted"></div>

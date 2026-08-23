@@ -30,7 +30,7 @@ const presets = [
     </div>
 
     <!-- Preset Selector (Tabs) -->
-    <nav class="flex gap-2 sm:border-r-2 border-hw-border pr-2 sm:pr-6 overflow-x-auto custom-scrollbar flex-grow max-w-[75vw] md:max-w-none">
+    <nav class="flex gap-2 sm:border-r-2 border-hw-border pr-2 sm:pr-6 overflow-x-auto custom-scrollbar flex-1 min-w-0 md:flex-grow md:max-w-none">
       {presets.map(preset => {
         const isActive = activePreset === preset.id;
         return (

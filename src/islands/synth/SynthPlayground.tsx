@@ -924,22 +924,22 @@ export function SynthPlayground() {
       </PatchProvider>
       
       {/* Bottom Navigation Tabs */}
-      <div className="flex bg-[#111] border-2 border-hw-border rounded-lg overflow-hidden shadow-sm mt-2">
+      <div className="flex flex-col sm:flex-row bg-[#111] border-2 border-hw-border rounded-lg overflow-hidden shadow-sm mt-2">
          <button 
            onClick={() => setActiveTab('instrument')} 
-           className={`flex-1 py-3 px-4 font-mono text-xs font-bold transition-colors ${activeTab === 'instrument' ? 'bg-hw-accent-orange text-white shadow-[0_4px_15px_rgba(255,85,0,0.4)]' : 'bg-[#181818] text-hw-text-muted hover:bg-[#222]'}`}
+           className={`flex-1 py-2 sm:py-3 px-2 sm:px-4 font-mono text-[9px] sm:text-xs font-bold transition-colors border-b-2 sm:border-b-0 sm:border-r-2 border-hw-border ${activeTab === 'instrument' ? 'bg-hw-accent-orange text-white shadow-[0_4px_15px_rgba(255,85,0,0.4)]' : 'bg-[#181818] text-hw-text-muted hover:bg-[#222]'}`}
          >
            INSTRUMENT
          </button>
          <button 
            onClick={() => setActiveTab('effects')} 
-           className={`flex-1 py-3 px-4 font-mono text-xs font-bold transition-colors border-l-2 border-hw-border ${activeTab === 'effects' ? 'bg-hw-accent-orange text-white shadow-[0_4px_15px_rgba(255,85,0,0.4)]' : 'bg-[#181818] text-hw-text-muted hover:bg-[#222]'}`}
+           className={`flex-1 py-2 sm:py-3 px-2 sm:px-4 font-mono text-[9px] sm:text-xs font-bold transition-colors border-b-2 sm:border-b-0 sm:border-r-2 border-hw-border ${activeTab === 'effects' ? 'bg-hw-accent-orange text-white shadow-[0_4px_15px_rgba(255,85,0,0.4)]' : 'bg-[#181818] text-hw-text-muted hover:bg-[#222]'}`}
          >
            FX EFFECTS
          </button>
          <button 
            onClick={() => setActiveTab('midi')} 
-           className={`flex-1 py-3 px-4 font-mono text-xs font-bold transition-colors border-l-2 border-hw-border ${activeTab === 'midi' ? 'bg-hw-accent-orange text-white shadow-[0_4px_15px_rgba(255,85,0,0.4)]' : 'bg-[#181818] text-hw-text-muted hover:bg-[#222]'}`}
+           className={`flex-1 py-2 sm:py-3 px-2 sm:px-4 font-mono text-[9px] sm:text-xs font-bold transition-colors ${activeTab === 'midi' ? 'bg-hw-accent-orange text-white shadow-[0_4px_15px_rgba(255,85,0,0.4)]' : 'bg-[#181818] text-hw-text-muted hover:bg-[#222]'}`}
          >
            MIDI EDITOR
          </button>
