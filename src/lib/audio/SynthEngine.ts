@@ -502,7 +502,7 @@ export class SynthEngine {
     }
   }
 
-  public noteOn(midiNote: number) {
+  public noteOn(midiNote: number, source?: string) {
     if (!this.ctx || !this.masterGain) this.init();
     
     // Calculate frequency from MIDI note (A4 = 69 = 440Hz)
@@ -521,18 +521,18 @@ export class SynthEngine {
     this.reapplyGlobalLFOPatches();
 
     if (typeof window !== 'undefined') {
-      window.dispatchEvent(new CustomEvent('synth-visual-on', { detail: { note: midiNote } }));
+      window.dispatchEvent(new CustomEvent('synth-visual-on', { detail: { note: midiNote, source } }));
     }
   }
 
-  public noteOff(midiNote: number) {
+  public noteOff(midiNote: number, source?: string) {
     if (this.activeVoices.has(midiNote)) {
       const voice = this.activeVoices.get(midiNote);
       voice?.noteOff();
       this.activeVoices.delete(midiNote);
       
       if (typeof window !== 'undefined') {
-        window.dispatchEvent(new CustomEvent('synth-visual-off', { detail: { note: midiNote } }));
+        window.dispatchEvent(new CustomEvent('synth-visual-off', { detail: { note: midiNote, source } }));
       }
     }
   }

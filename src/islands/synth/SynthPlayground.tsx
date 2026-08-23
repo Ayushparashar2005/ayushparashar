@@ -281,11 +281,11 @@ export function SynthPlayground() {
                  
                  // Note On
                  if (absoluteStart > prev && absoluteStart <= current) {
-                    engine.noteOn(note.note);
+                    engine.noteOn(note.note, 'playback');
                  }
                  // Note Off
                  if (absoluteEnd > prev && absoluteEnd <= current) {
-                    engine.noteOff(note.note);
+                    engine.noteOff(note.note, 'playback');
                  }
               });
            });
@@ -608,29 +608,39 @@ export function SynthPlayground() {
       const chord = getChordNotes(note);
       const engine = getEngine(activeTrackId);
       engine.noteOnMultiple(note, chord, smartChordsEnabled ? strum : 0);
-      if (isRecording) {
-        // Record all notes in the chord so they appear in the timeline
-        chord.forEach(n => recordingManager.noteOn(n, 100, currentTickRef.current));
-      }
     };
 
     const handleNoteOff = (e: CustomEvent) => {
       const { note } = e.detail;
-      const chord = getChordNotes(note);
       const engine = getEngine(activeTrackId);
       engine.noteOffMultiple(note);
-      if (isRecording) {
-        chord.forEach(n => recordingManager.noteOff(n, currentTickRef.current));
+    };
+
+    const handleVisualOn = (e: CustomEvent) => {
+      const { note, source } = e.detail;
+      if (isRecording && source !== 'playback') {
+        recordingManager.noteOn(note, 100, currentTickRef.current);
+      }
+    };
+
+    const handleVisualOff = (e: CustomEvent) => {
+      const { note, source } = e.detail;
+      if (isRecording && source !== 'playback') {
+        recordingManager.noteOff(note, currentTickRef.current);
         updateActiveTrackClips();
       }
     };
 
     window.addEventListener('synth-note-on' as any, handleNoteOn);
     window.addEventListener('synth-note-off' as any, handleNoteOff);
+    window.addEventListener('synth-visual-on' as any, handleVisualOn);
+    window.addEventListener('synth-visual-off' as any, handleVisualOff);
 
     return () => {
       window.removeEventListener('synth-note-on' as any, handleNoteOn);
       window.removeEventListener('synth-note-off' as any, handleNoteOff);
+      window.removeEventListener('synth-visual-on' as any, handleVisualOn);
+      window.removeEventListener('synth-visual-off' as any, handleVisualOff);
     };
   }, [smartChordsEnabled, scaleKey, scaleType, padX, padY, strum, activeTrackId, isRecording]);
 
