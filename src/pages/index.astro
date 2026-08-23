@@ -23,7 +23,7 @@ const allCerts = await db.select().from(certifications).orderBy(asc(certificatio
       <ModulePanel title="OP-1 // IDENTITY" className="min-h-[300px] shrink-0" href="/identity">
         <div class="flex flex-col h-full justify-between gap-4 p-4">
           <div class="flex flex-col sm:flex-row gap-4 bg-hw-module border-2 border-hw-border rounded p-4 shadow-inner overflow-hidden">
-             <div class="w-24 h-24 rounded border-2 border-hw-border overflow-hidden shrink-0 filter grayscale contrast-125 hover:grayscale-0 transition-all duration-500 mx-auto sm:mx-0 shadow-sm bg-hw-sticker">
+             <div tabindex="0" class="w-24 h-24 rounded border-2 border-hw-border overflow-hidden shrink-0 filter grayscale contrast-125 hover:grayscale-0 active:grayscale-0 focus:grayscale-0 cursor-pointer outline-none transition-all duration-500 mx-auto sm:mx-0 shadow-sm bg-hw-sticker">
                <img src="/profile.jpg" alt="Ayush Parashar" class="w-full h-full object-cover" />
              </div>
              <div class="flex flex-col justify-center text-xs font-mono text-hw-text-main leading-relaxed">
