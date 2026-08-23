@@ -16,8 +16,8 @@ const allCerts = await db.select().from(certifications).orderBy(asc(certificatio
     <div class="w-full h-auto lg:h-full flex flex-col lg:flex-row gap-4 p-4">
       
       <!-- Skills Matrix -->
-      <ModulePanel title="TAPE // SKILLS_MATRIX" className="w-full lg:w-1/2 h-auto lg:h-full lg:max-h-[800px] shrink-0 min-h-0">
-         <div class="flex flex-col gap-6 h-auto lg:h-full p-4 md:p-6 overflow-visible lg:overflow-hidden min-h-0">
+      <ModulePanel title="TAPE // SKILLS_MATRIX" className="w-full lg:w-1/2 h-[400px] lg:h-full lg:max-h-[800px] shrink-0 min-h-0">
+         <div class="flex flex-col gap-4 h-full p-4 overflow-hidden min-h-0">
             <!-- Hardware Toggles -->
             <div class="flex gap-4 mb-2 shrink-0 bg-hw-module-inset p-2 rounded border-2 border-hw-border shadow-inner" id="skill-tabs">
                <button class="text-xs px-4 md:px-8 py-2.5 flex-grow tracking-widest font-bold rounded shadow-sm border border-hw-accent-orange transition-all bg-[#2a1100] text-hw-accent-orange flex items-center justify-center gap-3 relative overflow-hidden" data-tab="Languages">
@@ -32,26 +32,24 @@ const allCerts = await db.select().from(certifications).orderBy(asc(certificatio
                </button>
             </div>
             
-            <div class="flex flex-col gap-4 h-auto lg:h-full overflow-visible lg:overflow-y-auto pr-0 lg:pr-4 custom-scrollbar min-h-0" id="skills-list">
+            <div class="flex flex-col gap-3 h-full overflow-y-auto pr-2 custom-scrollbar min-h-0" id="skills-list">
                {allSkills.map((skill: any) => (
-                  <div class="skill-item bg-hw-sticker border-2 border-hw-border p-4 rounded flex items-center justify-between gap-4 shadow-sm shrink-0 relative" data-category={skill.category}>
+                  <div class="skill-item bg-hw-sticker border-2 border-hw-border px-3 py-2 rounded flex items-center justify-between gap-3 shadow-sm relative shrink-0" data-category={skill.category}>
                      <!-- Screws -->
-                     <div class="absolute top-2 left-2 w-1.5 h-1.5 rounded-full bg-hw-screw shadow-inner border border-hw-screw-border"></div>
-                     <div class="absolute top-2 right-2 w-1.5 h-1.5 rounded-full bg-hw-screw shadow-inner border border-hw-screw-border"></div>
-                     <div class="absolute bottom-2 left-2 w-1.5 h-1.5 rounded-full bg-hw-screw shadow-inner border border-hw-screw-border"></div>
-                     <div class="absolute bottom-2 right-2 w-1.5 h-1.5 rounded-full bg-hw-screw shadow-inner border border-hw-screw-border"></div>
+                     <div class="absolute top-1 left-1 w-1 h-1 rounded-full bg-hw-screw shadow-inner border border-hw-screw-border"></div>
+                     <div class="absolute bottom-1 right-1 w-1 h-1 rounded-full bg-hw-screw shadow-inner border border-hw-screw-border"></div>
                      
-                     <span class="text-xs md:text-sm font-mono font-bold text-hw-text-main w-24 md:w-36 shrink-0 tracking-wider z-10 pl-2 leading-none">{skill.name.toUpperCase()}</span>
+                     <span class="text-[10px] md:text-xs font-bold font-sans text-hw-text-main w-20 md:w-24 shrink-0 z-10 pl-1">{skill.name.toUpperCase()}</span>
                      
-                     <div class="flex-grow h-5 bg-hw-screen-light relative rounded overflow-hidden shadow-[inset_0_2px_10px_rgba(0,0,0,0.8)] border border-hw-border-screen z-10 flex items-center">
+                     <div class="flex-grow h-3.5 bg-hw-screen-light relative rounded overflow-hidden shadow-[inset_0_1px_5px_rgba(0,0,0,0.8)] border border-hw-border-screen z-10 flex items-center">
                        <!-- SVG Black Slits to separate LEDs -->
-                       <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2IiBoZWlnaHQ9IjIwIj48cGF0aCBkPSJNMCAwaDJ2MjBIMHoiIGZpbGw9IiMxYTFhMWEiLz48L3N2Zz4=')] z-20"></div>
+                       <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjIwIj48cGF0aCBkPSJNMCAwaDF2MjBIMHoiIGZpbGw9IiMxYTFhMWEiLz48L3N2Zz4=')] z-20"></div>
                        
                        <!-- LED Fill -->
                        <div class="absolute top-0 left-0 h-full bg-gradient-to-r from-[#0066ff] via-[#00aaff] to-[#00ffee] z-10 shadow-[0_0_8px_rgba(0,170,255,0.6)]" style={`width: ${skill.proficiency}%`}></div>
                      </div>
-                     <div class="bg-hw-screen border border-hw-border-screen px-2 py-1 rounded shadow-inner z-10 mr-2 min-w-[36px] flex justify-center">
-                       <span class="text-[10px] md:text-xs font-mono font-bold text-[#00ffee] text-center shrink-0 block tracking-widest">{skill.proficiency}</span>
+                     <div class="bg-hw-screen border border-hw-border-screen px-1 py-0.5 rounded shadow-inner z-10 min-w-[28px] flex justify-center">
+                       <span class="text-[8px] md:text-[10px] font-mono font-bold text-[#00ffee] text-center shrink-0 block tracking-widest">{skill.proficiency}</span>
                      </div>
                   </div>
                ))}
@@ -60,30 +58,26 @@ const allCerts = await db.select().from(certifications).orderBy(asc(certificatio
       </ModulePanel>
 
       <!-- Certifications -->
-      <ModulePanel title="MEM // CERTIFICATIONS" className="w-full lg:w-1/2 h-auto lg:h-full lg:max-h-[800px] shrink-0 min-h-0">
-         <div class="flex flex-col h-auto lg:h-full p-4 md:p-6 overflow-visible lg:overflow-hidden min-h-0">
+      <ModulePanel title="MEM // CERTIFICATIONS" className="w-full lg:w-1/2 h-[400px] lg:h-full lg:max-h-[800px] shrink-0 min-h-0">
+         <div class="flex flex-col h-full p-4 overflow-hidden min-h-0">
             <div class="text-xs font-sans font-bold text-hw-text-muted tracking-[0.2em] uppercase border-b-2 border-hw-border pb-3 mb-6 shrink-0 flex items-center gap-3">
               <div class="w-2 h-2 rounded-full bg-hw-text-muted"></div>
               DATA BANKS
             </div>
-            <div class="flex flex-col gap-5 overflow-visible lg:overflow-y-auto pr-0 lg:pr-4 custom-scrollbar flex-grow min-h-0">
+            <div class="flex flex-col gap-3 h-full overflow-y-auto pr-2 custom-scrollbar min-h-0">
                {allCerts.map((cert: any) => (
-                  <div class="bg-hw-module-inset border-2 border-hw-border p-3 rounded-lg flex flex-col gap-2 shadow-inner shrink-0 relative group hover:bg-hw-module transition-colors cursor-default">
-                     <!-- Cartridge Indent -->
-                     <div class="bg-hw-sticker border border-hw-border rounded p-4 pt-6 flex flex-col gap-3 shadow-sm relative overflow-hidden">
-                       <!-- Cartridge sticker decal (warning/barcode) -->
-                       <div class="absolute top-0 right-0 bottom-0 w-8 bg-hw-sticker border-l border-hw-border flex items-center justify-center pointer-events-none z-10">
-                         <!-- Vertical Barcode SVG -->
+                  <div class="bg-hw-module-inset border-2 border-hw-border p-2 rounded-lg flex flex-col shadow-inner shrink-0 relative group hover:bg-hw-module transition-colors cursor-default">
+                     <div class="bg-hw-sticker border border-hw-border rounded p-3 flex flex-col shadow-sm relative overflow-hidden">
+                       <div class="absolute top-0 right-0 bottom-0 w-6 bg-hw-sticker border-l border-hw-border flex items-center justify-center pointer-events-none z-10">
                          <div class="w-full h-full bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQ9IjEwMCI+PHBhdGggZD0iTTAgMGgxdjEwMEgwek0yIDBoMXYxMDBIMnpNNCAwaDJ2MTAwSDR6TTcgMGgxdjEwMEg3eiIgZmlsbD0iIzIyMiIvPjwvc3ZnPg==')] opacity-30"></div>
                        </div>
                        
-                       <!-- Type/Warning sticker -->
-                       <div class="absolute top-0 left-0 bg-hw-screen text-hw-accent-orange text-[8px] font-mono font-bold px-2 py-0.5 rounded-br uppercase tracking-widest z-10">READ_ONLY</div>
+                       <div class="absolute top-0 left-0 bg-hw-screen text-hw-accent-orange text-[7px] font-mono font-bold px-1.5 py-0.5 rounded-br uppercase tracking-widest z-10">READ_ONLY</div>
                        
-                       <span class="text-sm font-mono font-bold text-hw-text-main leading-tight pr-10 tracking-wide z-10">{cert.title.toUpperCase()}</span>
-                       <div class="flex justify-between items-end mt-1 pt-3 border-t border-hw-border border-dashed pr-10 z-10">
-                          <span class="text-[10px] font-mono text-hw-text-muted uppercase tracking-widest">{cert.issuer}</span>
-                          <span class="text-[10px] font-mono font-bold text-hw-accent-orange bg-black border border-hw-border px-1 shadow-inner">[{cert.date}]</span>
+                       <span class="text-[11px] md:text-sm font-mono font-bold text-hw-text-main leading-tight pr-8 tracking-wide z-10 mt-3">{cert.title.toUpperCase()}</span>
+                       <div class="flex justify-between items-end mt-1 pt-2 border-t border-hw-border border-dashed pr-8 z-10">
+                          <span class="text-[8px] font-mono text-hw-text-muted uppercase tracking-widest truncate max-w-[80px] md:max-w-full">{cert.issuer}</span>
+                          <span class="text-[8px] font-mono font-bold text-hw-accent-orange bg-black border border-hw-border px-1 shadow-inner shrink-0">[{cert.date}]</span>
                        </div>
                      </div>
                   </div>

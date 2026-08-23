@@ -30,7 +30,7 @@ export default function MediaRouter({
   return (
     <div className="flex flex-col h-full overflow-hidden p-4 md:p-6 gap-6 min-h-0">
       
-      <div className="flex justify-between items-center border-b-2 border-hw-border pb-4 shrink-0 flex-wrap gap-4">
+      <div className="flex flex-col md:flex-row justify-between items-stretch md:items-center border-b-2 border-hw-border pb-4 shrink-0 gap-4">
         <div>
           <div className="text-[10px] font-sans font-bold text-hw-text-muted tracking-[0.2em] uppercase flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-hw-accent-orange animate-pulse shadow-[0_0_5px_rgba(255,85,0,0.6)]"></span>
@@ -64,8 +64,8 @@ export default function MediaRouter({
            </button>
         </div>
 
-        <div className="flex gap-4">
-          <a href="https://www.youtube.com/channel/UCTWZFNloPx0rNAd8Dhesdqg" target="_blank" rel="noreferrer" className="hw-button h-10 px-6 flex items-center justify-center font-bold text-white bg-hw-accent-orange hover:bg-[#e64a00] border-hw-accent-orange shadow-[0_4px_0_#cc4400,0_5px_5px_rgba(0,0,0,0.3)] active:shadow-[0_0px_0_#cc4400,0_0px_0px_rgba(0,0,0,0.3)] active:translate-y-1 transition-all text-xs tracking-widest uppercase rounded">
+        <div className="flex gap-4 w-full md:w-auto">
+          <a href="https://www.youtube.com/channel/UCTWZFNloPx0rNAd8Dhesdqg" target="_blank" rel="noreferrer" className="hw-button w-full md:w-auto h-10 px-6 flex items-center justify-center font-bold text-white bg-hw-accent-orange hover:bg-[#e64a00] border-hw-accent-orange shadow-[0_4px_0_#cc4400,0_5px_5px_rgba(0,0,0,0.3)] active:shadow-[0_0px_0_#cc4400,0_0px_0px_rgba(0,0,0,0.3)] active:translate-y-1 transition-all text-xs tracking-widest uppercase rounded">
             SUBSCRIBE
           </a>
         </div>

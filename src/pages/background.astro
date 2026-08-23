@@ -17,42 +17,37 @@ const myWork = allExperience.filter((e: any) => !e.company.includes('University'
     <div class="w-full h-auto lg:h-full flex flex-col p-4 md:p-8">
       
       <!-- Background Full Width -->
-      <ModulePanel title="SEQ // BACKGROUND" className="w-full h-auto lg:h-full lg:max-h-[800px] shrink-0 min-h-0">
+      <ModulePanel title="SEQ // BACKGROUND" className="w-full h-[800px] lg:h-full lg:max-h-[800px] shrink-0 min-h-0">
          <div class="flex flex-col lg:flex-row h-full overflow-hidden divide-y-2 lg:divide-y-0 lg:divide-x-2 divide-hw-border min-h-0">
             
             <!-- Experience Column -->
-            <div class="w-full lg:w-1/2 p-4 md:p-6 flex flex-col h-auto lg:h-full min-h-0 relative">
-              <div class="text-xs font-sans font-bold text-hw-text-muted tracking-[0.2em] uppercase border-b-2 border-hw-border pb-3 mb-6 shrink-0 flex items-center gap-3">
+            <div class="w-full lg:w-1/2 p-4 md:p-6 flex flex-col h-1/2 lg:h-full min-h-0 relative">
+              <div class="text-xs font-sans font-bold text-hw-text-muted tracking-[0.2em] uppercase border-b-2 border-hw-border pb-3 mb-4 shrink-0 flex items-center gap-3">
                 <div class="w-2 h-2 rounded-full bg-hw-accent-orange shadow-[0_0_5px_rgba(255,85,0,0.5)]"></div>
                 EXPERIENCE_LOG
               </div>
-              <div class="flex flex-col gap-6 overflow-visible lg:overflow-y-auto pr-0 lg:pr-2 custom-scrollbar flex-grow min-h-0">
+              <div class="flex flex-col gap-3 overflow-y-auto pr-2 custom-scrollbar flex-grow min-h-0">
                 {myWork.map((exp: any, idx: number) => (
-                   <div class="bg-hw-module-inset border-2 border-hw-border p-4 pt-5 rounded-lg flex flex-col gap-3 shadow-sm relative shrink-0">
-                      <!-- Screws -->
-                      <div class="absolute top-2 left-2 w-1.5 h-1.5 rounded-full bg-hw-screw shadow-inner border border-hw-screw-border"></div>
-                      <div class="absolute top-2 right-2 w-1.5 h-1.5 rounded-full bg-hw-screw shadow-inner border border-hw-screw-border"></div>
-                      <div class="absolute bottom-2 left-2 w-1.5 h-1.5 rounded-full bg-hw-screw shadow-inner border border-hw-screw-border"></div>
-                      <div class="absolute bottom-2 right-2 w-1.5 h-1.5 rounded-full bg-hw-screw shadow-inner border border-hw-screw-border"></div>
+                   <div class="bg-hw-module-inset border-2 border-hw-border p-3 rounded-lg flex flex-col gap-2 shadow-sm relative shrink-0">
+                      <div class="absolute top-1.5 left-1.5 w-1 h-1 rounded-full bg-hw-screw shadow-inner border border-hw-screw-border"></div>
+                      <div class="absolute bottom-1.5 right-1.5 w-1 h-1 rounded-full bg-hw-screw shadow-inner border border-hw-screw-border"></div>
                       
-                      <!-- Track Number -->
-                      <div class="absolute top-0 right-8 bg-hw-sticker border-x border-b border-hw-border text-hw-accent-orange text-[8px] font-mono font-bold px-2 py-0.5 rounded-b shadow-sm">TRK_{String(idx + 1).padStart(2, '0')}</div>
+                      <div class="absolute top-0 right-4 bg-hw-sticker border-x border-b border-hw-border text-hw-accent-orange text-[7px] font-mono font-bold px-1.5 py-0.5 rounded-b shadow-sm">TRK_{String(idx + 1).padStart(2, '0')}</div>
 
-                      <div class="flex justify-between items-start px-2">
-                         <div class="pr-2">
-                            <div class="text-sm md:text-base font-sans text-hw-text-main uppercase font-bold tracking-widest">{exp.role}</div>
-                            <div class="text-[10px] md:text-xs font-mono text-hw-accent-orange mt-1 font-bold tracking-widest">@{exp.company}</div>
-                         </div>
-                         <div class="bg-hw-sticker border-2 border-hw-border px-2 py-1 rounded shadow-sm shrink-0 mt-1">
-                            <span class="text-[9px] font-mono font-bold text-hw-accent-orange tracking-widest">[{exp.startDate} - {exp.endDate || 'PRST'}]</span>
-                         </div>
+                      <div class="flex flex-col pl-1 pr-1 pt-1">
+                         <div class="text-xs md:text-sm font-sans text-hw-text-main uppercase font-bold tracking-widest leading-none">{exp.role}</div>
+                         <div class="text-[9px] md:text-[10px] font-mono text-hw-accent-orange mt-1 font-bold tracking-widest">@{exp.company}</div>
+                      </div>
+                      
+                      <div class="bg-hw-sticker border border-hw-border px-1.5 py-0.5 rounded shadow-sm self-start mt-1">
+                         <span class="text-[8px] md:text-[9px] font-mono font-bold text-hw-accent-orange tracking-widest">[{exp.startDate} - {exp.endDate || 'PRST'}]</span>
                       </div>
                       
                       {exp.description ? (
-                        <div class="mt-2 bg-hw-bg border-2 border-hw-border rounded p-3 shadow-inner relative overflow-hidden">
+                        <div class="mt-2 bg-hw-bg border-2 border-hw-border rounded p-2 md:p-3 shadow-inner relative overflow-hidden">
                            <!-- Scanline overlay -->
                            <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPjxyZWN0IHdpZHRoPSI0IiBoZWlnaHQ9IjEiIGZpbGw9IiMwMDAiIGZpbGwtb3BhY2l0eT0iMC4xIi8+PC9zdmc+')] opacity-50 z-20 pointer-events-none"></div>
-                           <p class="text-[10px] md:text-xs font-mono text-hw-text-muted leading-relaxed text-justify relative z-10 opacity-90 tracking-wide">
+                           <p class="text-[9px] md:text-[10px] font-mono text-hw-text-muted leading-relaxed text-justify relative z-10 opacity-90 tracking-wide">
                              > {exp.description}
                            </p>
                         </div>
@@ -63,38 +58,33 @@ const myWork = allExperience.filter((e: any) => !e.company.includes('University'
             </div>
             
             <!-- Education Column -->
-            <div class="w-full lg:w-1/2 p-4 md:p-6 flex flex-col h-auto lg:h-full min-h-0 relative">
-              <div class="text-xs font-sans font-bold text-hw-text-muted tracking-[0.2em] uppercase border-b-2 border-hw-border pb-3 mb-6 shrink-0 flex items-center gap-3">
+            <div class="w-full lg:w-1/2 p-4 md:p-6 flex flex-col h-1/2 lg:h-full min-h-0 relative">
+              <div class="text-xs font-sans font-bold text-hw-text-muted tracking-[0.2em] uppercase border-b-2 border-hw-border pb-3 mb-4 shrink-0 flex items-center gap-3">
                 <div class="w-2 h-2 rounded-full bg-hw-accent-blue shadow-[0_0_5px_rgba(0,170,255,0.5)]"></div>
                 EDUCATION_LOG
               </div>
-              <div class="flex flex-col gap-6 overflow-visible lg:overflow-y-auto pr-0 lg:pr-2 custom-scrollbar flex-grow min-h-0">
+              <div class="flex flex-col gap-3 overflow-y-auto pr-2 custom-scrollbar flex-grow min-h-0">
                  {myEducation.map((edu: any, idx: number) => (
-                    <div class="bg-hw-module-inset border-2 border-hw-border p-4 pt-5 rounded-lg flex flex-col gap-3 shadow-sm relative shrink-0">
-                       <!-- Screws -->
-                       <div class="absolute top-2 left-2 w-1.5 h-1.5 rounded-full bg-hw-screw shadow-inner border border-hw-screw-border"></div>
-                       <div class="absolute top-2 right-2 w-1.5 h-1.5 rounded-full bg-hw-screw shadow-inner border border-hw-screw-border"></div>
-                       <div class="absolute bottom-2 left-2 w-1.5 h-1.5 rounded-full bg-hw-screw shadow-inner border border-hw-screw-border"></div>
-                       <div class="absolute bottom-2 right-2 w-1.5 h-1.5 rounded-full bg-hw-screw shadow-inner border border-hw-screw-border"></div>
+                    <div class="bg-hw-module-inset border-2 border-hw-border p-3 rounded-lg flex flex-col gap-2 shadow-sm relative shrink-0">
+                       <div class="absolute top-1.5 left-1.5 w-1 h-1 rounded-full bg-hw-screw shadow-inner border border-hw-screw-border"></div>
+                       <div class="absolute bottom-1.5 right-1.5 w-1 h-1 rounded-full bg-hw-screw shadow-inner border border-hw-screw-border"></div>
                        
-                       <!-- Track Number -->
-                       <div class="absolute top-0 right-8 bg-hw-sticker border-x border-b border-hw-border text-hw-accent-blue text-[8px] font-mono font-bold px-2 py-0.5 rounded-b shadow-sm">TRK_{String(idx + 1).padStart(2, '0')}</div>
+                       <div class="absolute top-0 right-4 bg-hw-sticker border-x border-b border-hw-border text-hw-accent-blue text-[7px] font-mono font-bold px-1.5 py-0.5 rounded-b shadow-sm">TRK_{String(idx + 1).padStart(2, '0')}</div>
 
-                       <div class="flex justify-between items-start px-2">
-                          <div class="pr-2">
-                             <div class="text-sm md:text-base font-sans text-hw-text-main uppercase font-bold tracking-widest">{edu.role}</div>
-                             <div class="text-[10px] md:text-xs font-mono text-hw-accent-blue mt-1 font-bold tracking-widest">@{edu.company}</div>
-                          </div>
-                          <div class="bg-hw-sticker border-2 border-hw-border px-2 py-1 rounded shadow-sm shrink-0 mt-1">
-                             <span class="text-[9px] font-mono font-bold text-hw-accent-blue tracking-widest">[{edu.startDate} - {edu.endDate || 'PRST'}]</span>
-                          </div>
+                       <div class="flex flex-col pl-1 pr-1 pt-1">
+                          <div class="text-xs md:text-sm font-sans text-hw-text-main uppercase font-bold tracking-widest leading-none">{edu.role}</div>
+                          <div class="text-[9px] md:text-[10px] font-mono text-hw-accent-blue mt-1 font-bold tracking-widest">@{edu.company}</div>
+                       </div>
+                       
+                       <div class="bg-hw-sticker border border-hw-border px-1.5 py-0.5 rounded shadow-sm self-start mt-1">
+                          <span class="text-[8px] md:text-[9px] font-mono font-bold text-hw-accent-blue tracking-widest">[{edu.startDate} - {edu.endDate || 'PRST'}]</span>
                        </div>
                        
                        {edu.description ? (
-                         <div class="mt-2 bg-hw-bg border-2 border-hw-border rounded p-3 shadow-inner relative overflow-hidden">
+                         <div class="mt-2 bg-hw-bg border-2 border-hw-border rounded p-2 md:p-3 shadow-inner relative overflow-hidden">
                             <!-- Scanline overlay -->
                             <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPjxyZWN0IHdpZHRoPSI0IiBoZWlnaHQ9IjEiIGZpbGw9IiMwMDAiIGZpbGwtb3BhY2l0eT0iMC4xIi8+PC9zdmc+')] opacity-50 z-20 pointer-events-none"></div>
-                            <p class="text-[10px] md:text-xs font-mono text-hw-text-muted leading-relaxed text-justify relative z-10 opacity-90 tracking-wide">
+                            <p class="text-[9px] md:text-[10px] font-mono text-hw-text-muted leading-relaxed text-justify relative z-10 opacity-90 tracking-wide">
                               > {edu.description}
                             </p>
                          </div>
