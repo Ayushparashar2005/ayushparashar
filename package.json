@@ -17,6 +17,7 @@
   "dependencies": {
     "@astrojs/node": "^11.1.1",
     "@astrojs/preact": "^6.0.2",
+    "@astrojs/vercel": "^11.0.7",
     "@google/generative-ai": "^0.24.1",
     "@neondatabase/serverless": "^1.1.0",
     "@tailwindcss/vite": "^4.3.3",
