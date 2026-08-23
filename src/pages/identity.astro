@@ -45,13 +45,13 @@ try {
              <span class="relative z-10 whitespace-pre-wrap">{identity.bio}</span>
           </div>
           
-          <div class="flex flex-col sm:flex-row justify-center sm:justify-between px-4 sm:px-10 py-6 sm:py-8 bg-hw-panel border-t-2 border-hw-border rounded-lg shrink-0 gap-6 sm:gap-0 mt-4 shadow-sm">
-             <div class="flex justify-center gap-6 sm:gap-8 md:gap-4 lg:gap-10 w-full sm:w-auto">
-               <SynthKnob id="creativity" label="CREATIVITY" projectId="identity-page" initialValue={0.5} sizeClass="w-16 h-16 md:w-20 md:h-20" />
-               <SynthKnob id="logic" label="LOGIC" projectId="identity-page" initialValue={1} sizeClass="w-16 h-16 md:w-20 md:h-20" />
-               <SynthKnob id="design" label="DESIGN" projectId="identity-page" initialValue={0.5} sizeClass="w-16 h-16 md:w-20 md:h-20" />
+          <div class="flex flex-col sm:flex-row justify-center sm:justify-between px-4 sm:px-10 py-6 sm:py-8 bg-hw-panel border-t-2 border-hw-border rounded-lg shrink-0 gap-6 sm:gap-0 mt-4 shadow-sm items-center">
+             <div class="flex justify-center gap-4 sm:gap-6 md:gap-8 lg:gap-10 w-full sm:w-auto flex-wrap">
+               <SynthKnob id="creativity" label="CREATIVITY" projectId="identity-page" initialValue={0.5} sizeClass="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20" />
+               <SynthKnob id="logic" label="LOGIC" projectId="identity-page" initialValue={1} sizeClass="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20" />
+               <SynthKnob id="design" label="DESIGN" projectId="identity-page" initialValue={0.5} sizeClass="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20" />
              </div>
-             <div class="flex items-center justify-center pl-0 sm:pl-10 pt-4 sm:pt-0 border-t-2 sm:border-t-0 sm:border-l-2 border-hw-border w-full sm:w-auto mt-4 sm:mt-0">
+             <div class="flex items-center justify-center pl-0 sm:pl-8 lg:pl-10 pt-4 sm:pt-0 border-t-2 sm:border-t-0 sm:border-l-2 border-hw-border w-full sm:w-auto mt-2 sm:mt-0">
                  <a href="/resume" class="hw-button w-full sm:w-auto h-12 md:h-16 px-6 md:px-8 flex items-center justify-center font-bold !bg-hw-accent-orange !text-white !border-hw-accent-orange hover:!bg-[#e64a00] transition-all text-xs md:text-sm tracking-widest shadow-[0_4px_0_#cc4400,0_5px_5px_rgba(0,0,0,0.3)] active:shadow-[0_0px_0_#cc4400,0_0px_0px_rgba(0,0,0,0.3)] active:translate-y-1">
                    DOWNLOAD CV
                  </a>
