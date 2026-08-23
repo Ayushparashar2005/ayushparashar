@@ -1,0 +1,20 @@
+---
+import PatchBayLayout from '../../layouts/PatchBayLayout.astro';
+import ModulePanel from '../../components/synth/ModulePanel.astro';
+import SyncControl from '../../islands/patch-bay/SyncControl';
+import DraftReviewer from '../../islands/patch-bay/DraftReviewer';
+---
+
+<PatchBayLayout title="SYNC_MATRIX">
+  <div class="flex flex-col gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <ModulePanel title="EXTERNAL_DATA_SYNC" className="min-h-[250px]">
+        <SyncControl client:load />
+      </ModulePanel>
+      
+      <ModulePanel title="DRAFT_REVIEWER" className="min-h-[250px] max-h-[600px] overflow-hidden">
+        <DraftReviewer client:load />
+      </ModulePanel>
+    </div>
+  </div>
+</PatchBayLayout>

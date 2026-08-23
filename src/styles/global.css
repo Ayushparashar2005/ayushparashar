@@ -1,0 +1,199 @@
+@import "tailwindcss";
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --color-hw-bg: var(--hw-bg);          
+  --color-hw-panel: var(--hw-panel);       
+  --color-hw-module: var(--hw-module);
+  --color-hw-module-inset: var(--hw-module-inset);
+  --color-hw-screen: var(--hw-screen);      
+  --color-hw-screen-light: var(--hw-screen-light);
+  --color-hw-border: var(--hw-border);      
+  --color-hw-border-screen: var(--hw-border-screen);
+  
+  --color-hw-screw: var(--hw-screw);
+  --color-hw-screw-border: var(--hw-screw-border);
+  --color-hw-sticker: var(--hw-sticker);
+  
+  --color-hw-accent-orange: #ff5500; 
+  --color-hw-accent-blue: #005bc4;   
+  --color-hw-accent-lime: #a3e635;   
+  
+  --color-hw-text-main: var(--hw-text-main);   
+  --color-hw-text-muted: var(--hw-text-muted);  
+  --color-hw-text-lcd: #ff5500;    
+  
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-sans: 'Inter Tight', ui-sans-serif, system-ui, -apple-system, sans-serif;
+}
+
+:root {
+  --hw-bg: #f5f5f5;
+  --hw-panel: #ebebeb;
+  --hw-module: #e8e8e8;
+  --hw-module-inset: #dcdcdc;
+  --hw-screen: #111111;
+  --hw-screen-light: #1a1a1a;
+  --hw-border: #d4d4d4;
+  --hw-border-screen: #333333;
+  --hw-screw: #cccccc;
+  --hw-screw-border: #999999;
+  --hw-sticker: #ffffff;
+  --hw-text-main: #1a1a1a;
+  --hw-text-muted: #737373;
+}
+
+.dark {
+  --hw-bg: #121212;
+  --hw-panel: #1a1a1a;
+  --hw-module: #222222;
+  --hw-module-inset: #181818;
+  --hw-screen: #0a0a0a;
+  --hw-screen-light: #161616;
+  --hw-border: #333333;
+  --hw-border-screen: #222222;
+  --hw-screw: #444444;
+  --hw-screw-border: #222222;
+  --hw-sticker: #2a2a2a;
+  --hw-text-main: #f0f0f0;
+  --hw-text-muted: #999999;
+}
+
+html, body {
+  @apply bg-hw-bg text-hw-text-main font-sans antialiased transition-colors duration-300;
+  min-height: 100vh;
+}
+
+/* Hardware specific styles */
+.hw-panel-container {
+  @apply bg-hw-bg border-t border-hw-border shadow-[0_-5px_15px_rgba(0,0,0,0.05)] flex flex-col relative;
+  background-image: linear-gradient(to bottom, var(--hw-bg), var(--hw-module-inset));
+}
+
+.hw-module {
+  @apply bg-hw-module border-2 border-hw-border rounded-xl relative overflow-hidden text-hw-text-main shadow-sm;
+}
+
+.hw-module-header {
+  @apply bg-hw-panel flex justify-between items-center px-4 py-2 border-b-2 border-hw-border text-[10px] font-sans font-bold tracking-[0.2em] uppercase text-hw-text-muted shadow-sm;
+}
+
+.hw-label {
+  @apply font-mono text-[9px] text-hw-text-muted uppercase tracking-[0.15em] font-bold;
+}
+
+.hw-button {
+  @apply bg-hw-bg border-2 border-hw-border text-hw-text-main font-mono text-[10px] px-3 py-1.5 rounded-full hover:bg-hw-sticker hover:border-hw-accent-orange transition-all cursor-pointer flex items-center justify-center shadow-sm active:translate-y-0.5 active:shadow-none;
+}
+
+.hw-button.active {
+  @apply bg-hw-accent-orange text-white border-hw-accent-orange shadow-none translate-y-0.5;
+}
+
+/* Screen Button */
+.hw-screen-button {
+  @apply bg-hw-screen-light border border-hw-border-screen text-[#888] font-mono text-[10px] px-2 py-1 rounded hover:text-hw-accent-blue hover:border-hw-accent-blue transition-colors cursor-pointer flex items-center justify-center;
+}
+
+.hw-screen-button.active {
+  @apply text-hw-accent-orange border-hw-accent-orange bg-[#2a1100] shadow-[inset_0_0_8px_rgba(255,85,0,0.3)];
+}
+
+.knob-container {
+  @apply flex flex-col items-center gap-0.5;
+}
+
+.knob {
+  @apply rounded-full relative;
+  background: linear-gradient(145deg, #f8f8f8, #cccccc);
+  border: 2px solid #a8a8a8;
+  box-shadow:
+    0 4px 8px rgba(0,0,0,0.22),
+    0 1px 3px rgba(0,0,0,0.14),
+    inset 0 1px 1px rgba(255,255,255,0.95),
+    inset 0 -2px 4px rgba(0,0,0,0.12);
+}
+
+/* Inner groove/indent for the knob face — deeper inset for visible metallic ring */
+.knob::before {
+  content: '';
+  @apply absolute inset-[5px] rounded-full;
+  background: linear-gradient(160deg, #e0e0e0, #c4c4c4);
+  border: 1px solid #9a9a9a;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.2), inset 0 -1px 2px rgba(255,255,255,0.4);
+}
+
+.knob-indicator {
+  @apply absolute inset-0;
+  z-index: 2;
+}
+
+/* The integrated orange tick mark — bolder and more visible */
+.knob-indicator::after {
+  content: '';
+  @apply absolute left-1/2 -translate-x-1/2 bg-hw-accent-orange;
+  top: 6%;
+  width: 4px;
+  height: 30%;
+  border-radius: 2px;
+  box-shadow:
+    0 0 4px rgba(255,85,0,0.7),
+    0 0 8px rgba(255,85,0,0.3);
+}
+
+
+
+/* Custom Scrollbar for screens */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: var(--hw-module);
+  border-radius: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--hw-screw-border);
+  border-radius: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: var(--hw-text-muted);
+}
+
+/* Y2K Details */
+.y2k-grid {
+  background-image: 
+    linear-gradient(rgba(204, 204, 204, 0.3) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(204, 204, 204, 0.3) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.y2k-checker {
+  background-image: 
+    linear-gradient(45deg, rgba(0, 0, 0, 0.03) 25%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.03) 75%, rgba(0, 0, 0, 0.03)), 
+    linear-gradient(45deg, rgba(0, 0, 0, 0.03) 25%, transparent 25%, transparent 75%, rgba(0, 0, 0, 0.03) 75%, rgba(0, 0, 0, 0.03));
+  background-position: 0 0, 10px 10px;
+  background-size: 20px 20px;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.y2k-marquee-container {
+  overflow: hidden;
+  white-space: nowrap;
+  display: flex;
+}
+
+.y2k-marquee {
+  display: flex;
+  min-width: 200%;
+  animation: marquee 15s linear infinite;
+}
+
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--hw-screw-border) var(--hw-module);
+}

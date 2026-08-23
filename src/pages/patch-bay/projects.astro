@@ -1,0 +1,15 @@
+---
+import PatchBayLayout from '../../layouts/PatchBayLayout.astro';
+import { db } from '../../db';
+import { projects } from '../../db/schema';
+import { asc } from 'drizzle-orm';
+import ProjectsManager from '../../islands/patch-bay/ProjectsManager';
+
+const allProjects = await db.select().from(projects).orderBy(asc(projects.displayOrder));
+---
+
+<PatchBayLayout title="PROJECTS_MODULE">
+  <div class="flex flex-col gap-6">
+    <ProjectsManager client:load initialProjects={allProjects} />
+  </div>
+</PatchBayLayout>

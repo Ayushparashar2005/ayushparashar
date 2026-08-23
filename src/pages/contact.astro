@@ -1,0 +1,167 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SynthShell from '../components/common/SynthShell.astro';
+import ModulePanel from '../components/synth/ModulePanel.astro';
+import Oscilloscope from '../components/interactive/Oscilloscope.astro';
+import SynthKnob from '../components/interactive/SynthKnob.astro';
+---
+
+<BaseLayout title="ayush.wav | CONTACT">
+  <SynthShell activePreset="contact">
+    <div class="w-full h-full p-4 md:p-8 flex items-center justify-center overflow-y-auto custom-scrollbar">
+      
+      <div class="w-full max-w-4xl grid grid-cols-1 md:grid-cols-2 gap-6 pb-12">
+        
+        <!-- Contact Form Module -->
+        <ModulePanel title="ENV // COMMS_UPLINK" className="min-h-[450px]">
+          <div class="p-6 h-full flex flex-col justify-between">
+             <div class="mb-6">
+                <div class="text-[10px] font-sans font-bold text-hw-text-muted tracking-[0.2em] uppercase border-b-2 border-hw-border pb-2 mb-4 flex items-center gap-2">
+                    <div class="w-2 h-2 rounded-full bg-hw-accent-orange shadow-[0_0_5px_rgba(255,85,0,0.5)] animate-pulse"></div>
+                    TRANSMIT_MESSAGE
+                </div>
+                
+                <form id="contact-form" class="flex flex-col gap-4 relative z-10">
+                   <input type="hidden" id="urgency-input" value="0.5" />
+                   <div class="flex flex-col gap-1">
+                      <label class="text-[9px] font-mono font-bold text-hw-text-main tracking-widest uppercase">CALLSIGN (Name)</label>
+                      <input type="text" required class="bg-hw-module border-2 border-hw-border p-2 text-xs font-mono text-hw-text-main rounded-sm outline-none focus:border-hw-accent-orange shadow-inner placeholder-hw-text-muted/50" placeholder="ENTER_NAME..." />
+                   </div>
+                   
+                   <div class="flex flex-col gap-1">
+                      <label class="text-[9px] font-mono font-bold text-hw-text-main tracking-widest uppercase">FREQ_BAND (Email)</label>
+                      <input type="email" required class="bg-hw-module border-2 border-hw-border p-2 text-xs font-mono text-hw-text-main rounded-sm outline-none focus:border-hw-accent-orange shadow-inner placeholder-hw-text-muted/50" placeholder="ENTER_EMAIL..." />
+                   </div>
+                   
+                   <div class="flex flex-col gap-1">
+                      <label class="text-[9px] font-mono font-bold text-hw-text-main tracking-widest uppercase">PAYLOAD (Message)</label>
+                      <textarea required rows="4" class="bg-hw-module border-2 border-hw-border p-2 text-xs font-mono text-hw-text-main rounded-sm outline-none focus:border-hw-accent-orange shadow-inner placeholder-hw-text-muted/50 resize-none custom-scrollbar" placeholder="ENTER_MESSAGE..."></textarea>
+                   </div>
+                   
+                   <div class="flex items-center justify-between mt-2 pt-4 border-t-2 border-hw-border border-dashed">
+                      <div class="flex gap-4">
+                         <SynthKnob id="urgency" label="URGENCY" projectId="contact" initialValue={0.5} />
+                      </div>
+                      <button id="send-btn" type="submit" class="hw-button h-12 w-32 transition-all !bg-hw-accent-orange !text-white !border-hw-accent-orange shadow-[0_4px_0_#cc4400,0_5px_5px_rgba(0,0,0,0.3)] active:shadow-[0_0px_0_#cc4400,0_0px_0px_rgba(0,0,0,0.3)] active:translate-y-1 flex items-center justify-center gap-2">
+                        <div class="w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_5px_#fff]"></div>
+                        SEND
+                      </button>
+                   </div>
+                </form>
+             </div>
+          </div>
+        </ModulePanel>
+        
+        <!-- Socials & Info Module -->
+        <ModulePanel title="SEQ // NETWORK_NODES" className="min-h-[450px]">
+           <div class="p-6 h-full flex flex-col">
+              <div class="text-[10px] font-sans font-bold text-hw-text-muted tracking-[0.2em] uppercase border-b-2 border-hw-border pb-2 mb-6 flex items-center gap-2">
+                  <div class="w-2 h-2 rounded-full bg-hw-accent-blue shadow-[0_0_5px_rgba(0,170,255,0.5)]"></div>
+                  KNOWN_COORDINATES
+              </div>
+              
+              <div class="flex flex-col gap-4 flex-grow">
+                 
+                 <a href="https://github.com/Ayushparashar2005" target="_blank" rel="noopener noreferrer" class="bg-hw-sticker border-2 border-hw-border p-4 rounded-lg flex items-center justify-between hover:border-hw-accent-orange group transition-all shadow-sm">
+                    <div class="flex flex-col gap-1 relative z-10">
+                       <span class="text-sm font-sans font-black text-hw-text-main tracking-widest uppercase">GITHUB</span>
+                       <span class="text-[10px] font-mono text-hw-text-muted tracking-wider group-hover:text-hw-accent-orange transition-colors">@Ayushparashar2005</span>
+                    </div>
+                    <div class="bg-hw-module border border-hw-border px-2 py-1 rounded shadow-inner">
+                       <span class="text-[9px] font-mono font-bold text-hw-text-main uppercase">VIEW_CODE</span>
+                    </div>
+                 </a>
+
+                 <a href="https://linkedin.com/in/ayush-parashar" target="_blank" rel="noopener noreferrer" class="bg-hw-sticker border-2 border-hw-border p-4 rounded-lg flex items-center justify-between hover:border-[#0a66c2] group transition-all shadow-sm">
+                    <div class="flex flex-col gap-1 relative z-10">
+                       <span class="text-sm font-sans font-black text-hw-text-main tracking-widest uppercase">LINKEDIN</span>
+                       <span class="text-[10px] font-mono text-hw-text-muted tracking-wider group-hover:text-[#0a66c2] transition-colors">Ayush Parashar</span>
+                    </div>
+                    <div class="bg-hw-module border border-hw-border px-2 py-1 rounded shadow-inner">
+                       <span class="text-[9px] font-mono font-bold text-hw-text-main uppercase">CONNECT</span>
+                    </div>
+                 </a>
+
+                 <a href="https://youtube.com/@VOYXGE" target="_blank" rel="noopener noreferrer" class="bg-hw-sticker border-2 border-hw-border p-4 rounded-lg flex items-center justify-between hover:border-[#ff0000] group transition-all shadow-sm">
+                    <div class="flex flex-col gap-1 relative z-10">
+                       <span class="text-sm font-sans font-black text-hw-text-main tracking-widest uppercase">YOUTUBE</span>
+                       <span class="text-[10px] font-mono text-hw-text-muted tracking-wider group-hover:text-[#ff0000] transition-colors">VOYXGE</span>
+                    </div>
+                    <div class="bg-hw-module border border-hw-border px-2 py-1 rounded shadow-inner">
+                       <span class="text-[9px] font-mono font-bold text-hw-text-main uppercase">WATCH</span>
+                    </div>
+                 </a>
+                 
+                 <a href="mailto:contact@ayush.wav" class="bg-hw-sticker border-2 border-hw-border p-4 rounded-lg flex items-center justify-between hover:border-hw-accent-orange group transition-all shadow-sm">
+                    <div class="flex flex-col gap-1 relative z-10">
+                       <span class="text-sm font-sans font-black text-hw-text-main tracking-widest uppercase">EMAIL</span>
+                       <span class="text-[10px] font-mono text-hw-text-muted tracking-wider group-hover:text-hw-accent-orange transition-colors">contact@ayush.wav</span>
+                    </div>
+                    <div class="bg-hw-module border border-hw-border px-2 py-1 rounded shadow-inner">
+                       <span class="text-[9px] font-mono font-bold text-hw-text-main uppercase">COMPOSE</span>
+                    </div>
+                 </a>
+                 
+              </div>
+              
+              <!-- Interactive Visualizer -->
+              <div class="mt-6 h-24 bg-hw-bg border-2 border-hw-border rounded-lg relative overflow-hidden shadow-inner flex flex-col justify-end p-2">
+                 <div class="absolute top-2 left-2 text-[8px] font-mono font-bold text-hw-text-muted z-10 tracking-widest uppercase">NETWORK_ACTIVITY</div>
+                 <div class="absolute top-2 right-2 flex gap-1 z-10">
+                    <div class="w-1.5 h-1.5 rounded-full bg-hw-accent-orange animate-ping opacity-75"></div>
+                    <div class="w-1.5 h-1.5 rounded-full bg-hw-accent-orange"></div>
+                 </div>
+                 <div class="absolute bottom-1 right-2 z-20">
+                    <SynthKnob id="freq" label="FREQ" projectId="contact-network" initialValue={0.5} sizeClass="w-6 h-6" />
+                 </div>
+                 <Oscilloscope projectId="contact-network" />
+              </div>
+
+           </div>
+        </ModulePanel>
+        
+      </div>
+      
+    </div>
+  </SynthShell>
+</BaseLayout>
+
+<script>
+  const form = document.getElementById('contact-form');
+  const urgencyInput = document.getElementById('urgency-input') as HTMLInputElement;
+  const sendBtn = document.getElementById('send-btn');
+
+  document.addEventListener('synth-knob-change', (e: Event) => {
+    const customEvent = e as CustomEvent;
+    if (customEvent.detail.projectId === 'contact' && customEvent.detail.id === 'urgency') {
+      const val = customEvent.detail.value;
+      if (urgencyInput) urgencyInput.value = val.toString();
+      
+      // Visual feedback on button based on urgency
+      if (sendBtn) {
+        if (val > 0.8) {
+          sendBtn.classList.remove('!bg-hw-accent-orange', '!border-hw-accent-orange', 'shadow-[0_4px_0_#cc4400,0_5px_5px_rgba(0,0,0,0.3)]');
+          sendBtn.classList.add('!bg-red-600', '!border-red-600', 'shadow-[0_4px_0_#990000,0_5px_5px_rgba(0,0,0,0.3)]', 'animate-pulse');
+        } else {
+          sendBtn.classList.add('!bg-hw-accent-orange', '!border-hw-accent-orange', 'shadow-[0_4px_0_#cc4400,0_5px_5px_rgba(0,0,0,0.3)]');
+          sendBtn.classList.remove('!bg-red-600', '!border-red-600', 'shadow-[0_4px_0_#990000,0_5px_5px_rgba(0,0,0,0.3)]', 'animate-pulse');
+        }
+      }
+    }
+  });
+
+  if (form) {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const urgency = urgencyInput ? urgencyInput.value : '0.5';
+      const u = parseFloat(urgency);
+      let msg = 'Transmission simulated! Backend not wired up yet.';
+      if (u > 0.8) {
+         msg = 'HIGH PRIORITY TRANSMISSION SIMULATED! (Urgency: ' + Math.round(u * 100) + '%)';
+      } else {
+         msg = 'Transmission simulated! (Urgency: ' + Math.round(u * 100) + '%)';
+      }
+      alert(msg);
+    });
+  }
+</script>

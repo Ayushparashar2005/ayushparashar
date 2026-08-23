@@ -1,0 +1,72 @@
+---
+import Header from './Header.astro';
+
+interface Props {
+  activePreset: string;
+}
+
+const { activePreset } = Astro.props;
+---
+
+<div class="w-full h-screen p-2 md:p-6 flex flex-col justify-center items-center bg-hw-bg/80 y2k-checker">
+  <div class="hw-panel-container w-full max-w-[1400px] h-full max-h-[950px] rounded-xl overflow-hidden ring-1 ring-hw-border relative shadow-2xl">
+    
+    <!-- Top Hardware bezel -->
+    <div class="h-8 bg-hw-panel border-b border-hw-border flex items-center justify-between px-6 shadow-sm z-10 relative">
+      <div class="flex gap-4 items-center">
+        <!-- Hardware Screws -->
+        <div class="w-2.5 h-2.5 rounded-full bg-zinc-300 border border-zinc-400 shadow-[inset_0_1px_3px_rgba(0,0,0,0.3)] flex items-center justify-center"><div class="w-full h-[1px] bg-zinc-400/50 rotate-45"></div></div>
+        <div class="w-2.5 h-2.5 rounded-full bg-zinc-300 border border-zinc-400 shadow-[inset_0_1px_3px_rgba(0,0,0,0.3)] flex items-center justify-center"><div class="w-full h-[1px] bg-zinc-400/50 rotate-[-15deg]"></div></div>
+      </div>
+      <div class="text-[10px] font-mono text-hw-text-muted tracking-[0.3em] uppercase font-bold w-48 md:w-96 overflow-hidden flex items-center bg-hw-bg shadow-inner rounded-sm border border-[#ccc] px-2 py-1">
+        <div class="y2k-marquee-container w-full relative">
+          <!-- Small gradient fades on edges -->
+          <div class="absolute left-0 top-0 bottom-0 w-4 bg-gradient-to-r from-hw-bg to-transparent z-10"></div>
+          <div class="absolute right-0 top-0 bottom-0 w-4 bg-gradient-to-l from-hw-bg to-transparent z-10"></div>
+          
+          <div class="y2k-marquee text-hw-accent-orange">
+            <span class="pr-8">ayush.wav // TE-OP1 Style Interface v3.0 // Y2K_OVERRIDE_ENABLED // NEURAL_LINK_ACTIVE //</span>
+            <span class="pr-8">ayush.wav // TE-OP1 Style Interface v3.0 // Y2K_OVERRIDE_ENABLED // NEURAL_LINK_ACTIVE //</span>
+          </div>
+        </div>
+      </div>
+      <div class="flex gap-4 items-center">
+        <div class="w-2.5 h-2.5 rounded-full bg-zinc-300 border border-zinc-400 shadow-[inset_0_1px_3px_rgba(0,0,0,0.3)] flex items-center justify-center"><div class="w-full h-[1px] bg-zinc-400/50 rotate-[70deg]"></div></div>
+        <div class="w-2.5 h-2.5 rounded-full bg-zinc-300 border border-zinc-400 shadow-[inset_0_1px_3px_rgba(0,0,0,0.3)] flex items-center justify-center"><div class="w-full h-[1px] bg-zinc-400/50 rotate-0"></div></div>
+      </div>
+    </div>
+
+    <!-- Main Panel -->
+    <div class="flex-grow flex flex-col overflow-hidden relative">
+      <Header activePreset={activePreset} />
+      
+      <!-- Patch Area / Main Content -->
+      <main class="flex-grow flex flex-col lg:flex-row gap-4 p-4 lg:p-6 overflow-hidden relative">
+        <slot />
+      </main>
+      
+      <!-- Bottom Lip (Physical depth) -->
+      <div class="h-6 border-t border-hw-border bg-gradient-to-b from-hw-module-inset to-hw-border shadow-[inset_0_2px_5px_rgba(255,255,255,0.1)] z-10 relative flex justify-between items-center px-12">
+        <!-- Y2K Barcode Sticker -->
+        <div class="flex gap-0.5 items-center opacity-40">
+           <div class="w-1 h-3 bg-black"></div>
+           <div class="w-0.5 h-3 bg-black"></div>
+           <div class="w-1.5 h-3 bg-black"></div>
+           <div class="w-0.5 h-3 bg-black"></div>
+           <div class="w-1 h-3 bg-black"></div>
+           <div class="w-0.5 h-3 bg-black"></div>
+           <div class="w-2 h-3 bg-black"></div>
+           <div class="w-0.5 h-3 bg-black"></div>
+           <div class="w-1 h-3 bg-black"></div>
+           <div class="text-[6px] font-mono text-black font-bold ml-2">S/N: 2001-Y2K</div>
+        </div>
+        
+        <!-- Y2K Warning Label -->
+        <div class="bg-yellow-400 border border-black px-2 py-[1px] shadow-sm transform -rotate-1 opacity-70">
+           <span class="text-[6px] font-sans font-black text-black tracking-tighter uppercase">! Caution: Experimental Build !</span>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+</div>

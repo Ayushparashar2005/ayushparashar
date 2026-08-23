@@ -1,0 +1,63 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SynthShell from '../components/common/SynthShell.astro';
+import ModulePanel from '../components/synth/ModulePanel.astro';
+import SynthKnob from '../components/interactive/SynthKnob.astro';
+import GenerativeArt from '../components/interactive/GenerativeArt.astro';
+import fs from 'node:fs/promises';
+import path from 'node:path';
+
+const dataPath = path.join(process.cwd(), 'src/data/identity.json');
+let identity = {
+  name: "Ayush Parashar",
+  role: "Engineering Student",
+  location: "Bahadurgarh, IN",
+  bio: "A passionate engineering student from Bahadurgarh, building innovative solutions with modern technologies. Thriving at the intersection of design and development to turn ideas into impactful digital experiences. I am constantly learning and experimenting with cutting-edge tech, with a goal to work on projects that make a real difference — especially in healthcare and accessibility tech."
+};
+try {
+  const content = await fs.readFile(dataPath, 'utf-8');
+  identity = JSON.parse(content);
+} catch (e) {
+  // Use default if file doesn't exist yet
+}
+---
+
+<BaseLayout title="ayush.wav | IDENTITY">
+  <SynthShell activePreset="identity">
+    <div class="w-full h-full flex items-center justify-center p-4 md:p-8">
+      <ModulePanel title="OP-1 // IDENTITY" className="w-full max-w-4xl h-full max-h-[800px] shrink-0 min-h-0">
+        <div class="flex flex-col flex-grow gap-6 p-6 overflow-y-auto custom-scrollbar min-h-0">
+          
+          <div class="flex flex-col md:flex-row gap-8 bg-hw-module border-4 border-hw-border rounded-lg p-8 shadow-inner shrink-0">
+             <div class="w-48 h-48 rounded border-4 border-hw-border overflow-hidden shrink-0 filter grayscale contrast-125 hover:grayscale-0 transition-all duration-500 shadow-sm bg-hw-sticker">
+               <img src="/profile.jpg" alt={identity.name} class="w-full h-full object-cover" />
+             </div>
+             <div class="flex flex-col justify-center text-base font-mono text-hw-text-main leading-relaxed">
+                <span class="mb-4 text-2xl font-bold tracking-widest text-hw-accent-orange">HELLO, EVERYONE!</span>
+                <span class="mb-2"><span class="text-hw-text-muted font-bold">SYS.NAME:</span> {identity.name}</span>
+                <span class="mb-2"><span class="text-hw-text-muted font-bold">SYS.ROLE:</span> {identity.role}</span>
+                <span><span class="text-hw-text-muted font-bold">SYS.LOC:</span> {identity.location}</span>
+             </div>
+          </div>
+          
+          <div class="text-sm md:text-base font-mono text-hw-text-main leading-relaxed p-6 bg-hw-sticker border-2 border-hw-border rounded shadow-sm text-justify shrink-0 relative overflow-hidden">
+             <GenerativeArt projectId="identity-page" />
+             <span class="relative z-10 whitespace-pre-wrap">{identity.bio}</span>
+          </div>
+          
+          <div class="flex flex-col sm:flex-row justify-between px-10 py-8 bg-hw-panel border-t-2 border-hw-border rounded-lg shrink-0 gap-8 sm:gap-0 mt-4 shadow-sm">
+             <SynthKnob id="creativity" label="CREATIVITY" projectId="identity-page" initialValue={0.5} sizeClass="w-20 h-20" />
+             <SynthKnob id="logic" label="LOGIC" projectId="identity-page" initialValue={1} sizeClass="w-20 h-20" />
+             <SynthKnob id="design" label="DESIGN" projectId="identity-page" initialValue={0.5} sizeClass="w-20 h-20" />
+             <div class="flex items-center justify-center pl-10 border-l-2 border-hw-border">
+                 <a href="/resume" class="hw-button h-16 px-8 flex items-center justify-center font-bold !bg-hw-accent-orange !text-white !border-hw-accent-orange hover:!bg-[#e64a00] transition-all text-sm tracking-widest shadow-[0_4px_0_#cc4400,0_5px_5px_rgba(0,0,0,0.3)] active:shadow-[0_0px_0_#cc4400,0_0px_0px_rgba(0,0,0,0.3)] active:translate-y-1">
+                   DOWNLOAD CV
+                 </a>
+             </div>
+          </div>
+
+        </div>
+      </ModulePanel>
+    </div>
+  </SynthShell>
+</BaseLayout>

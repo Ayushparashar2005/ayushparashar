@@ -1,0 +1,251 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SynthShell from '../components/common/SynthShell.astro';
+import ModulePanel from '../components/synth/ModulePanel.astro';
+import SynthKnob from '../components/interactive/SynthKnob.astro';
+import Oscilloscope from '../components/interactive/Oscilloscope.astro';
+import GenerativeArt from '../components/interactive/GenerativeArt.astro';
+import { db } from '../db';
+import { projects, skills, experience, certifications } from '../db/schema';
+import { eq, asc } from 'drizzle-orm';
+
+const featuredProjects = await db.select().from(projects).where(eq(projects.status, 'PUBLISHED')).orderBy(asc(projects.displayOrder));
+const allSkills = await db.select().from(skills).orderBy(asc(skills.proficiency));
+const myExperience = await db.select().from(experience).orderBy(asc(experience.displayOrder));
+const allCerts = await db.select().from(certifications).orderBy(asc(certifications.displayOrder));
+---
+
+<BaseLayout title="ayush.wav | OVERVIEW">
+  <SynthShell activePreset="overview">
+    
+    <!-- Right Column: Envelopes/Info (Visually on Left) -->
+    <div class="w-full lg:w-[35%] flex flex-col gap-4 order-1 overflow-y-auto custom-scrollbar pr-2 h-full min-h-0">
+      <ModulePanel title="OP-1 // IDENTITY" className="min-h-[300px] shrink-0" href="/identity">
+        <div class="flex flex-col h-full justify-between gap-4 p-4">
+          <div class="flex flex-col sm:flex-row gap-4 bg-hw-module border-2 border-hw-border rounded p-4 shadow-inner overflow-hidden">
+             <div class="w-24 h-24 rounded border-2 border-hw-border overflow-hidden shrink-0 filter grayscale contrast-125 hover:grayscale-0 transition-all duration-500 mx-auto sm:mx-0 shadow-sm bg-hw-sticker">
+               <img src="/profile.jpg" alt="Ayush Parashar" class="w-full h-full object-cover" />
+             </div>
+             <div class="flex flex-col justify-center text-xs font-mono text-hw-text-main leading-relaxed">
+                <span class="mb-2 font-bold text-sm tracking-wide text-hw-accent-orange">Hello, Everyone!</span>
+                <span><span class="text-hw-text-muted font-bold">NAME:</span> Ayush Parashar</span>
+                <span><span class="text-hw-text-muted font-bold">ROLE:</span> Engineering Student</span>
+                <span><span class="text-hw-text-muted font-bold">LOC:</span> Bahadurgarh, IN</span>
+             </div>
+          </div>
+          
+          <div class="text-[10px] font-mono text-hw-text-main leading-relaxed px-2 text-justify flex-grow flex items-center bg-hw-sticker border-2 border-hw-border p-3 rounded-sm shadow-sm relative overflow-hidden">
+             <GenerativeArt projectId="identity-index" />
+             <span class="relative z-10">A passionate engineering student building innovative solutions with modern technologies. Turning ideas into impactful digital experiences.</span>
+          </div>
+          
+          <div class="flex justify-between px-4 py-3 mt-2 bg-hw-panel border-t-2 border-hw-border rounded-sm">
+             <SynthKnob id="creativity" label="CREATIVITY" projectId="identity-index" initialValue={0.5} />
+             <SynthKnob id="logic" label="LOGIC" projectId="identity-index" initialValue={1} />
+             <SynthKnob id="design" label="DESIGN" projectId="identity-index" initialValue={0.5} />
+             <div class="flex items-center justify-center ml-2">
+                 <a href="/resume" class="hw-button w-24 h-10 !bg-hw-accent-orange !text-white !border-hw-accent-orange hover:!bg-[#e64a00] shadow-[0_4px_0_#cc4400,0_5px_5px_rgba(0,0,0,0.3)] active:shadow-[0_0px_0_#cc4400,0_0px_0px_rgba(0,0,0,0.3)] active:translate-y-1">
+                   DOWNLOAD CV
+                 </a>
+              </div>
+          </div>
+        </div>
+      </ModulePanel>
+      
+      <ModulePanel title="TAPE // SKILLS_MATRIX" className="h-[250px] shrink-0" href="/skills">
+          <div class="flex flex-col gap-4 h-full overflow-hidden p-4">
+            <div class="flex gap-2 mb-1 shrink-0 bg-hw-module-inset p-1.5 rounded border-2 border-hw-border shadow-inner" id="skill-tabs">
+               <button class="flex-grow py-1 text-[9px] font-bold font-sans rounded shadow-sm border border-hw-accent-orange transition-all bg-[#2a1100] text-hw-accent-orange flex items-center justify-center gap-2 relative overflow-hidden" data-tab="Languages">
+                  <div class="w-1 h-1 rounded-full bg-hw-accent-orange shadow-[0_0_8px_rgba(255,85,0,0.9)] pointer-events-none indicator-led"></div>
+                  <span class="pointer-events-none relative z-10">LANGUAGES</span>
+               </button>
+               <button class="flex-grow py-1 text-[9px] font-bold font-sans rounded shadow-sm border border-hw-screw-border transition-all bg-hw-module text-hw-text-muted hover:bg-hw-sticker flex items-center justify-center gap-2 relative overflow-hidden" data-tab="Technologies">
+                  <div class="w-1 h-1 rounded-full bg-hw-screw shadow-inner pointer-events-none indicator-led"></div>
+                  <span class="pointer-events-none relative z-10">FRAMEWORKS</span>
+               </button>
+            </div>
+            
+            <div class="flex flex-col gap-3 h-full overflow-y-auto pr-2 custom-scrollbar" id="skills-list">
+               {allSkills.map((skill: any) => (
+                  <div class="skill-item bg-hw-sticker border-2 border-hw-border px-3 py-2 rounded flex items-center justify-between gap-3 shadow-sm relative shrink-0" data-category={skill.category}>
+                     <div class="absolute top-1 left-1 w-1 h-1 rounded-full bg-hw-screw shadow-inner border border-hw-screw-border"></div>
+                     <div class="absolute bottom-1 right-1 w-1 h-1 rounded-full bg-hw-screw shadow-inner border border-hw-screw-border"></div>
+                     
+                     <span class="text-[10px] font-bold font-sans text-hw-text-main w-20 shrink-0 z-10 pl-1">{skill.name.toUpperCase()}</span>
+                     
+                     <div class="flex-grow h-3.5 bg-hw-screen-light relative rounded overflow-hidden shadow-[inset_0_1px_5px_rgba(0,0,0,0.8)] border border-hw-border-screen z-10 flex items-center">
+                       <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjIwIj48cGF0aCBkPSJNMCAwaDF2MjBIMHoiIGZpbGw9IiMxYTFhMWEiLz48L3N2Zz4=')] z-20"></div>
+                       <div class="absolute top-0 left-0 h-full bg-gradient-to-r from-[#0066ff] via-[#00aaff] to-[#00ffee] z-10 shadow-[0_0_8px_rgba(0,170,255,0.6)]" style={`width: ${skill.proficiency}%`}></div>
+                     </div>
+                     
+                     <div class="bg-hw-screen border border-hw-border-screen px-1 py-0.5 rounded shadow-inner z-10 min-w-[28px] flex justify-center">
+                       <span class="text-[8px] font-mono font-bold text-hw-accent-lime text-center shrink-0 block">{skill.proficiency}</span>
+                     </div>
+                  </div>
+               ))}
+            </div>
+         </div>
+      </ModulePanel>
+
+      <ModulePanel title="SEQ // BACKGROUND" className="flex-grow min-h-[280px] shrink-0" href="/background">
+         <div class="flex flex-col h-full overflow-hidden p-4 pr-2">
+            <div class="text-[10px] font-sans font-bold text-hw-text-muted tracking-[0.2em] uppercase border-b-2 border-hw-border pb-2 mb-3 shrink-0 flex items-center gap-2">
+                <div class="w-1.5 h-1.5 rounded-full bg-hw-accent-orange shadow-[0_0_3px_rgba(255,85,0,0.5)]"></div>
+                EXPERIENCE_LOG
+            </div>
+            <div class="flex flex-col gap-3 h-full overflow-y-auto pr-2 custom-scrollbar">
+               {myExperience.map((exp: any, idx: number) => (
+                  <div class="bg-hw-module-inset border-2 border-hw-border p-3 rounded-lg flex flex-col gap-2 shadow-sm relative shrink-0">
+                      <div class="absolute top-1.5 left-1.5 w-1 h-1 rounded-full bg-hw-screw shadow-inner border border-hw-screw-border"></div>
+                      <div class="absolute bottom-1.5 right-1.5 w-1 h-1 rounded-full bg-hw-screw shadow-inner border border-hw-screw-border"></div>
+                      
+                      <div class="absolute top-0 right-4 bg-hw-sticker border-x border-b border-hw-border text-hw-accent-orange text-[7px] font-mono font-bold px-1.5 py-0.5 rounded-b shadow-sm">TRK_{String(idx + 1).padStart(2, '0')}</div>
+
+                      <div class="flex flex-col pl-1 pr-1">
+                         <div class="text-xs font-sans text-hw-text-main uppercase font-bold tracking-widest">{exp.role}</div>
+                         <div class="text-[9px] font-mono text-hw-accent-orange font-bold tracking-widest">@{exp.company}</div>
+                      </div>
+                      
+                      <div class="bg-hw-sticker border border-hw-border px-1.5 py-0.5 rounded shadow-sm self-start mt-1">
+                         <span class="text-[8px] font-mono font-bold text-hw-accent-orange tracking-widest">[{exp.startDate} - {exp.endDate || 'PRST'}]</span>
+                      </div>
+                  </div>
+               ))}
+            </div>
+         </div>
+      </ModulePanel>
+
+      <ModulePanel title="MEM // CERTIFICATIONS" className="flex-grow min-h-[280px] shrink-0" href="/skills">
+         <div class="flex flex-col h-full overflow-hidden p-4 pr-2">
+            <div class="text-[10px] font-sans font-bold text-hw-text-muted tracking-[0.2em] uppercase border-b-2 border-hw-border pb-2 mb-3 shrink-0 flex items-center gap-2">
+               <div class="w-1.5 h-1.5 rounded-full bg-hw-text-muted"></div>
+               DATA BANKS
+            </div>
+            <div class="flex flex-col gap-3 h-full overflow-y-auto pr-2 custom-scrollbar">
+               {allCerts.map((cert: any) => (
+                  <div class="bg-hw-module-inset border-2 border-hw-border p-2 rounded-lg flex flex-col shadow-inner shrink-0 relative group hover:bg-hw-module transition-colors cursor-default">
+                     <div class="bg-hw-sticker border border-hw-border rounded p-3 flex flex-col shadow-sm relative overflow-hidden">
+                       <div class="absolute top-0 right-0 bottom-0 w-6 bg-hw-sticker border-l border-hw-border flex items-center justify-center pointer-events-none z-10">
+                         <div class="w-full h-full bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQ9IjEwMCI+PHBhdGggZD0iTTAgMGgxdjEwMEgwek0yIDBoMXYxMDBIMnpNNCAwaDJ2MTAwSDR6TTcgMGgxdjEwMEg3eiIgZmlsbD0iIzIyMiIvPjwvc3ZnPg==')] opacity-30"></div>
+                       </div>
+                       
+                       <div class="absolute top-0 left-0 bg-hw-screen text-hw-accent-orange text-[7px] font-mono font-bold px-1.5 py-0.5 rounded-br uppercase tracking-widest z-10">READ_ONLY</div>
+                       
+                       <span class="text-[11px] font-mono font-bold text-hw-text-main leading-tight pr-8 tracking-wide z-10 mt-3">{cert.title.toUpperCase()}</span>
+                       <div class="flex justify-between items-end mt-1 pt-2 border-t border-hw-border border-dashed pr-8 z-10">
+                          <span class="text-[8px] font-mono text-hw-text-muted uppercase tracking-widest truncate max-w-[80px]">{cert.issuer}</span>
+                          <span class="text-[8px] font-mono font-bold text-hw-accent-orange bg-black border border-hw-border px-1 shadow-inner shrink-0">[{cert.date}]</span>
+                       </div>
+                     </div>
+                  </div>
+               ))}
+            </div>
+         </div>
+      </ModulePanel>
+
+      <ModulePanel title="ENV // COMMS_UPLINK" className="flex-grow min-h-[150px] shrink-0" href="/contact">
+         <div class="flex flex-col h-full p-4 pr-2 justify-center items-center gap-4">
+             <div class="text-[10px] font-sans font-bold text-hw-text-muted tracking-[0.2em] uppercase flex items-center gap-2">
+                 <div class="w-2 h-2 rounded-full bg-hw-accent-orange animate-ping opacity-75 absolute"></div>
+                 <div class="w-2 h-2 rounded-full bg-hw-accent-orange relative"></div>
+                 INITIATE_CONTACT
+             </div>
+             
+             <a href="/contact" class="hw-button w-full h-10 flex items-center justify-center !bg-hw-sticker hover:border-hw-accent-orange group transition-all">
+                <span class="group-hover:text-hw-accent-orange transition-colors tracking-widest text-[10px] font-bold uppercase">OPEN_CHANNEL</span>
+             </a>
+         </div>
+      </ModulePanel>
+    </div>
+
+    <!-- Left Column: OSC/Projects (Visually on Right) -->
+    <div class="w-full lg:w-[65%] flex flex-col gap-4 order-2 overflow-y-auto custom-scrollbar pr-2 h-full min-h-0">
+      {featuredProjects.map((project: any, idx: number) => (
+        <ModulePanel title={`SYNTH ${idx + 1} // ${project.title}`} className="h-48 shrink-0" href="/projects">
+          <div class="flex h-full gap-4 items-center px-4 bg-hw-module rounded-sm py-2">
+            
+            <!-- Knobs section -->
+            <div class="flex flex-col justify-center items-center gap-3 h-full pr-4 border-r-2 border-hw-border min-h-0">
+              <SynthKnob id="vol" label="VOL" projectId={project.id.toString()} initialValue={0.3} />
+              <SynthKnob id="freq" label="FREQ" projectId={project.id.toString()} initialValue={0.2} />
+            </div>
+
+            <!-- Information Display Panel -->
+            <div class="flex-grow h-full bg-hw-sticker border-2 border-hw-border rounded-lg relative shadow-inner overflow-hidden p-3 flex flex-col">
+               <div class="text-[10px] font-mono font-bold text-hw-accent-orange mb-2 border-b-2 border-hw-border pb-1 flex justify-between gap-4">
+                 <span class="shrink-0">> {project.category?.toUpperCase() || 'N/A'}</span>
+                 <span class="text-hw-text-muted truncate">[ {project.tech?.join(', ') || 'N/A'} ]</span>
+               </div>
+               <div class="flex-grow overflow-y-auto custom-scrollbar pr-2 mt-1 relative z-10">
+                 <p class="text-xs font-mono text-hw-text-main leading-relaxed pb-4">
+                   {project.description}
+                 </p>
+               </div>
+               
+               <!-- Dynamic D3 Background Oscilloscope -->
+               <Oscilloscope projectId={project.id.toString()} />
+            </div>
+            
+            <!-- Output routing -->
+            <div class="w-24 h-full flex flex-col items-center justify-center gap-3 pl-4 border-l-2 border-hw-border">
+              <a href={`https://github.com/${project.githubUrl}`} class="hw-button w-full !bg-hw-sticker">GITHUB</a>
+              <a href={project.liveUrl || '#'} class="hw-button w-full !bg-hw-accent-orange !text-white !border-hw-accent-orange shadow-sm hover:!bg-[#e64a00]">LIVE</a>
+            </div>
+            
+          </div>
+        </ModulePanel>
+      ))}
+    </div>
+    
+  </SynthShell>
+</BaseLayout>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const tabs = document.querySelectorAll('#skill-tabs button');
+    const items = document.querySelectorAll('.skill-item');
+
+    // Function to filter skills
+    const filterSkills = (category: string) => {
+      items.forEach(item => {
+        if ((item as HTMLElement).dataset.category === category) {
+          (item as HTMLElement).style.display = 'flex';
+        } else {
+          (item as HTMLElement).style.display = 'none';
+        }
+      });
+    };
+
+    // Initial filter
+    filterSkills('Languages');
+
+    // Add click listeners
+    tabs.forEach(tab => {
+      tab.addEventListener('click', (e) => {
+        // Update active class
+        tabs.forEach(t => {
+           t.classList.remove('border-hw-accent-orange', 'bg-[#2a1100]', 'text-hw-accent-orange', 'shadow-[inset_0_0_8px_rgba(255,85,0,0.3)]');
+           t.classList.add('border-hw-screw-border', 'bg-hw-module', 'text-hw-text-muted', 'hover:text-hw-text-main', 'hover:bg-hw-sticker');
+           const led = t.querySelector('.indicator-led');
+           if(led) {
+             led.classList.remove('bg-hw-accent-orange', 'shadow-[0_0_8px_rgba(255,85,0,0.9)]');
+             led.classList.add('bg-hw-screw', 'shadow-inner');
+           }
+        });
+        
+        const target = e.currentTarget as HTMLElement;
+        target.classList.remove('border-hw-screw-border', 'bg-hw-module', 'text-hw-text-muted', 'hover:text-hw-text-main', 'hover:bg-hw-sticker');
+        target.classList.add('border-hw-accent-orange', 'bg-[#2a1100]', 'text-hw-accent-orange', 'shadow-[inset_0_0_8px_rgba(255,85,0,0.3)]');
+        
+        const activeLed = target.querySelector('.indicator-led');
+        if(activeLed) {
+           activeLed.classList.remove('bg-hw-screw', 'shadow-inner');
+           activeLed.classList.add('bg-hw-accent-orange', 'shadow-[0_0_8px_rgba(255,85,0,0.9)]');
+        }
+        
+        // Filter
+        filterSkills(target.dataset.tab!);
+      });
+    });
+  });
+</script>

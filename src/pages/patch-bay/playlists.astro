@@ -1,0 +1,13 @@
+---
+import PatchBayLayout from '../../layouts/PatchBayLayout.astro';
+import { db } from '../../db';
+import { youtubePlaylists } from '../../db/schema';
+import { asc } from 'drizzle-orm';
+import PlaylistManager from '../../islands/patch-bay/PlaylistManager';
+
+const allPlaylists = await db.select().from(youtubePlaylists).orderBy(asc(youtubePlaylists.displayOrder));
+---
+
+<PatchBayLayout title="YT PLAYLISTS">
+  <PlaylistManager client:load initialPlaylists={allPlaylists} />
+</PatchBayLayout>

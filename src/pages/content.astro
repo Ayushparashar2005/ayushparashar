@@ -1,0 +1,24 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SynthShell from '../components/common/SynthShell.astro';
+import ModulePanel from '../components/synth/ModulePanel.astro';
+import { db } from '../db';
+import { youtubeVideos, youtubePlaylists } from '../db/schema';
+import { desc, asc } from 'drizzle-orm';
+import MediaRouter from '../islands/MediaRouter';
+
+const videos = await db.select().from(youtubeVideos).orderBy(desc(youtubeVideos.publishedAt));
+const playlists = await db.select().from(youtubePlaylists).orderBy(asc(youtubePlaylists.displayOrder));
+---
+
+<BaseLayout title="ayush.wav | CONTENT">
+  <SynthShell activePreset="content">
+    <div class="w-full h-full flex flex-col p-4 md:p-8">
+      
+      <ModulePanel title="TAPE // MEDIA_ROUTER" className="w-full h-full shrink-0 min-h-0">
+         <MediaRouter client:load initialVideos={videos} initialPlaylists={playlists} />
+      </ModulePanel>
+
+    </div>
+  </SynthShell>
+</BaseLayout>

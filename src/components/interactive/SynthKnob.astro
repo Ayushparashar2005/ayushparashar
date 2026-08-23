@@ -1,0 +1,102 @@
+---
+interface Props {
+  id: string;
+  label: string;
+  initialValue?: number;
+  projectId?: string;
+  sizeClass?: string;
+}
+
+const { id, label, initialValue = 0.5, projectId = "", sizeClass = "w-10 h-10" } = Astro.props;
+---
+
+<synth-knob class="flex flex-col items-center gap-0.5 relative z-20 group shrink-0" data-id={id} data-value={initialValue} data-project-id={projectId}>
+  <div class={`knob ${sizeClass} cursor-pointer select-none touch-none relative transition-transform duration-75 shrink-0`}>
+    <div class="knob-indicator transition-transform duration-75" style={`transform: rotate(${(initialValue * 280) - 140}deg)`}></div>
+  </div>
+  <span class="hw-label group-hover:text-hw-accent-orange transition-colors">{label}</span>
+</synth-knob>
+
+<script>
+  class SynthKnob extends HTMLElement {
+    private knobEl: HTMLElement;
+    private indicatorEl: HTMLElement;
+    private isDragging = false;
+    private startY = 0;
+    private startValue = 0;
+    private currentValue = 0;
+    private knobId: string;
+    private projectId: string;
+
+    constructor() {
+      super();
+      this.knobEl = this.querySelector('.knob')!;
+      this.indicatorEl = this.querySelector('.knob-indicator')!;
+      this.knobId = this.dataset.id || 'knob';
+      this.projectId = this.dataset.projectId || '';
+      this.currentValue = parseFloat(this.dataset.value || '0.5');
+
+      this.updateRotation();
+
+      this.handlePointerDown = this.handlePointerDown.bind(this);
+      this.handlePointerMove = this.handlePointerMove.bind(this);
+      this.handlePointerUp = this.handlePointerUp.bind(this);
+
+      this.knobEl.addEventListener('pointerdown', this.handlePointerDown);
+    }
+
+    private handlePointerDown(e: PointerEvent) {
+      this.isDragging = true;
+      this.startY = e.clientY;
+      this.startValue = this.currentValue;
+      this.knobEl.setPointerCapture(e.pointerId);
+      
+      this.knobEl.addEventListener('pointermove', this.handlePointerMove);
+      this.knobEl.addEventListener('pointerup', this.handlePointerUp);
+      this.knobEl.addEventListener('pointercancel', this.handlePointerUp);
+      
+      // Visual feedback
+      this.knobEl.style.transform = 'scale(0.95)';
+    }
+
+    private handlePointerMove(e: PointerEvent) {
+      if (!this.isDragging) return;
+      e.preventDefault();
+
+      const deltaY = this.startY - e.clientY;
+      // 100 pixels of drag = full rotation
+      const deltaValue = deltaY / 150; 
+      
+      this.currentValue = Math.max(0, Math.min(1, this.startValue + deltaValue));
+      this.updateRotation();
+      
+      // Dispatch custom event for other components
+      // Using a global event on document so siblings anywhere can hear it
+      document.dispatchEvent(new CustomEvent('synth-knob-change', {
+        detail: { id: this.knobId, projectId: this.projectId, value: this.currentValue }
+      }));
+    }
+
+    private handlePointerUp(e: PointerEvent) {
+      this.isDragging = false;
+      this.knobEl.releasePointerCapture(e.pointerId);
+      
+      this.knobEl.removeEventListener('pointermove', this.handlePointerMove);
+      this.knobEl.removeEventListener('pointerup', this.handlePointerUp);
+      this.knobEl.removeEventListener('pointercancel', this.handlePointerUp);
+      
+      this.knobEl.style.transform = 'scale(1)';
+    }
+
+    private updateRotation() {
+      // Map 0-1 to -140deg to 140deg (280 degree range)
+      const degrees = (this.currentValue * 280) - 140;
+      this.indicatorEl.style.transform = `rotate(${degrees}deg)`;
+    }
+  }
+
+  // Prevent double definition
+  if (!customElements.get('synth-knob')) {
+    customElements.define('synth-knob', SynthKnob);
+  }
+</script>

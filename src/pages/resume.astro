@@ -1,0 +1,83 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SynthShell from '../components/common/SynthShell.astro';
+import ModulePanel from '../components/synth/ModulePanel.astro';
+---
+
+<BaseLayout title="ayush.wav | RESUME_EXPORT">
+  <SynthShell activePreset="resume">
+    <div class="w-full h-full flex flex-col p-4 md:p-8 items-center justify-center">
+      
+      <ModulePanel title="DRV_A // EXPORT_UTILITY" className="w-full max-w-5xl h-full max-h-[800px] shrink-0 min-h-0">
+         <div class="flex flex-col h-full overflow-hidden p-4 md:p-6 min-h-0">
+            
+            <!-- Physical Disk Drive Header -->
+            <div class="bg-hw-module-inset border-2 border-hw-border p-4 rounded-lg flex flex-col md:flex-row justify-between items-start md:items-center gap-6 shrink-0 shadow-inner relative">
+               <!-- Screws -->
+               <div class="absolute top-2 left-2 w-1.5 h-1.5 rounded-full bg-hw-screw shadow-inner border border-hw-screw-border"></div>
+               <div class="absolute top-2 right-2 w-1.5 h-1.5 rounded-full bg-hw-screw shadow-inner border border-hw-screw-border"></div>
+               <div class="absolute bottom-2 left-2 w-1.5 h-1.5 rounded-full bg-hw-screw shadow-inner border border-hw-screw-border"></div>
+               <div class="absolute bottom-2 right-2 w-1.5 h-1.5 rounded-full bg-hw-screw shadow-inner border border-hw-screw-border"></div>
+               
+               <div class="flex items-center gap-6 z-10 px-2 w-full md:w-auto">
+                  <!-- Physical Disk Icon -->
+                  <div class="w-16 h-16 bg-hw-sticker border border-hw-border rounded flex flex-col shadow-sm relative overflow-hidden shrink-0">
+                     <div class="absolute top-0 right-0 bottom-0 w-4 bg-hw-sticker border-l border-hw-border flex items-center justify-center pointer-events-none">
+                       <div class="w-full h-full bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4IiBoZWlnaHQ9IjEwMCI+PHBhdGggZD0iTTAgMGgxdjEwMEgwek0yIDBoMXYxMDBIMnpNNCAwaDJ2MTAwSDR6TTcgMGgxdjEwMEg3eiIgZmlsbD0iIzIyMiIvPjwvc3ZnPg==')] opacity-20"></div>
+                     </div>
+                     <div class="h-4 bg-hw-screen flex items-center justify-center border-b border-hw-border">
+                         <span class="text-[6px] text-hw-accent-orange font-mono font-bold tracking-widest">PDF_SYS</span>
+                     </div>
+                     <div class="flex-grow flex items-center justify-center p-2 pr-4">
+                         <svg class="w-6 h-6 text-hw-text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                     </div>
+                  </div>
+                  <div>
+                     <div class="text-[10px] font-sans font-bold text-hw-text-muted tracking-[0.2em] uppercase flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-hw-accent-blue animate-pulse shadow-[0_0_5px_rgba(0,170,255,0.6)]"></span>
+                        DATA_BANK_EXPORT
+                     </div>
+                     <div class="text-xs md:text-sm font-mono font-bold text-hw-text-main mt-2 tracking-wider bg-hw-sticker border border-hw-border px-3 py-1 shadow-sm">Ayush_Parashar_CV_v2.pdf</div>
+                  </div>
+               </div>
+               
+               <div class="flex flex-col sm:flex-row gap-4 z-10 px-2 w-full md:w-auto">
+                  <a href="/Ayush_Parashar_Resume.pdf" target="_blank" class="hw-button h-10 px-6 flex items-center justify-center font-bold bg-hw-module border-hw-border text-hw-text-muted hover:bg-hw-sticker hover:text-hw-text-main shadow-sm transition-all text-[10px] tracking-widest uppercase rounded">
+                    OPEN IN NEW TAB
+                  </a>
+                  <a href="/Ayush_Parashar_Resume.pdf" download class="hw-button h-10 px-6 flex items-center justify-center font-bold bg-hw-accent-orange text-white border-hw-accent-orange hover:bg-[#e64a00] shadow-[0_4px_0_#cc4400,0_5px_5px_rgba(0,0,0,0.3)] active:shadow-[0_0px_0_#cc4400,0_0px_0px_rgba(0,0,0,0.3)] active:translate-y-1 transition-all text-[10px] tracking-widest uppercase rounded">
+                    DOWNLOAD NOW
+                  </a>
+               </div>
+            </div>
+
+            <!-- PDF Viewer Embed -->
+            <div class="flex-grow w-full mt-6 bg-hw-screen border-4 border-hw-border-screen rounded-lg overflow-hidden shadow-[inset_0_0_20px_rgba(0,0,0,1)] relative min-h-0 group">
+               
+               <!-- Scanline overlay (pointer events none) -->
+               <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPjxyZWN0IHdpZHRoPSI0IiBoZWlnaHQ9IjEiIGZpbGw9IiMwMDAiIGZpbGwtb3BhY2l0eT0iMC4yIi8+PC9zdmc+')] opacity-20 z-20 pointer-events-none mix-blend-overlay"></div>
+
+               <!-- HUD Decorative overlay on hover -->
+               <div class="absolute inset-0 pointer-events-none border-4 border-transparent group-hover:border-hw-accent-blue/30 transition-colors z-20"></div>
+               <div class="absolute top-0 right-0 w-8 h-8 pointer-events-none border-t-4 border-r-4 border-transparent group-hover:border-hw-accent-blue/50 transition-colors z-20"></div>
+               <div class="absolute bottom-0 left-0 w-8 h-8 pointer-events-none border-b-4 border-l-4 border-transparent group-hover:border-hw-accent-blue/50 transition-colors z-20"></div>
+
+               <!-- Loading Overlay -->
+               <div class="absolute inset-0 flex flex-col items-center justify-center z-0 bg-hw-screen">
+                  <div class="w-12 h-12 border-t-4 border-hw-accent-blue border-solid rounded-full animate-spin mb-4 shadow-[0_0_15px_rgba(0,170,255,0.5)]"></div>
+                  <div class="text-[10px] font-mono font-bold text-hw-accent-blue tracking-widest uppercase animate-pulse">MOUNTING DATA BANK...</div>
+               </div>
+
+               <iframe 
+                  src="/Ayush_Parashar_Resume.pdf#navpanes=0&view=Fit" 
+                  class="relative z-10 w-full h-full border-none rounded-sm bg-hw-sticker"
+                  title="Ayush Parashar Resume"
+               ></iframe>
+            </div>
+
+         </div>
+      </ModulePanel>
+
+    </div>
+  </SynthShell>
+</BaseLayout>

@@ -1,0 +1,173 @@
+---
+interface Props {
+  projectId: string;
+  className?: string;
+}
+
+const { projectId, className = "" } = Astro.props;
+---
+
+<d3-generative-art class={`absolute inset-0 pointer-events-none overflow-hidden ${className}`} data-project-id={projectId}></d3-generative-art>
+
+<script>
+  import * as d3 from 'd3';
+
+  interface Node { id: number; x: number; y: number; vx: number; vy: number; radius: number; }
+  interface Link { source: Node; target: Node; dist: number; }
+
+  class GenerativeArt extends HTMLElement {
+    private svg: any;
+    private projectId: string = '';
+    
+    // State controlled by knobs
+    private creativity = 0.5; // Controls number of elements
+    private logic = 1.0;      // Controls geometric alignment
+    private design = 0.5;     // Controls style/color
+    
+
+    private time = 0;
+    private animationFrameId: number = 0;
+    private nodes: Node[] = [];
+
+    constructor() {
+      super();
+      this.projectId = this.dataset.projectId || '';
+      
+      this.handleKnobChange = this.handleKnobChange.bind(this);
+      this.updateFrame = this.updateFrame.bind(this);
+    }
+
+    connectedCallback() {
+      // Setup D3 SVG
+      this.svg = d3.select(this as HTMLElement)
+        .append('svg')
+        .attr('preserveAspectRatio', 'xMidYMid slice')
+        .attr('viewBox', '0 0 400 100')
+        .attr('width', '100%')
+        .attr('height', '100%')
+        .classed('opacity-30', true);
+        
+      // Initialize some nodes
+      this.generateNodes();
+
+      // Listen for global knob changes
+      document.addEventListener('synth-knob-change', this.handleKnobChange as EventListener);
+      
+      this.updateFrame();
+    }
+    
+    disconnectedCallback() {
+      document.removeEventListener('synth-knob-change', this.handleKnobChange as EventListener);
+      cancelAnimationFrame(this.animationFrameId);
+    }
+    
+    private generateNodes() {
+      const numNodes = Math.floor(10 + (this.creativity * 40)); // 10 to 50 nodes
+      this.nodes = Array.from({ length: numNodes }, (_, i) => ({
+        id: i,
+        x: Math.random() * 400,
+        y: Math.random() * 100,
+        vx: (Math.random() - 0.5) * 2,
+        vy: (Math.random() - 0.5) * 2,
+        radius: Math.random() * 4 + 1
+      }));
+    }
+
+    private handleKnobChange(e: CustomEvent) {
+      if (e.detail.projectId !== this.projectId) return;
+      
+      if (e.detail.id === 'creativity') {
+        const oldCreativity = this.creativity;
+        this.creativity = e.detail.value;
+        // Regenerate nodes if creativity changed significantly to avoid jitter
+        if (Math.abs(oldCreativity - this.creativity) > 0.1) {
+            this.generateNodes();
+        }
+      } else if (e.detail.id === 'logic') {
+        this.logic = e.detail.value;
+      } else if (e.detail.id === 'design') {
+        this.design = e.detail.value;
+      }
+    }
+
+    private updateFrame() {
+      this.time += 0.01;
+      
+      // Update node positions
+      this.nodes.forEach(node => {
+        node.x += node.vx;
+        node.y += node.vy;
+        
+        // Bounce off walls
+        if (node.x < 0 || node.x > 400) node.vx *= -1;
+        if (node.y < 0 || node.y > 100) node.vy *= -1;
+        
+        // Logic pulls nodes toward a grid
+        if (this.logic > 0.5) {
+            const gridX = Math.round(node.x / 40) * 40;
+            const gridY = Math.round(node.y / 25) * 25;
+            const pull = (this.logic - 0.5) * 0.1;
+            node.x += (gridX - node.x) * pull;
+            node.y += (gridY - node.y) * pull;
+        }
+      });
+      
+      // Draw lines between close nodes
+      const links = [];
+      const maxDist = 40 + (this.creativity * 60);
+      
+      for (let i = 0; i < this.nodes.length; i++) {
+        for (let j = i + 1; j < this.nodes.length; j++) {
+          const dx = this.nodes[i].x - this.nodes[j].x;
+          const dy = this.nodes[i].y - this.nodes[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          
+          if (dist < maxDist) {
+            links.push({
+              source: this.nodes[i],
+              target: this.nodes[j],
+              dist: dist
+            });
+          }
+        }
+      }
+      
+      // Update DOM
+      // Determine colors based on design knob
+      const color1 = this.design > 0.5 ? '#ff5500' : '#888888';
+      const color2 = this.design > 0.5 ? '#333333' : '#cccccc';
+      
+      const lines = this.svg.selectAll('line').data(links as Link[]);
+      
+      lines.enter()
+        .append('line')
+        .merge(lines)
+        .attr('x1', (d: Link) => d.source.x)
+        .attr('y1', (d: Link) => d.source.y)
+        .attr('x2', (d: Link) => d.target.x)
+        .attr('y2', (d: Link) => d.target.y)
+        .attr('stroke', color1)
+        .attr('stroke-width', (d: Link) => (1 - d.dist / maxDist) * (0.5 + this.design * 1.5));
+        
+      lines.exit().remove();
+      
+      const circles = this.svg.selectAll('circle').data(this.nodes);
+      
+      circles.enter()
+        .append('circle')
+        .merge(circles)
+        .attr('cx', (d: Node) => d.x)
+        .attr('cy', (d: Node) => d.y)
+        .attr('r', (d: Node) => d.radius * (0.5 + this.design))
+        .attr('fill', color2);
+        
+      circles.exit().remove();
+      
+      this.animationFrameId = requestAnimationFrame(this.updateFrame);
+    }
+  }
+
+  if (!customElements.get('d3-generative-art')) {
+    customElements.define('d3-generative-art', GenerativeArt);
+  }
+</script>

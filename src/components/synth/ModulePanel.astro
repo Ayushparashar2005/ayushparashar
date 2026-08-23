@@ -1,0 +1,43 @@
+---
+interface Props {
+  title: string;
+  id?: string;
+  className?: string;
+  href?: string;
+}
+
+const { title, id, className = "", href } = Astro.props;
+---
+
+<section id={id} class={`hw-module flex flex-col ${className}`}>
+  <!-- Screws / Hardware aesthetic -->
+  <div class="absolute top-1.5 left-1.5 w-1.5 h-1.5 rounded-full bg-hw-screw border border-hw-screw-border shadow-[0_1px_0_rgba(255,255,255,0.1)]"></div>
+  <div class="absolute top-1.5 right-1.5 w-1.5 h-1.5 rounded-full bg-hw-screw border border-hw-screw-border shadow-[0_1px_0_rgba(255,255,255,0.1)]"></div>
+  <div class="absolute bottom-1.5 left-1.5 w-1.5 h-1.5 rounded-full bg-hw-screw border border-hw-screw-border shadow-[0_1px_0_rgba(255,255,255,0.1)]"></div>
+  <div class="absolute bottom-1.5 right-1.5 w-1.5 h-1.5 rounded-full bg-hw-screw border border-hw-screw-border shadow-[0_1px_0_rgba(255,255,255,0.1)]"></div>
+  
+  <header class="hw-module-header px-6 relative group">
+    <div class="flex items-center gap-2">
+      <div class="w-2.5 h-2.5 rounded-full border border-hw-border-screen bg-hw-bg shadow-[inset_0_1px_2px_rgba(0,0,0,0.8)]">
+         <div class="w-1.5 h-1.5 m-[1px] rounded-full bg-hw-accent-orange shadow-[0_0_5px_rgba(255,85,0,0.8)]"></div>
+      </div>
+      {href ? (
+        <a href={href} class="hover:text-hw-accent-blue transition-colors flex items-center gap-2 after:absolute after:inset-0 z-10 text-hw-text-muted hover:text-hw-text-main">
+          {title} <span class="text-[8px] opacity-0 group-hover:opacity-100 transition-opacity tracking-widest text-hw-accent-blue">[ EXPAND ↗ ]</span>
+        </a>
+      ) : (
+        <span class="text-hw-text-muted">{title}</span>
+      )}
+    </div>
+    <div class="flex items-center gap-1">
+      <slot name="header-right" />
+      <span class="text-[10px] opacity-50 ml-2 text-hw-text-muted">≡</span>
+    </div>
+  </header>
+  
+  <div class="flex-grow p-2 md:p-4 relative min-h-0 bg-hw-module">
+    <div class="relative z-10 h-full flex flex-col gap-2 min-h-0">
+       <slot />
+    </div>
+  </div>
+</section>

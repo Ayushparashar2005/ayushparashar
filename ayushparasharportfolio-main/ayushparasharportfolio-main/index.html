@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ayush | Engineering Portfolio</title>
+  <meta name="description" content="Personal portfolio of Ayush Parashar – Engineering Student passionate about Web Development, Python, AI Automation, and Flutter." />
+  <meta property="og:title" content="Ayush | Engineering Portfolio" />
+  <meta property="og:description" content="Engineering student portfolio showcasing projects in web development, AI, and mobile apps." />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💻</text></svg>" />
+</head>
+<body>
+
+<!-- ─── NAVBAR ─── -->
+<nav id="navbar">
+  <div class="nav-logo">&lt;Ayush/&gt;</div>
+  <ul class="nav-links" id="nav-links">
+    <li><a href="#hero"    class="active">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#certifications">Certifications</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-particles" id="particles"></div>
+  <div class="hero-content">
+    <div class="hero-text">
+      <div class="hero-greeting">👋 Hello, Everyone!</div>
+      <h1 class="hero-name">I'm <span>Ayush</span></h1>
+      <div class="hero-typing">
+        <span id="typing-text"></span><span class="cursor"></span>
+      </div>
+      <p class="hero-desc">
+        A passionate engineering student from Bahadurgarh, building innovative solutions with modern technologies. Turning ideas into impactful digital experiences.
+      </p>
+      <div class="hero-buttons">
+        <a href="#projects" class="btn-primary">🚀 View My Work</a>
+      </div>
+    </div>
+    <div class="hero-image">
+      <div class="hero-avatar-wrap">
+        <img src="profile.jpg" alt="Ayush Parashar" id="profile-img" onerror="this.style.display='none';document.getElementById('profile-fallback').style.display='flex';" />
+        <div class="hero-avatar-initials" id="profile-fallback" style="display:none;">👩‍💻</div>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-indicator">
+    <span>Scroll</span>
+    <div class="scroll-dot"></div>
+  </div>
+</section>
+
+<!-- ─── ABOUT ─── -->
+<section id="about">
+  <div class="section-header reveal">
+    <div class="section-tag">Get to know me</div>
+    <h2 class="section-title">About <span>Me</span></h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="about-grid">
+    <div class="about-text reveal-left">
+      <p>Hi! I'm <strong>Ayush Parashar</strong>, an enthusiastic engineering student from Bahadurgarh with a deep passion for technology, creativity, and problem-solving.</p>
+      <p>I thrive at the intersection of design and development — crafting web applications, automating workflows with AI tools, and building mobile experiences. I'm constantly learning and experimenting with cutting-edge tech.</p>
+      <p>My goal is to work on impactful projects that make a real difference — especially in healthcare and accessibility tech.</p>
+      <div class="about-stats">
+        <div class="stat-box"><div class="stat-num">13+</div><div class="stat-label">Projects</div></div>
+        <div class="stat-box"><div class="stat-num">8+</div><div class="stat-label">Technologies</div></div>
+        <div class="stat-box"><div class="stat-num">2+</div><div class="stat-label">Years Learning</div></div>
+      </div>
+    </div>
+    <div class="about-cards reveal-right">
+      <div class="info-card glass">
+        <div class="info-icon">🎓</div>
+        <div>
+          <h4>Education</h4>
+          <p>Engineering Student | Computer Science &amp; Engineering</p>
+        </div>
+      </div>
+      <div class="info-card glass">
+        <div class="info-icon">📍</div>
+        <div>
+          <h4>Location</h4>
+          <p>Bahadurgarh, Haryana, India</p>
+        </div>
+      </div>
+      <div class="info-card glass">
+        <div class="info-icon">🎯</div>
+        <div>
+          <h4>Career Interests</h4>
+          <p>Full-Stack Development · AI/ML · Mobile Apps · Automation</p>
+        </div>
+      </div>
+      <div class="info-card glass">
+        <div class="info-icon">⚡</div>
+        <div>
+          <h4>Currently Exploring</h4>
+          <p>AI Automation (n8n) · Flutter · GenAI Applications</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── EDUCATION ─── -->
+<section id="education">
+  <div class="section-header reveal">
+    <div class="section-tag">My academic journey</div>
+    <h2 class="section-title">Education &amp; <span>Background</span></h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="edu-timeline">
+
+    <div class="edu-item reveal">
+      <div class="edu-dot"></div>
+      <div class="edu-card glass">
+        <div class="edu-header">
+          <div class="edu-icon">🎓</div>
+          <div>
+            <div class="edu-degree">B.Tech. Computer Science &amp; Engineering</div>
+            <div class="edu-school">SGT University,Gurugram,Haryana</div>
+          </div>
+          <div class="edu-year">2023 – 2027</div>
+        </div>
+        <p class="edu-desc">Pursuing a Bachelor of Engineering in Computer Science, with a focus on software development, AI/ML, and modern web technologies. Actively building projects and participating in tech communities.</p>
+        <div class="edu-tags">
+          <span class="tag">CSE</span><span class="tag">Full Stack</span><span class="tag">AI/ML</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="edu-item reveal">
+      <div class="edu-dot"></div>
+      <div class="edu-card glass">
+        <div class="edu-header">
+          <div class="edu-icon">📚</div>
+          <div>
+            <div class="edu-degree">Higher Secondary (12th) – Science</div>
+            <div class="edu-school">Vijaya Senior Secondary School , Bahadurgarh</div>
+          </div>
+          <div class="edu-year">2022 – 2023</div>
+        </div>
+        <p class="edu-desc">Completed Higher Secondary education with a focus on Mathematics, Physics, and Computer Science, building a strong analytical foundation.</p>
+        <div class="edu-tags">
+          <span class="tag">Science</span><span class="tag">Mathematics</span><span class="tag">Computer Science</span> <span class="tag">class 12th</span><span class="tag">CBSE Board</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="edu-item reveal">
+      <div class="edu-dot"></div>
+      <div class="edu-card glass">
+        <div class="edu-header">
+          <div class="edu-icon">🏫</div>
+          <div>
+            <div class="edu-degree">Class 10th</div>
+            <div class="edu-school">Vijaya Senior Secondary School , Bahadurgarh</div>
+          </div>
+          <div class="edu-year">2020 – 2021</div>
+        </div>
+        <p class="edu-desc">Completed Class 10th with strong academic performance, developing a passion for technology and logical problem-solving.</p>
+        <div class="edu-tags">
+          <span class="tag">Class 10th</span><span class="tag">CBSE Board</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─── SKILLS ─── -->
+<section id="skills">
+  <div class="section-header reveal">
+    <div class="section-tag">What I work with</div>
+    <h2 class="section-title">My <span>Skills</span></h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="skills-grid" id="skills-grid">
+    <!-- JS will render skill cards -->
+  </div>
+</section>
+
+<!-- ─── CERTIFICATIONS ─── -->
+<section id="certifications">
+  <div class="section-header reveal">
+    <div class="section-tag">What I've earned</div>
+    <h2 class="section-title">My <span>Certifications</span></h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="cert-grid">
+
+    <div class="cert-card glass reveal">
+      <div class="cert-badge">🏅</div>
+      <div class="cert-body">
+        <div class="cert-title">Artificial Intelligence Course</div>
+        <div class="cert-issuer">Samsung Innovation Campus -SIC</div>
+        <div class="cert-date">2024</div>
+      </div>
+      <div class="cert-verify">✔ Verified</div>
+    </div>
+
+    <div class="cert-card glass reveal">
+      <div class="cert-badge">🏅</div>
+      <div class="cert-body">
+        <div class="cert-title">Ai for beginners</div>
+        <div class="cert-issuer">HP LIFE</div>
+        <div class="cert-date">2024</div>
+      </div>
+      <div class="cert-verify">✔ Verified</div>
+    </div>
+      <div class="cert-card glass reveal">
+      <div class="cert-badge">🏅</div>
+      <div class="cert-body">
+        <div class="cert-title">Foundation to AI Data analytics</div>
+        <div class="cert-issuer">Samatrix.io</div>
+        <div class="cert-date">2024</div>
+      </div>
+      <div class="cert-verify">✔ Verified</div>
+    </div>
+  <div class="cert-card glass reveal">
+      <div class="cert-badge">🏅</div>
+      <div class="cert-body">
+        <div class="cert-title"> Data analytics using python</div>
+        <div class="cert-issuer">Samatrix.io</div>
+        <div class="cert-date">2024</div>
+      </div>
+      <div class="cert-verify">✔ Verified</div>
+    </div>
+
+
+    <div class="cert-card glass reveal">
+      <div class="cert-badge">🏅</div>
+      <div class="cert-body">
+        <div class="cert-title">C programming</div>
+        <div class="cert-issuer">Great learning</div>
+        <div class="cert-date">2024</div>
+      </div>
+      <div class="cert-verify">✔ Verified</div>
+    </div>
+
+    <div class="cert-card glass reveal">
+      <div class="cert-badge">🏅</div>
+      <div class="cert-body">
+        <div class="cert-title">Data Analytics &amp; Visualization Job Simulation
+
+Forage</div>
+        <div class="cert-issuer">Forage</div>
+        <div class="cert-date">2025</div>
+      </div>
+      <div class="cert-verify">✔ Verified</div>
+    </div>
+
+
+</section>
+
+<!-- ─── PROJECTS ─── -->
+<section id="projects">
+  <div class="section-header reveal">
+    <div class="section-tag">My work</div>
+    <h2 class="section-title">Featured <span>Projects</span></h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="projects-filter reveal" id="filter-bar">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="web">Web</button>
+    <button class="filter-btn" data-filter="python">Python</button>
+    <button class="filter-btn" data-filter="ai">AI / Automation</button>
+    <button class="filter-btn" data-filter="mobile">Mobile</button>
+    <button class="filter-btn" data-filter="game">Games</button>
+  </div>
+  <div class="projects-grid" id="projects-grid"></div>
+</section>
+
+<!-- ─── CONTACT ─── -->
+<section id="contact">
+  <div class="section-header reveal">
+    <div class="section-tag">Let's connect</div>
+    <h2 class="section-title">Get In <span>Touch</span></h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="contact-wrap">
+    <div class="contact-info reveal-left">
+      <h3>Let's build something great together! 🚀</h3>
+      <p>Whether you have a project idea, an internship opportunity, or just want to say hi — my inbox is always open. I'll get back to you as soon as possible!</p>
+      <div class="contact-items">
+        <a href="mailto:parasharayush71@gmail.com" class="contact-item">
+          <div class="contact-item-icon">📧</div>
+          <div class="contact-item-text">
+            <span>Email</span>
+            <p>parasharayush71@gmail.com</p>
+          </div>
+        </a>
+        <a href="https://www.linkedin.com/in/ayushparashar2005/" target="_blank" class="contact-item">
+          <div class="contact-item-icon">💼</div>
+          <div class="contact-item-text">
+            <span>LinkedIn</span>
+            <p>ayushparashar2005</p>
+          </div>
+        </a>
+        <a href="https://github.com/Ayushparashar2005" target="_blank" class="contact-item">
+          <div class="contact-item-icon">🐙</div>
+          <div class="contact-item-text">
+            <span>GitHub</span>
+            <p>Ayushparashar2005</p>
+          </div>
+        </a>
+        <div class="contact-item">
+          <div class="contact-item-icon">📍</div>
+          <div class="contact-item-text">
+            <span>Location</span>
+            <p>Bahadurgarh, Haryana, India</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="contact-form glass reveal-right">
+      <form id="contact-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="cf-name">Name</label>
+            <input type="text" id="cf-name" placeholder="Your name" required />
+          </div>
+          <div class="form-group">
+            <label for="cf-email">Email</label>
+            <input type="email" id="cf-email" placeholder="your@email.com" required />
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="cf-subject">Subject</label>
+          <input type="text" id="cf-subject" placeholder="Project inquiry / Collaboration..." required />
+        </div>
+        <div class="form-group">
+          <label for="cf-message">Message</label>
+          <textarea id="cf-message" placeholder="Tell me about your project or opportunity..." required></textarea>
+        </div>
+        <button type="submit" class="btn-submit" id="submit-btn">
+          <span>Send Message</span> <span>🚀</span>
+        </button>
+      </form>
+      <div class="form-success" id="form-success">
+        <div class="check">✅</div>
+        <h4>Message Sent!</h4>
+        <p>Thanks for reaching out! I'll respond within 24 hours.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="footer-logo">&lt;Ayush/&gt;</div>
+  <p class="footer-tagline">Engineering Student · Developer · Problem Solver</p>
+  <div class="social-links">
+    <a href="mailto:parasharayush71@gmail.com" class="social-link" title="Email">📧</a>
+    <a href="https://www.linkedin.com/in/ayushparashar2005/" target="_blank" class="social-link" title="LinkedIn">💼</a>
+    <a href="https://github.com/Ayushparashar2005" target="_blank" class="social-link" title="GitHub">🐙</a>
+  </div>
+  <div class="footer-bottom">
+    <p>Designed &amp; Built with ❤️ by <span>Ayush Parashar</span> © 2025</p>
+  </div>
+</footer>
+
+<button id="back-top" aria-label="Back to top">↑</button>
+
+<script src="script.js"></script>
+</body>
+</html>

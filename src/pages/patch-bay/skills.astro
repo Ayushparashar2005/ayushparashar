@@ -1,0 +1,23 @@
+---
+import PatchBayLayout from '../../layouts/PatchBayLayout.astro';
+import { db } from '../../db';
+import { skills, certifications } from '../../db/schema';
+import { asc } from 'drizzle-orm';
+import SkillsManager from '../../islands/patch-bay/SkillsManager';
+import CertsManager from '../../islands/patch-bay/CertsManager';
+
+const allSkills = await db.select().from(skills).orderBy(asc(skills.proficiency));
+const allCerts = await db.select().from(certifications).orderBy(asc(certifications.displayOrder));
+---
+
+<PatchBayLayout title="SKILLS & CERTS">
+  <div class="flex flex-col gap-10">
+    
+    <!-- Skills Section -->
+    <SkillsManager client:load initialSkills={allSkills} />
+
+    <!-- Certifications Section -->
+    <CertsManager client:load initialCerts={allCerts} />
+
+  </div>
+</PatchBayLayout>

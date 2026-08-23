@@ -1,0 +1,58 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SynthShell from '../components/common/SynthShell.astro';
+import ModulePanel from '../components/synth/ModulePanel.astro';
+import SynthKnob from '../components/interactive/SynthKnob.astro';
+import Oscilloscope from '../components/interactive/Oscilloscope.astro';
+import { db } from '../db';
+import { projects } from '../db/schema';
+import { eq } from 'drizzle-orm';
+
+const featuredProjects = await db.select().from(projects).where(eq(projects.status, 'PUBLISHED'));
+---
+
+<BaseLayout title="ayush.wav | PROJECTS">
+  <SynthShell activePreset="projects">
+    <div class="w-full h-full p-4 overflow-y-auto custom-scrollbar">
+      
+      <div class="grid grid-cols-1 xl:grid-cols-2 gap-4 pb-12">
+        {featuredProjects.map((project: any, idx: number) => (
+          <ModulePanel title={`SYNTH ${idx + 1} // ${project.title}`} className="h-[250px] shrink-0">
+            <div class="flex h-full gap-4 items-center px-4 bg-hw-module rounded-sm py-2">
+              
+              <!-- Knobs section -->
+              <div class="flex flex-col justify-center items-center gap-3 h-full pr-4 border-r-2 border-hw-border min-h-0">
+                <SynthKnob id="vol" label="VOL" projectId={project.id.toString()} initialValue={0.3} />
+                <SynthKnob id="freq" label="FREQ" projectId={project.id.toString()} initialValue={0.2} />
+              </div>
+
+              <!-- Information Display Panel -->
+              <div class="flex-grow h-full bg-hw-sticker border-2 border-hw-border rounded-lg relative shadow-inner overflow-hidden p-4 flex flex-col">
+                 <div class="text-[10px] font-mono font-bold text-hw-accent-orange mb-2 border-b-2 border-hw-border pb-2 flex justify-between gap-4">
+                   <span class="shrink-0">> {project.category?.toUpperCase() || 'N/A'}</span>
+                   <span class="text-hw-text-muted truncate">[ {project.tech?.join(', ') || 'N/A'} ]</span>
+                 </div>
+                 <div class="flex-grow overflow-y-auto custom-scrollbar pr-2 mt-2 relative z-10">
+                   <p class="text-xs font-mono text-hw-text-main leading-relaxed text-justify pb-4">
+                     {project.description}
+                   </p>
+                 </div>
+                 
+                 <!-- Dynamic D3 Background Oscilloscope -->
+                 <Oscilloscope projectId={project.id.toString()} />
+              </div>
+              
+              <!-- Output routing -->
+              <div class="w-24 h-full flex flex-col items-center justify-center gap-4 pl-4 border-l-2 border-hw-border">
+                <a href={`https://github.com/${project.githubUrl}`} class="hw-button w-full h-12 flex items-center justify-center text-[10px] !bg-hw-sticker">GITHUB</a>
+                <a href={project.liveUrl || '#'} class="hw-button w-full h-12 flex items-center justify-center text-[10px] !bg-hw-accent-orange !text-white !border-hw-accent-orange shadow-sm hover:!bg-[#e64a00]">LIVE</a>
+              </div>
+              
+            </div>
+          </ModulePanel>
+        ))}
+      </div>
+
+    </div>
+  </SynthShell>
+</BaseLayout>

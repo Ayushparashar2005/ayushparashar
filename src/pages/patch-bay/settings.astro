@@ -1,0 +1,75 @@
+---
+import PatchBayLayout from '../../layouts/PatchBayLayout.astro';
+import fs from 'node:fs/promises';
+import path from 'node:path';
+
+const dataPath = path.join(process.cwd(), 'src/data/identity.json');
+
+// Read existing data
+let identity = { name: "Ayush Parashar", role: "Engineering Student", location: "Bahadurgarh, IN", bio: "" };
+try {
+  const content = await fs.readFile(dataPath, 'utf-8');
+  identity = JSON.parse(content);
+} catch (e) {
+  // Ignore, use default
+}
+
+let success = false;
+
+if (Astro.request.method === "POST") {
+  try {
+    const data = await Astro.request.formData();
+    identity = {
+      name: data.get("name")?.toString() || "",
+      role: data.get("role")?.toString() || "",
+      location: data.get("location")?.toString() || "",
+      bio: data.get("bio")?.toString() || "",
+    };
+    
+    await fs.mkdir(path.dirname(dataPath), { recursive: true });
+    await fs.writeFile(dataPath, JSON.stringify(identity, null, 2));
+    success = true;
+  } catch (error) {
+    console.error(error);
+  }
+}
+---
+
+<PatchBayLayout title="SETTINGS">
+  <div class="flex flex-col gap-6">
+    <p class="text-zinc-400 font-mono text-sm mb-4">Configure your portfolio identity settings.</p>
+
+    <form method="POST" class="bg-zinc-900/50 border border-zinc-800 p-6 rounded-md flex flex-col gap-4">
+      <h3 class="text-zinc-200 font-mono font-bold border-b border-zinc-800 pb-2">PROFILE SETTINGS (IDENTITY)</h3>
+      
+      {success && <div class="bg-green-900/30 text-green-400 border border-green-800 p-2 text-xs font-mono rounded">Saved successfully!</div>}
+
+      <div class="flex flex-col gap-2">
+        <label class="text-zinc-500 font-mono text-xs">DISPLAY NAME</label>
+        <input name="name" type="text" value={identity.name} class="bg-zinc-950 border border-zinc-800 rounded px-3 py-2 text-zinc-300 font-mono text-sm focus:outline-none focus:border-hw-accent-blue/50" />
+      </div>
+
+      <div class="flex flex-col gap-2 mt-2">
+        <label class="text-zinc-500 font-mono text-xs">ROLE</label>
+        <input name="role" type="text" value={identity.role} class="bg-zinc-950 border border-zinc-800 rounded px-3 py-2 text-zinc-300 font-mono text-sm focus:outline-none focus:border-hw-accent-blue/50" />
+      </div>
+
+      <div class="flex flex-col gap-2 mt-2">
+        <label class="text-zinc-500 font-mono text-xs">LOCATION</label>
+        <input name="location" type="text" value={identity.location} class="bg-zinc-950 border border-zinc-800 rounded px-3 py-2 text-zinc-300 font-mono text-sm focus:outline-none focus:border-hw-accent-blue/50" />
+      </div>
+
+      <div class="flex flex-col gap-2 mt-2">
+        <label class="text-zinc-500 font-mono text-xs">BIO (FULL)</label>
+        <textarea name="bio" rows="6" class="bg-zinc-950 border border-zinc-800 rounded px-3 py-2 text-zinc-300 font-mono text-sm focus:outline-none focus:border-hw-accent-blue/50 leading-relaxed">{identity.bio}</textarea>
+      </div>
+
+      <div class="mt-4">
+        <button type="submit" class="bg-hw-accent-blue/20 text-hw-accent-blue border border-hw-accent-blue/50 px-4 py-2 font-mono text-xs rounded hover:bg-hw-accent-blue/30 transition-colors">
+          SAVE CHANGES
+        </button>
+      </div>
+    </form>
+    
+  </div>
+</PatchBayLayout>

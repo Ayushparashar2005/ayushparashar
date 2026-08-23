@@ -1,0 +1,107 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import LED from '../components/synth/LED.astro';
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<BaseLayout title={`PATCH BAY | ${title}`}>
+  <div class="w-full h-screen p-2 md:p-6 flex flex-col justify-center items-center bg-hw-bg/80 y2k-checker">
+    <div class="hw-panel-container w-full max-w-[1400px] h-full max-h-[950px] rounded-xl overflow-hidden ring-1 ring-hw-border relative shadow-2xl">
+      
+      <!-- Top Hardware bezel -->
+      <div class="h-8 bg-hw-panel dark:bg-[#111] border-b border-hw-border dark:border-[#222] flex items-center justify-between px-6 shadow-sm z-10 relative shrink-0">
+        <div class="flex gap-4 items-center">
+          <div class="w-2.5 h-2.5 rounded-full bg-zinc-300 dark:bg-[#222] border border-zinc-400 dark:border-[#000] shadow-[inset_0_1px_3px_rgba(0,0,0,0.3)] dark:shadow-none flex items-center justify-center"><div class="w-full h-[1px] bg-zinc-400/50 dark:bg-black rotate-45"></div></div>
+          <div class="w-2.5 h-2.5 rounded-full bg-zinc-300 dark:bg-[#222] border border-zinc-400 dark:border-[#000] shadow-[inset_0_1px_3px_rgba(0,0,0,0.3)] dark:shadow-none flex items-center justify-center"><div class="w-full h-[1px] bg-zinc-400/50 dark:bg-black rotate-[-15deg]"></div></div>
+        </div>
+        <div class="text-[10px] font-mono text-hw-accent-orange dark:text-[#ff3333] tracking-[0.3em] uppercase font-bold dark:drop-shadow-[0_0_5px_rgba(255,51,51,0.8)] relative w-48 md:w-96 overflow-hidden flex items-center bg-hw-bg dark:bg-[#050505] shadow-inner rounded-sm border border-[#ccc] dark:border-[#222] px-2 py-1">
+          <span class="absolute left-2 top-2 w-2 h-2 rounded-full bg-red-500 animate-pulse z-20"></span>
+          <div class="y2k-marquee-container w-full relative ml-4">
+            <div class="absolute left-0 top-0 bottom-0 w-4 bg-gradient-to-r from-hw-bg dark:from-[#050505] to-transparent z-10"></div>
+            <div class="absolute right-0 top-0 bottom-0 w-4 bg-gradient-to-l from-hw-bg dark:from-[#050505] to-transparent z-10"></div>
+            
+            <div class="y2k-marquee text-hw-accent-orange dark:text-[#ff3333]">
+              <span class="pr-8">PATCH BAY ADMIN // AUTHORIZED ACCESS ONLY // OVERRIDE_ENABLED //</span>
+              <span class="pr-8">PATCH BAY ADMIN // AUTHORIZED ACCESS ONLY // OVERRIDE_ENABLED //</span>
+            </div>
+          </div>
+        </div>
+        <div class="flex gap-4 items-center">
+          <div class="w-2.5 h-2.5 rounded-full bg-zinc-300 dark:bg-[#222] border border-zinc-400 dark:border-[#000] shadow-[inset_0_1px_3px_rgba(0,0,0,0.3)] dark:shadow-none flex items-center justify-center"><div class="w-full h-[1px] bg-zinc-400/50 dark:bg-black rotate-[70deg]"></div></div>
+          <div class="w-2.5 h-2.5 rounded-full bg-zinc-300 dark:bg-[#222] border border-zinc-400 dark:border-[#000] shadow-[inset_0_1px_3px_rgba(0,0,0,0.3)] dark:shadow-none flex items-center justify-center"><div class="w-full h-[1px] bg-zinc-400/50 dark:bg-black rotate-0"></div></div>
+        </div>
+      </div>
+
+      <!-- Main Panel -->
+      <div class="flex-grow flex flex-col overflow-hidden relative">
+        <main class="flex-grow flex flex-col lg:flex-row gap-4 p-4 lg:p-6 overflow-hidden relative">
+          
+          <!-- Sidebar -->
+          <div class="w-full lg:w-64 flex flex-col gap-4 shrink-0 overflow-y-auto custom-scrollbar pr-2 h-full min-h-0">
+            <section class="hw-module h-full flex flex-col bg-hw-bg dark:bg-[#050505] dark:border-[#222] dark:shadow-[0_0_15px_rgba(255,85,0,0.05)_inset]">
+              <header class="hw-module-header px-4 shrink-0 dark:bg-[#111] dark:border-[#333]">
+                <div class="flex items-center gap-2">
+                   <div class="w-2.5 h-2.5 rounded-full border border-hw-border-screen bg-hw-bg dark:bg-black shadow-[inset_0_1px_2px_rgba(0,0,0,0.8)]">
+                     <div class="w-1.5 h-1.5 m-[1px] rounded-full bg-hw-accent-orange dark:bg-hw-accent-orange shadow-[0_0_5px_rgba(255,85,0,0.8)] dark:shadow-[0_0_8px_rgba(255,85,0,0.9)] animate-pulse"></div>
+                   </div>
+                   <span class="dark:text-hw-accent-orange dark:drop-shadow-[0_0_2px_rgba(255,85,0,0.8)]">PATCH BAY</span>
+                </div>
+              </header>
+              <nav class="flex-grow p-4 flex flex-col gap-2 font-mono text-[10px] font-bold text-hw-text-muted dark:text-[#cc4400]">
+                <a href="/patch-bay/settings" class="px-3 py-2 hover:text-hw-accent-orange dark:hover:text-hw-accent-orange hover:bg-hw-sticker dark:hover:bg-[#2a1100] border-2 border-transparent hover:border-hw-border dark:hover:border-hw-accent-orange rounded-sm transition-all dark:hover:shadow-[0_0_10px_rgba(255,85,0,0.2)]">> IDENTITY</a>
+                <a href="/patch-bay/projects" class="px-3 py-2 hover:text-hw-accent-orange dark:hover:text-hw-accent-orange hover:bg-hw-sticker dark:hover:bg-[#2a1100] border-2 border-transparent hover:border-hw-border dark:hover:border-hw-accent-orange rounded-sm transition-all dark:hover:shadow-[0_0_10px_rgba(255,85,0,0.2)]">> PROJECTS</a>
+                <a href="/patch-bay/experience" class="px-3 py-2 hover:text-hw-accent-orange dark:hover:text-hw-accent-orange hover:bg-hw-sticker dark:hover:bg-[#2a1100] border-2 border-transparent hover:border-hw-border dark:hover:border-hw-accent-orange rounded-sm transition-all dark:hover:shadow-[0_0_10px_rgba(255,85,0,0.2)]">> EXPERIENCE</a>
+                <a href="/patch-bay/skills" class="px-3 py-2 hover:text-hw-accent-orange dark:hover:text-hw-accent-orange hover:bg-hw-sticker dark:hover:bg-[#2a1100] border-2 border-transparent hover:border-hw-border dark:hover:border-hw-accent-orange rounded-sm transition-all dark:hover:shadow-[0_0_10px_rgba(255,85,0,0.2)]">> SKILLS & CERTS</a>
+                <a href="/patch-bay/playlists" class="px-3 py-2 hover:text-hw-accent-orange dark:hover:text-hw-accent-orange hover:bg-hw-sticker dark:hover:bg-[#2a1100] border-2 border-transparent hover:border-hw-border dark:hover:border-hw-accent-orange rounded-sm transition-all dark:hover:shadow-[0_0_10px_rgba(255,85,0,0.2)]">> YT PLAYLISTS</a>
+                <a href="/patch-bay/sync" class="px-3 py-2 hover:text-hw-accent-orange dark:hover:text-hw-accent-orange hover:bg-hw-sticker dark:hover:bg-[#2a1100] border-2 border-transparent hover:border-hw-border dark:hover:border-hw-accent-orange rounded-sm transition-all dark:hover:shadow-[0_0_10px_rgba(255,85,0,0.2)]">> SYNC MATRIX</a>
+                
+                <div class="mt-auto border-t-2 border-hw-border dark:border-[#222] pt-4">
+                  <a href="/" class="flex items-center justify-center gap-2 px-3 py-3 text-white bg-hw-accent-orange dark:bg-[#ff3333] hover:bg-[#e64a00] dark:hover:bg-[#cc0000] border-2 border-transparent dark:hover:border-[#ff9999] font-bold rounded-sm transition-all shadow-sm active:translate-y-1 active:shadow-none dark:shadow-[0_0_15px_rgba(255,51,51,0.4)]">
+                    [ EXIT PATCH_BAY ]
+                  </a>
+                </div>
+              </nav>
+            </section>
+          </div>
+          
+          <!-- Content Area -->
+          <div class="flex-grow flex flex-col gap-4 overflow-y-auto custom-scrollbar pr-2 h-full min-h-0">
+             <header class="mb-4 pb-2 border-b-2 border-hw-border flex justify-between items-end shrink-0">
+               <h1 class="font-sans font-bold text-xl text-hw-text-main uppercase tracking-wider">{title}</h1>
+             </header>
+             <slot />
+          </div>
+          
+        </main>
+        
+        <!-- Bottom Lip -->
+        <div class="h-6 border-t border-hw-border bg-gradient-to-b from-hw-module-inset to-hw-border shadow-[inset_0_2px_5px_rgba(255,255,255,0.1)] z-10 relative flex justify-between items-center px-12 shrink-0">
+          <!-- Y2K Barcode Sticker -->
+          <div class="flex gap-0.5 items-center opacity-40">
+             <div class="w-1 h-3 bg-black"></div>
+             <div class="w-0.5 h-3 bg-black"></div>
+             <div class="w-1.5 h-3 bg-black"></div>
+             <div class="w-0.5 h-3 bg-black"></div>
+             <div class="w-1 h-3 bg-black"></div>
+             <div class="w-0.5 h-3 bg-black"></div>
+             <div class="w-2 h-3 bg-black"></div>
+             <div class="w-0.5 h-3 bg-black"></div>
+             <div class="w-1 h-3 bg-black"></div>
+             <div class="text-[6px] font-mono text-hw-text-main font-bold ml-2">S/N: 2001-ADMIN</div>
+          </div>
+          
+          <!-- Y2K Warning Label -->
+          <div class="bg-yellow-400 border border-black px-2 py-[1px] shadow-sm transform -rotate-1 opacity-70">
+             <span class="text-[6px] font-sans font-black text-black tracking-tighter uppercase">! Caution: SYSTEM OVERRIDE !</span>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</BaseLayout>

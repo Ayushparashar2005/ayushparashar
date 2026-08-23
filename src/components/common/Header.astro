@@ -1,0 +1,90 @@
+---
+import LED from '../synth/LED.astro';
+
+interface Props {
+  activePreset: string;
+}
+
+const { activePreset } = Astro.props;
+
+const presets = [
+  { id: 'overview', label: 'OVERVIEW', path: '/' },
+  { id: 'identity', label: 'IDENTITY', path: '/identity' },
+  { id: 'skills', label: 'SKILLS & CERTS', path: '/skills' },
+  { id: 'background', label: 'BACKGROUND', path: '/background' },
+  { id: 'projects', label: 'PROJECTS', path: '/projects' },
+  { id: 'resume', label: 'RESUME', path: '/resume' },
+  { id: 'contact', label: 'CONTACT', path: '/contact' },
+  { id: 'content', label: 'CONTENT', path: '/content' },
+  { id: 'playground', label: 'SYNTH', path: '/playground' },
+];
+---
+
+<header class="flex items-center justify-between px-6 py-3 bg-hw-bg border-b-2 border-hw-border shadow-sm z-10 relative">
+  <!-- Brand Area -->
+  <div class="flex items-center gap-6">
+    <div class="flex items-center gap-2">
+      <div class="w-10 h-10 rounded-full bg-hw-accent-orange flex items-center justify-center shadow-[inset_0_2px_4px_rgba(0,0,0,0.2),0_2px_5px_rgba(255,85,0,0.3)] border-2 border-white dark:border-[#333]">
+        <span class="font-bold text-white font-sans text-lg italic pr-0.5">V</span>
+      </div>
+    </div>
+
+    <!-- Preset Selector (Tabs) -->
+    <nav class="flex gap-2 border-r-2 border-hw-border pr-6 overflow-x-auto custom-scrollbar max-w-[60vw] md:max-w-none">
+      {presets.map(preset => {
+        const isActive = activePreset === preset.id;
+        return (
+          <a 
+            href={preset.path}
+            class={`
+              px-4 py-1.5 font-sans font-bold text-xs tracking-wider transition-all whitespace-nowrap shrink-0 rounded-full border-2
+              ${isActive 
+                ? 'bg-hw-accent-orange text-white border-hw-accent-orange shadow-inner' 
+                : 'bg-hw-module text-hw-text-muted hover:text-hw-text-main border-hw-border hover:border-hw-text-muted shadow-sm'
+              }
+            `}
+          >
+            {preset.label}
+          </a>
+        )
+      })}
+    </nav>
+  </div>
+
+  <!-- Center Display (Admin Access & Theme) -->
+  <div class="hidden md:flex flex-grow max-w-sm mx-4 justify-center gap-4">
+    <a href="/patch-bay/sync" class="bg-hw-module border-2 border-hw-border rounded h-10 flex items-center justify-between px-4 gap-4 relative shadow-sm hover:border-hw-accent-orange group transition-all cursor-pointer">
+      <div class="w-2 h-2 rounded-full bg-hw-accent-orange animate-pulse shadow-[0_0_5px_rgba(255,85,0,0.5)]"></div>
+      <span class="font-mono text-[10px] text-hw-text-muted font-bold tracking-[0.2em] group-hover:text-hw-accent-orange transition-colors uppercase">ADMIN PATCH_BAY</span>
+      <span class="text-hw-text-muted text-[10px] group-hover:text-hw-accent-orange transition-colors">&gt;&gt;</span>
+    </a>
+    
+    <button id="theme-toggle" class="bg-hw-module border-2 border-hw-border rounded h-10 px-3 flex items-center justify-center gap-2 shadow-sm hover:border-hw-accent-orange group transition-colors cursor-pointer" aria-label="Toggle Theme">
+       <svg class="w-4 h-4 text-hw-text-muted group-hover:text-hw-accent-orange hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+       <svg class="w-4 h-4 text-hw-text-muted group-hover:text-hw-accent-orange block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+       <span class="font-mono text-[10px] text-hw-text-muted font-bold tracking-[0.1em] group-hover:text-hw-accent-orange uppercase">PWR</span>
+    </button>
+  </div>
+
+  <!-- Right Area -->
+  <div class="flex items-center gap-4">
+    <div class="flex items-center gap-3 bg-hw-module border-2 border-hw-border px-3 py-1.5 rounded-full shadow-sm">
+       <LED status="active" size="sm" />
+       <div class="h-4 w-16 bg-hw-module-inset rounded-sm overflow-hidden flex items-end relative shadow-[inset_0_1px_3px_rgba(0,0,0,0.5)] border border-hw-border-screen">
+         <div class="w-full h-full bg-gradient-to-t from-hw-accent-blue to-transparent opacity-40 relative"></div>
+         <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjIwIj48cGF0aCBkPSJNMCAwdjIwaDFWMEgweiIgZmlsbD0icmdiYSgxNzAsMTcwLDE3MCwwLjMpIi8+PC9zdmc+')]"></div>
+       </div>
+    </div>
+  </div>
+</header>
+
+<script>
+  const themeToggleBtn = document.getElementById('theme-toggle');
+  
+  if (themeToggleBtn) {
+    themeToggleBtn.addEventListener('click', () => {
+      const isDark = document.documentElement.classList.toggle('dark');
+      localStorage.setItem('hw-theme', isDark ? 'dark' : 'light');
+    });
+  }
+</script>
