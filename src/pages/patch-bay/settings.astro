@@ -26,6 +26,13 @@ if (Astro.request.method === "POST") {
       bio: data.get("bio")?.toString() || "",
     };
     
+    const resumeFile = data.get("resume");
+    if (resumeFile && typeof resumeFile === 'object' && 'arrayBuffer' in resumeFile && resumeFile.size > 0) {
+      const buffer = await resumeFile.arrayBuffer();
+      const resumePath = path.join(process.cwd(), 'public/Ayush_Parashar_Resume.pdf');
+      await fs.writeFile(resumePath, Buffer.from(buffer));
+    }
+    
     await fs.mkdir(path.dirname(dataPath), { recursive: true });
     await fs.writeFile(dataPath, JSON.stringify(identity, null, 2));
     success = true;
@@ -39,7 +46,7 @@ if (Astro.request.method === "POST") {
   <div class="flex flex-col gap-6">
     <p class="text-zinc-400 font-mono text-sm mb-4">Configure your portfolio identity settings.</p>
 
-    <form method="POST" class="bg-zinc-900/50 border border-zinc-800 p-6 rounded-md flex flex-col gap-4">
+    <form method="POST" enctype="multipart/form-data" class="bg-zinc-900/50 border border-zinc-800 p-6 rounded-md flex flex-col gap-4">
       <h3 class="text-zinc-200 font-mono font-bold border-b border-zinc-800 pb-2">PROFILE SETTINGS (IDENTITY)</h3>
       
       {success && <div class="bg-green-900/30 text-green-400 border border-green-800 p-2 text-xs font-mono rounded">Saved successfully!</div>}
@@ -62,6 +69,12 @@ if (Astro.request.method === "POST") {
       <div class="flex flex-col gap-2 mt-2">
         <label class="text-zinc-500 font-mono text-xs">BIO (FULL)</label>
         <textarea name="bio" rows="6" class="bg-zinc-950 border border-zinc-800 rounded px-3 py-2 text-zinc-300 font-mono text-sm focus:outline-none focus:border-hw-accent-blue/50 leading-relaxed">{identity.bio}</textarea>
+      </div>
+
+      <div class="flex flex-col gap-2 mt-4 pt-4 border-t border-zinc-800">
+        <label class="text-zinc-500 font-mono text-xs">UPDATE RESUME (PDF)</label>
+        <input name="resume" type="file" accept="application/pdf" class="bg-zinc-950 border border-zinc-800 rounded px-3 py-2 text-zinc-300 font-mono text-sm focus:outline-none focus:border-hw-accent-blue/50 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-xs file:font-mono file:font-semibold file:bg-hw-accent-blue/10 file:text-hw-accent-blue hover:file:bg-hw-accent-blue/20" />
+        <p class="text-zinc-500 font-mono text-[10px]">Leave empty if you don't want to update the resume.</p>
       </div>
 
       <div class="mt-4">
