@@ -43,42 +43,42 @@ if (Astro.request.method === "POST") {
 ---
 
 <PatchBayLayout title="SETTINGS">
-  <div class="flex flex-col gap-6">
-    <p class="text-zinc-400 font-mono text-sm mb-4">Configure your portfolio identity settings.</p>
+  <div class="flex flex-col gap-6 w-full">
+    <p class="text-hw-text-muted font-mono text-sm mb-4">Configure your portfolio identity settings.</p>
 
-    <form method="POST" enctype="multipart/form-data" class="bg-zinc-900/50 border border-zinc-800 p-6 rounded-md flex flex-col gap-4">
-      <h3 class="text-zinc-200 font-mono font-bold border-b border-zinc-800 pb-2">PROFILE SETTINGS (IDENTITY)</h3>
+    <form method="POST" enctype="multipart/form-data" class="bg-hw-sticker border border-hw-border p-6 rounded-md flex flex-col gap-4 shadow-sm w-full">
+      <h3 class="text-hw-text-main font-mono font-bold border-b border-hw-border pb-2">PROFILE SETTINGS (IDENTITY)</h3>
       
-      {success && <div class="bg-green-900/30 text-green-400 border border-green-800 p-2 text-xs font-mono rounded">Saved successfully!</div>}
+      {success && <div class="bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 border border-green-300 dark:border-green-800 p-2 text-xs font-mono rounded">Saved successfully!</div>}
 
       <div class="flex flex-col gap-2">
-        <label class="text-zinc-500 font-mono text-xs">DISPLAY NAME</label>
-        <input name="name" type="text" value={identity.name} class="bg-zinc-950 border border-zinc-800 rounded px-3 py-2 text-zinc-300 font-mono text-sm focus:outline-none focus:border-hw-accent-blue/50" />
+        <label class="text-hw-text-muted font-mono text-xs">DISPLAY NAME</label>
+        <input name="name" type="text" value={identity.name} class="bg-hw-module border border-hw-border rounded px-3 py-2 text-hw-text-main font-mono text-sm focus:outline-none focus:border-hw-accent-orange" />
       </div>
 
       <div class="flex flex-col gap-2 mt-2">
-        <label class="text-zinc-500 font-mono text-xs">ROLE</label>
-        <input name="role" type="text" value={identity.role} class="bg-zinc-950 border border-zinc-800 rounded px-3 py-2 text-zinc-300 font-mono text-sm focus:outline-none focus:border-hw-accent-blue/50" />
+        <label class="text-hw-text-muted font-mono text-xs">ROLE</label>
+        <input name="role" type="text" value={identity.role} class="bg-hw-module border border-hw-border rounded px-3 py-2 text-hw-text-main font-mono text-sm focus:outline-none focus:border-hw-accent-orange" />
       </div>
 
       <div class="flex flex-col gap-2 mt-2">
-        <label class="text-zinc-500 font-mono text-xs">LOCATION</label>
-        <input name="location" type="text" value={identity.location} class="bg-zinc-950 border border-zinc-800 rounded px-3 py-2 text-zinc-300 font-mono text-sm focus:outline-none focus:border-hw-accent-blue/50" />
+        <label class="text-hw-text-muted font-mono text-xs">LOCATION</label>
+        <input name="location" type="text" value={identity.location} class="bg-hw-module border border-hw-border rounded px-3 py-2 text-hw-text-main font-mono text-sm focus:outline-none focus:border-hw-accent-orange" />
       </div>
 
       <div class="flex flex-col gap-2 mt-2">
-        <label class="text-zinc-500 font-mono text-xs">BIO (FULL)</label>
-        <textarea name="bio" rows="6" class="bg-zinc-950 border border-zinc-800 rounded px-3 py-2 text-zinc-300 font-mono text-sm focus:outline-none focus:border-hw-accent-blue/50 leading-relaxed">{identity.bio}</textarea>
+        <label class="text-hw-text-muted font-mono text-xs">BIO (FULL)</label>
+        <textarea name="bio" rows="6" class="bg-hw-module border border-hw-border rounded px-3 py-2 text-hw-text-main font-mono text-sm focus:outline-none focus:border-hw-accent-orange leading-relaxed">{identity.bio}</textarea>
       </div>
 
-      <div class="flex flex-col gap-2 mt-4 pt-4 border-t border-zinc-800">
-        <label class="text-zinc-500 font-mono text-xs">UPDATE RESUME (PDF)</label>
-        <input name="resume" type="file" accept="application/pdf" class="block w-full text-sm text-zinc-400 font-mono file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-xs file:font-mono file:bg-hw-accent-blue/10 file:text-hw-accent-blue hover:file:bg-hw-accent-blue/20 cursor-pointer" />
-        <p class="text-zinc-500 font-mono text-[10px]">Leave empty if you don't want to update the resume.</p>
+      <div class="flex flex-col gap-2 mt-4 pt-4 border-t border-hw-border">
+        <label class="text-hw-text-muted font-mono text-xs">UPDATE RESUME (PDF)</label>
+        <input name="resume" type="file" accept="application/pdf" class="block w-full text-sm text-hw-text-muted font-mono file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-xs file:font-mono file:bg-hw-bg file:border file:border-hw-border file:text-hw-text-main hover:file:bg-hw-module cursor-pointer transition-colors" />
+        <p class="text-hw-text-muted opacity-70 font-mono text-[10px]">Leave empty if you don't want to update the resume.</p>
       </div>
 
       <div class="mt-4">
-        <button type="submit" class="bg-hw-accent-blue/20 text-hw-accent-blue border border-hw-accent-blue/50 px-4 py-2 font-mono text-xs rounded hover:bg-hw-accent-blue/30 transition-colors">
+        <button type="submit" class="hw-button inline-flex self-start">
           SAVE CHANGES
         </button>
       </div>
