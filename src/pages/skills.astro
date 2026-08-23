@@ -16,8 +16,8 @@ const allCerts = await db.select().from(certifications).orderBy(asc(certificatio
     <div class="w-full h-auto lg:h-full flex flex-col lg:flex-row gap-4 p-4">
       
       <!-- Skills Matrix -->
-      <ModulePanel title="TAPE // SKILLS_MATRIX" className="w-full lg:w-1/2 h-[500px] lg:h-full lg:max-h-[800px] shrink-0 min-h-0">
-         <div class="flex flex-col gap-6 h-full p-4 md:p-6 overflow-hidden min-h-0">
+      <ModulePanel title="TAPE // SKILLS_MATRIX" className="w-full lg:w-1/2 h-auto lg:h-full lg:max-h-[800px] shrink-0 min-h-0">
+         <div class="flex flex-col gap-6 h-auto lg:h-full p-4 md:p-6 overflow-visible lg:overflow-hidden min-h-0">
             <!-- Hardware Toggles -->
             <div class="flex gap-4 mb-2 shrink-0 bg-hw-module-inset p-2 rounded border-2 border-hw-border shadow-inner" id="skill-tabs">
                <button class="text-xs px-4 md:px-8 py-2.5 flex-grow tracking-widest font-bold rounded shadow-sm border border-hw-accent-orange transition-all bg-[#2a1100] text-hw-accent-orange flex items-center justify-center gap-3 relative overflow-hidden" data-tab="Languages">
@@ -32,7 +32,7 @@ const allCerts = await db.select().from(certifications).orderBy(asc(certificatio
                </button>
             </div>
             
-            <div class="flex flex-col gap-4 h-full overflow-y-auto pr-4 custom-scrollbar min-h-0" id="skills-list">
+            <div class="flex flex-col gap-4 h-auto lg:h-full overflow-visible lg:overflow-y-auto pr-0 lg:pr-4 custom-scrollbar min-h-0" id="skills-list">
                {allSkills.map((skill: any) => (
                   <div class="skill-item bg-hw-sticker border-2 border-hw-border p-4 rounded flex items-center justify-between gap-4 shadow-sm shrink-0 relative" data-category={skill.category}>
                      <!-- Screws -->
@@ -60,13 +60,13 @@ const allCerts = await db.select().from(certifications).orderBy(asc(certificatio
       </ModulePanel>
 
       <!-- Certifications -->
-      <ModulePanel title="MEM // CERTIFICATIONS" className="w-full lg:w-1/2 h-[500px] lg:h-full lg:max-h-[800px] shrink-0 min-h-0">
-         <div class="flex flex-col h-full p-4 md:p-6 overflow-hidden min-h-0">
+      <ModulePanel title="MEM // CERTIFICATIONS" className="w-full lg:w-1/2 h-auto lg:h-full lg:max-h-[800px] shrink-0 min-h-0">
+         <div class="flex flex-col h-auto lg:h-full p-4 md:p-6 overflow-visible lg:overflow-hidden min-h-0">
             <div class="text-xs font-sans font-bold text-hw-text-muted tracking-[0.2em] uppercase border-b-2 border-hw-border pb-3 mb-6 shrink-0 flex items-center gap-3">
               <div class="w-2 h-2 rounded-full bg-hw-text-muted"></div>
               DATA BANKS
             </div>
-            <div class="flex flex-col gap-5 overflow-y-auto pr-4 custom-scrollbar flex-grow min-h-0">
+            <div class="flex flex-col gap-5 overflow-visible lg:overflow-y-auto pr-0 lg:pr-4 custom-scrollbar flex-grow min-h-0">
                {allCerts.map((cert: any) => (
                   <div class="bg-hw-module-inset border-2 border-hw-border p-3 rounded-lg flex flex-col gap-2 shadow-inner shrink-0 relative group hover:bg-hw-module transition-colors cursor-default">
                      <!-- Cartridge Indent -->

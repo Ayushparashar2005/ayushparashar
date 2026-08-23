@@ -8,7 +8,7 @@ import ModulePanel from '../components/synth/ModulePanel.astro';
   <SynthShell activePreset="resume">
     <div class="w-full h-full flex flex-col p-4 md:p-8 items-center justify-center">
       
-      <ModulePanel title="DRV_A // EXPORT_UTILITY" className="w-full max-w-5xl h-[85vh] md:h-full md:max-h-[800px] shrink-0 min-h-0">
+      <ModulePanel title="DRV_A // EXPORT_UTILITY" className="w-full max-w-5xl h-auto md:h-full md:max-h-[800px] shrink-0 min-h-0">
          <div class="flex flex-col h-full overflow-hidden p-4 md:p-6 min-h-0">
             
             <!-- Physical Disk Drive Header -->
@@ -52,7 +52,7 @@ import ModulePanel from '../components/synth/ModulePanel.astro';
             </div>
 
             <!-- PDF Viewer Embed -->
-            <div class="flex-grow w-full mt-6 bg-hw-screen border-4 border-hw-border-screen rounded-lg overflow-hidden shadow-[inset_0_0_20px_rgba(0,0,0,1)] relative min-h-[400px] md:min-h-0 group">
+            <div class="flex-grow w-full mt-6 bg-hw-screen border-4 border-hw-border-screen rounded-lg overflow-hidden shadow-[inset_0_0_20px_rgba(0,0,0,1)] relative min-h-[500px] md:min-h-0 group">
                
                <!-- Scanline overlay (pointer events none) -->
                <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPjxyZWN0IHdpZHRoPSI0IiBoZWlnaHQ9IjEiIGZpbGw9IiMwMDAiIGZpbGwtb3BhY2l0eT0iMC4yIi8+PC9zdmc+')] opacity-20 z-20 pointer-events-none mix-blend-overlay"></div>

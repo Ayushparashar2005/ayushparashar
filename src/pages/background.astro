@@ -21,12 +21,12 @@ const myWork = allExperience.filter((e: any) => !e.company.includes('University'
          <div class="flex flex-col lg:flex-row h-full overflow-hidden divide-y-2 lg:divide-y-0 lg:divide-x-2 divide-hw-border min-h-0">
             
             <!-- Experience Column -->
-            <div class="w-full lg:w-1/2 p-4 md:p-6 flex flex-col h-[500px] lg:h-full min-h-0 relative">
+            <div class="w-full lg:w-1/2 p-4 md:p-6 flex flex-col h-auto lg:h-full min-h-0 relative">
               <div class="text-xs font-sans font-bold text-hw-text-muted tracking-[0.2em] uppercase border-b-2 border-hw-border pb-3 mb-6 shrink-0 flex items-center gap-3">
                 <div class="w-2 h-2 rounded-full bg-hw-accent-orange shadow-[0_0_5px_rgba(255,85,0,0.5)]"></div>
                 EXPERIENCE_LOG
               </div>
-              <div class="flex flex-col gap-6 overflow-y-auto pr-2 custom-scrollbar flex-grow min-h-0">
+              <div class="flex flex-col gap-6 overflow-visible lg:overflow-y-auto pr-0 lg:pr-2 custom-scrollbar flex-grow min-h-0">
                 {myWork.map((exp: any, idx: number) => (
                    <div class="bg-hw-module-inset border-2 border-hw-border p-4 pt-5 rounded-lg flex flex-col gap-3 shadow-sm relative shrink-0">
                       <!-- Screws -->
@@ -63,12 +63,12 @@ const myWork = allExperience.filter((e: any) => !e.company.includes('University'
             </div>
             
             <!-- Education Column -->
-            <div class="w-full lg:w-1/2 p-4 md:p-6 flex flex-col h-[500px] lg:h-full min-h-0 relative">
+            <div class="w-full lg:w-1/2 p-4 md:p-6 flex flex-col h-auto lg:h-full min-h-0 relative">
               <div class="text-xs font-sans font-bold text-hw-text-muted tracking-[0.2em] uppercase border-b-2 border-hw-border pb-3 mb-6 shrink-0 flex items-center gap-3">
                 <div class="w-2 h-2 rounded-full bg-hw-accent-blue shadow-[0_0_5px_rgba(0,170,255,0.5)]"></div>
                 EDUCATION_LOG
               </div>
-              <div class="flex flex-col gap-6 overflow-y-auto pr-2 custom-scrollbar flex-grow min-h-0">
+              <div class="flex flex-col gap-6 overflow-visible lg:overflow-y-auto pr-0 lg:pr-2 custom-scrollbar flex-grow min-h-0">
                  {myEducation.map((edu: any, idx: number) => (
                     <div class="bg-hw-module-inset border-2 border-hw-border p-4 pt-5 rounded-lg flex flex-col gap-3 shadow-sm relative shrink-0">
                        <!-- Screws -->
