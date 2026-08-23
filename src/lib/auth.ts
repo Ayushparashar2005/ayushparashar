@@ -10,6 +10,7 @@ export const auth = betterAuth({
             ...schema
         }
     }),
+    baseURL: (import.meta.env?.BETTER_AUTH_URL || process.env.BETTER_AUTH_URL) as string || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : undefined),
     socialProviders: {
         github: {
             clientId: (import.meta.env?.GITHUB_CLIENT_ID || process.env.GITHUB_CLIENT_ID) as string,
