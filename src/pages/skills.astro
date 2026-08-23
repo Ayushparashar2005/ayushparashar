@@ -13,10 +13,10 @@ const allCerts = await db.select().from(certifications).orderBy(asc(certificatio
 
 <BaseLayout title="ayush.wav | SKILLS & CERTS">
   <SynthShell activePreset="skills">
-    <div class="w-full h-full flex flex-col lg:flex-row gap-4 p-4">
+    <div class="w-full h-auto lg:h-full flex flex-col lg:flex-row gap-4 p-4">
       
       <!-- Skills Matrix -->
-      <ModulePanel title="TAPE // SKILLS_MATRIX" className="w-full lg:w-1/2 h-full max-h-[800px] shrink-0 min-h-0">
+      <ModulePanel title="TAPE // SKILLS_MATRIX" className="w-full lg:w-1/2 h-[500px] lg:h-full lg:max-h-[800px] shrink-0 min-h-0">
          <div class="flex flex-col gap-6 h-full p-4 md:p-6 overflow-hidden min-h-0">
             <!-- Hardware Toggles -->
             <div class="flex gap-4 mb-2 shrink-0 bg-hw-module-inset p-2 rounded border-2 border-hw-border shadow-inner" id="skill-tabs">
@@ -60,7 +60,7 @@ const allCerts = await db.select().from(certifications).orderBy(asc(certificatio
       </ModulePanel>
 
       <!-- Certifications -->
-      <ModulePanel title="MEM // CERTIFICATIONS" className="w-full lg:w-1/2 h-full max-h-[800px] shrink-0 min-h-0">
+      <ModulePanel title="MEM // CERTIFICATIONS" className="w-full lg:w-1/2 h-[500px] lg:h-full lg:max-h-[800px] shrink-0 min-h-0">
          <div class="flex flex-col h-full p-4 md:p-6 overflow-hidden min-h-0">
             <div class="text-xs font-sans font-bold text-hw-text-muted tracking-[0.2em] uppercase border-b-2 border-hw-border pb-3 mb-6 shrink-0 flex items-center gap-3">
               <div class="w-2 h-2 rounded-full bg-hw-text-muted"></div>

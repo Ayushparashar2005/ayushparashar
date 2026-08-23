@@ -19,7 +19,7 @@ const allCerts = await db.select().from(certifications).orderBy(asc(certificatio
   <SynthShell activePreset="overview">
     
     <!-- Right Column: Envelopes/Info (Visually on Left) -->
-    <div class="w-full lg:w-[35%] flex flex-col gap-4 order-1 overflow-y-auto custom-scrollbar pr-2 h-full min-h-0">
+    <div class="w-full lg:w-[40%] xl:w-[35%] flex flex-col gap-4 order-1 overflow-y-auto custom-scrollbar pr-0 lg:pr-2 h-auto lg:h-full min-h-0">
       <ModulePanel title="OP-1 // IDENTITY" className="min-h-[300px] shrink-0" href="/identity">
         <div class="flex flex-col h-full justify-between gap-4 p-4">
           <div class="flex flex-col sm:flex-row gap-4 bg-hw-module border-2 border-hw-border rounded p-4 shadow-inner overflow-hidden">
@@ -39,7 +39,7 @@ const allCerts = await db.select().from(certifications).orderBy(asc(certificatio
              <span class="relative z-10">A passionate engineering student building innovative solutions with modern technologies. Turning ideas into impactful digital experiences.</span>
           </div>
           
-          <div class="flex justify-between px-4 py-3 mt-2 bg-hw-panel border-t-2 border-hw-border rounded-sm">
+          <div class="flex flex-wrap justify-center sm:justify-between px-4 py-3 mt-2 bg-hw-panel border-t-2 border-hw-border rounded-sm gap-4 sm:gap-2">
              <SynthKnob id="creativity" label="CREATIVITY" projectId="identity-index" initialValue={0.5} />
              <SynthKnob id="logic" label="LOGIC" projectId="identity-index" initialValue={1} />
              <SynthKnob id="design" label="DESIGN" projectId="identity-index" initialValue={0.5} />
@@ -52,7 +52,7 @@ const allCerts = await db.select().from(certifications).orderBy(asc(certificatio
         </div>
       </ModulePanel>
       
-      <ModulePanel title="TAPE // SKILLS_MATRIX" className="h-[250px] shrink-0" href="/skills">
+      <ModulePanel title="TAPE // SKILLS_MATRIX" className="h-auto min-h-[300px] lg:h-[250px] shrink-0" href="/skills">
           <div class="flex flex-col gap-4 h-full overflow-hidden p-4">
             <div class="flex gap-2 mb-1 shrink-0 bg-hw-module-inset p-1.5 rounded border-2 border-hw-border shadow-inner" id="skill-tabs">
                <button class="flex-grow py-1 text-[9px] font-bold font-sans rounded shadow-sm border border-hw-accent-orange transition-all bg-[#2a1100] text-hw-accent-orange flex items-center justify-center gap-2 relative overflow-hidden" data-tab="Languages">
@@ -159,19 +159,19 @@ const allCerts = await db.select().from(certifications).orderBy(asc(certificatio
     </div>
 
     <!-- Left Column: OSC/Projects (Visually on Right) -->
-    <div class="w-full lg:w-[65%] flex flex-col gap-4 order-2 overflow-y-auto custom-scrollbar pr-2 h-full min-h-0">
+    <div class="w-full lg:w-[60%] xl:w-[65%] flex flex-col gap-4 order-2 overflow-y-auto custom-scrollbar pr-0 lg:pr-2 h-auto lg:h-full min-h-0">
       {featuredProjects.map((project: any, idx: number) => (
-        <ModulePanel title={`SYNTH ${idx + 1} // ${project.title}`} className="h-48 shrink-0" href="/projects">
-          <div class="flex h-full gap-4 items-center px-4 bg-hw-module rounded-sm py-2">
+        <ModulePanel title={`SYNTH ${idx + 1} // ${project.title}`} className="h-auto lg:h-48 shrink-0" href="/projects">
+          <div class="flex flex-col md:flex-row h-full gap-4 items-center px-4 bg-hw-module rounded-sm py-4 md:py-2">
             
             <!-- Knobs section -->
-            <div class="flex flex-col justify-center items-center gap-3 h-full pr-4 border-r-2 border-hw-border min-h-0">
+            <div class="flex flex-row md:flex-col justify-center items-center gap-8 md:gap-3 h-auto md:h-full pb-4 md:pb-0 pr-0 md:pr-4 border-b-2 md:border-b-0 md:border-r-2 border-hw-border w-full md:w-auto">
               <SynthKnob id="vol" label="VOL" projectId={project.id.toString()} initialValue={0.3} />
               <SynthKnob id="freq" label="FREQ" projectId={project.id.toString()} initialValue={0.2} />
             </div>
 
             <!-- Information Display Panel -->
-            <div class="flex-grow h-full bg-hw-sticker border-2 border-hw-border rounded-lg relative shadow-inner overflow-hidden p-3 flex flex-col">
+            <div class="flex-grow w-full md:w-auto h-48 md:h-full bg-hw-sticker border-2 border-hw-border rounded-lg relative shadow-inner overflow-hidden p-3 flex flex-col">
                <div class="text-[10px] font-mono font-bold text-hw-accent-orange mb-2 border-b-2 border-hw-border pb-1 flex justify-between gap-4">
                  <span class="shrink-0">> {project.category?.toUpperCase() || 'N/A'}</span>
                  <span class="text-hw-text-muted truncate">[ {project.tech?.join(', ') || 'N/A'} ]</span>
@@ -187,7 +187,7 @@ const allCerts = await db.select().from(certifications).orderBy(asc(certificatio
             </div>
             
             <!-- Output routing -->
-            <div class="w-24 h-full flex flex-col items-center justify-center gap-3 pl-4 border-l-2 border-hw-border">
+            <div class="w-full md:w-24 h-auto md:h-full flex flex-row md:flex-col items-center justify-center gap-3 pt-4 md:pt-0 pl-0 md:pl-4 border-t-2 md:border-t-0 md:border-l-2 border-hw-border">
               <a href={`https://github.com/${project.githubUrl}`} class="hw-button w-full !bg-hw-sticker">GITHUB</a>
               <a href={project.liveUrl || '#'} class="hw-button w-full !bg-hw-accent-orange !text-white !border-hw-accent-orange shadow-sm hover:!bg-[#e64a00]">LIVE</a>
             </div>

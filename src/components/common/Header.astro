@@ -20,9 +20,9 @@ const presets = [
 ];
 ---
 
-<header class="flex items-center justify-between px-6 py-3 bg-hw-bg border-b-2 border-hw-border shadow-sm z-10 relative">
+<header class="flex items-center justify-between px-3 sm:px-6 py-2 sm:py-3 bg-hw-bg border-b-2 border-hw-border shadow-sm z-10 relative">
   <!-- Brand Area -->
-  <div class="flex items-center gap-6">
+  <div class="flex items-center gap-3 sm:gap-6 w-full sm:w-auto">
     <div class="flex items-center gap-2">
       <div class="w-10 h-10 rounded-full bg-hw-accent-orange flex items-center justify-center shadow-[inset_0_2px_4px_rgba(0,0,0,0.2),0_2px_5px_rgba(255,85,0,0.3)] border-2 border-white dark:border-[#333]">
         <span class="font-bold text-white font-sans text-lg italic pr-0.5">V</span>
@@ -30,7 +30,7 @@ const presets = [
     </div>
 
     <!-- Preset Selector (Tabs) -->
-    <nav class="flex gap-2 border-r-2 border-hw-border pr-6 overflow-x-auto custom-scrollbar max-w-[60vw] md:max-w-none">
+    <nav class="flex gap-2 sm:border-r-2 border-hw-border pr-2 sm:pr-6 overflow-x-auto custom-scrollbar flex-grow max-w-[75vw] md:max-w-none">
       {presets.map(preset => {
         const isActive = activePreset === preset.id;
         return (
@@ -67,7 +67,7 @@ const presets = [
   </div>
 
   <!-- Right Area -->
-  <div class="flex items-center gap-4">
+  <div class="hidden sm:flex items-center gap-4">
     <div class="flex items-center gap-3 bg-hw-module border-2 border-hw-border px-3 py-1.5 rounded-full shadow-sm">
        <LED status="active" size="sm" />
        <div class="h-4 w-16 bg-hw-module-inset rounded-sm overflow-hidden flex items-end relative shadow-[inset_0_1px_3px_rgba(0,0,0,0.5)] border border-hw-border-screen">
