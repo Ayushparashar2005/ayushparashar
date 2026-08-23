@@ -27,15 +27,21 @@ export async function analyzeReadmeWithGemini(readmeContent: string, repoName: s
   ${readmeContent}
   `;
 
-  const result = await model.generateContent(prompt);
-  const text = result.response.text();
-  
   try {
+    const result = await model.generateContent(prompt);
+    const text = result.response.text();
+    
     // Basic extraction to handle markdown JSON blocks if present
     const jsonStr = text.replace(/```json/g, '').replace(/```/g, '').trim();
     return JSON.parse(jsonStr);
-  } catch (e) {
-    console.error("Failed to parse Gemini response as JSON", text);
-    throw new Error("Invalid response format from Gemini");
+  } catch (e: any) {
+    console.error("Gemini API Error for", repoName, ":", e.message);
+    
+    // Return a fallback object so the sync doesn't completely fail
+    return {
+      description: "Auto-synced repository. AI description failed to generate (API overloaded). Please edit manually.",
+      category: "Engineering",
+      tech: []
+    };
   }
 }
