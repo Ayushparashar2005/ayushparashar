@@ -9,11 +9,11 @@ interface NodeProps {
   onMove: (id: string, dx: number, dy: number) => void;
   onUpdateData: (id: string, data: any) => void;
   onRemove: (id: string) => void;
-  onJackMouseDown: (e: MouseEvent, nodeId: string, jackId: string, type: 'in' | 'out') => void;
-  onJackMouseUp: (nodeId: string, jackId: string, type: 'in' | 'out') => void;
+  onJackPointerDown: (e: PointerEvent, nodeId: string, jackId: string, type: 'in' | 'out') => void;
+  onJackPointerUp: (nodeId: string, jackId: string, type: 'in' | 'out') => void;
 }
 
-export default function Node({ node, edges, scale, onMove, onUpdateData, onRemove, onJackMouseDown, onJackMouseUp }: NodeProps) {
+export default function Node({ node, edges, scale, onMove, onUpdateData, onRemove, onJackPointerDown, onJackPointerUp }: NodeProps) {
   const def = NodeDefinitions[node.type];
   const nodeRef = useRef<HTMLDivElement>(null);
   
@@ -127,8 +127,8 @@ export default function Node({ node, edges, scale, onMove, onUpdateData, onRemov
                     data-node-id={node.id}
                     data-jack-id={inp.id}
                     data-jack-type="in"
-                    onMouseDown={(e) => onJackMouseDown(e as unknown as MouseEvent, node.id, inp.id, 'in')}
-                    onMouseUp={() => onJackMouseUp(node.id, inp.id, 'in')}
+                    onPointerDown={(e) => onJackPointerDown(e as unknown as PointerEvent, node.id, inp.id, 'in')}
+                    onPointerUp={() => onJackPointerUp(node.id, inp.id, 'in')}
                   >
                     <div className="w-1 h-1 rounded-full bg-[#111]"></div>
                   </div>
@@ -169,8 +169,8 @@ export default function Node({ node, edges, scale, onMove, onUpdateData, onRemov
                   data-node-id={node.id}
                   data-jack-id={out.id}
                   data-jack-type="out"
-                  onMouseDown={(e) => onJackMouseDown(e as unknown as MouseEvent, node.id, out.id, 'out')}
-                  onMouseUp={() => onJackMouseUp(node.id, out.id, 'out')}
+                  onPointerDown={(e) => onJackPointerDown(e as unknown as PointerEvent, node.id, out.id, 'out')}
+                  onPointerUp={() => onJackPointerUp(node.id, out.id, 'out')}
                 >
                   <div className="w-1 h-1 rounded-full bg-[#111]"></div>
                 </div>

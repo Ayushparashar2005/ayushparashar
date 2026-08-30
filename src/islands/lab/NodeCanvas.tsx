@@ -172,8 +172,9 @@ const NodeCanvas = forwardRef<NodeCanvasRef, NodeCanvasProps>(({ nodes, edges, o
     });
   };
 
-  const handleJackMouseDown = (e: MouseEvent, nodeId: string, jackId: string, type: 'in' | 'out') => {
+  const handleJackPointerDown = (e: PointerEvent, nodeId: string, jackId: string, type: 'in' | 'out') => {
     e.stopPropagation();
+    e.preventDefault();
     const posKey = `${nodeId}-${jackId}-${type}`;
     const startPos = jackPositions[posKey];
     if (startPos) {
@@ -183,7 +184,7 @@ const NodeCanvas = forwardRef<NodeCanvasRef, NodeCanvasProps>(({ nodes, edges, o
     }
   };
 
-  const handleJackMouseUp = (nodeId: string, jackId: string, type: 'in' | 'out') => {
+  const handleJackPointerUp = (nodeId: string, jackId: string, type: 'in' | 'out') => {
     if (isConnecting && connectionStart) {
       if (connectionStart.type === 'out' && type === 'in') {
         onAddEdge({
@@ -271,8 +272,8 @@ const NodeCanvas = forwardRef<NodeCanvasRef, NodeCanvasProps>(({ nodes, edges, o
             onMove={onMoveNode}
             onUpdateData={onUpdateNodeData}
             onRemove={onRemoveNode}
-            onJackMouseDown={handleJackMouseDown}
-            onJackMouseUp={handleJackMouseUp}
+            onJackPointerDown={handleJackPointerDown}
+            onJackPointerUp={handleJackPointerUp}
           />
         ))}
       </div>
