@@ -151,17 +151,51 @@ import SynthKnob from '../components/interactive/SynthKnob.astro';
   });
 
   if (form) {
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
+      
+      const nameInput = form.querySelector('input[type="text"]') as HTMLInputElement;
+      const emailInput = form.querySelector('input[type="email"]') as HTMLInputElement;
+      const messageInput = form.querySelector('textarea') as HTMLTextAreaElement;
       const urgency = urgencyInput ? urgencyInput.value : '0.5';
-      const u = parseFloat(urgency);
-      let msg = 'Transmission simulated! Backend not wired up yet.';
-      if (u > 0.8) {
-         msg = 'HIGH PRIORITY TRANSMISSION SIMULATED! (Urgency: ' + Math.round(u * 100) + '%)';
-      } else {
-         msg = 'Transmission simulated! (Urgency: ' + Math.round(u * 100) + '%)';
+
+      if (!nameInput || !emailInput || !messageInput) return;
+
+      const btnOriginalText = sendBtn ? sendBtn.innerHTML : 'SEND';
+      if (sendBtn) {
+          sendBtn.innerHTML = `<div class="w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_5px_#fff] animate-ping"></div> TRANSMITTING...`;
+          sendBtn.setAttribute('disabled', 'true');
       }
-      alert(msg);
+
+      try {
+        const response = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: nameInput.value,
+            email: emailInput.value,
+            message: messageInput.value,
+            urgency: urgency
+          })
+        });
+
+        if (response.ok) {
+          alert('TRANSMISSION SUCCESSFUL! Signal received.');
+          form.reset();
+          if (urgencyInput) urgencyInput.value = '0.5';
+          // Find and reset the urgency knob visually if possible by dispatching an event, but relying on page reload/user interaction is fine too.
+        } else {
+          const err = await response.json();
+          alert(`TRANSMISSION FAILED: ${err.error || 'Unknown error'}`);
+        }
+      } catch (err) {
+        alert('TRANSMISSION FAILED: Network error.');
+      } finally {
+        if (sendBtn) {
+            sendBtn.innerHTML = btnOriginalText;
+            sendBtn.removeAttribute('disabled');
+        }
+      }
     });
   }
 </script>

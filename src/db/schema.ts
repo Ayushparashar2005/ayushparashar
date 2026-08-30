@@ -121,3 +121,13 @@ export const certifications = pgTable("certifications", {
     displayOrder: integer("display_order").default(0).notNull(),
     createdAt: timestamp("created_at").defaultNow().notNull()
 });
+
+export const messages = pgTable("messages", {
+    id: text("id").primaryKey(),
+    name: text("name").notNull(),
+    email: text("email").notNull(),
+    message: text("message").notNull(),
+    urgency: text("urgency").default("0.5").notNull(),
+    status: text("status").default("UNREAD").notNull(),
+    createdAt: timestamp("created_at").defaultNow().notNull()
+});
