@@ -8,13 +8,13 @@ export default function NodeLibrary({ onAddNode }: NodeLibraryProps) {
   const nodeTypes = Object.values(NodeDefinitions);
 
   return (
-    <div className="w-64 bg-hw-panel border-r-2 border-hw-border shadow-md flex flex-col h-full shrink-0 z-20 relative">
-      <div className="bg-hw-module-inset border-b-2 border-hw-border p-3 shadow-inner">
+    <div className="w-64 bg-hw-panel border-r-2 border-hw-border shadow-md flex flex-col h-full shrink-0 z-20 relative min-h-0">
+      <div className="bg-hw-module-inset border-b-2 border-hw-border p-3 shadow-inner shrink-0">
         <h3 className="font-mono text-xs font-bold text-hw-accent-orange tracking-widest uppercase">LAB_CORE // NODES</h3>
         <p className="font-mono text-[9px] text-hw-text-muted mt-1 uppercase">Click to add to canvas</p>
       </div>
       
-      <div className="flex-1 overflow-y-auto custom-scrollbar p-3 flex flex-col gap-2">
+      <div className="flex-1 overflow-y-auto custom-scrollbar p-3 flex flex-col gap-2 min-h-0">
         {nodeTypes.map(def => (
           <button
             key={def.type}
