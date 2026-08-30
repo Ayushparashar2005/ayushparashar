@@ -11,11 +11,7 @@ export default function LabEngine() {
   } = useNodeGraph();
 
   return (
-    <section class="hw-module flex flex-col w-full max-w-7xl h-[calc(100vh-100px)] shrink-0 min-h-0">
-      <div class="absolute top-1.5 left-1.5 w-1.5 h-1.5 rounded-full bg-hw-screw border border-hw-screw-border shadow-[0_1px_0_rgba(255,255,255,0.1)]"></div>
-      <div class="absolute top-1.5 right-1.5 w-1.5 h-1.5 rounded-full bg-hw-screw border border-hw-screw-border shadow-[0_1px_0_rgba(255,255,255,0.1)]"></div>
-      <div class="absolute bottom-1.5 left-1.5 w-1.5 h-1.5 rounded-full bg-hw-screw border border-hw-screw-border shadow-[0_1px_0_rgba(255,255,255,0.1)]"></div>
-      <div class="absolute bottom-1.5 right-1.5 w-1.5 h-1.5 rounded-full bg-hw-screw border border-hw-screw-border shadow-[0_1px_0_rgba(255,255,255,0.1)]"></div>
+    <section class="flex flex-col flex-1 w-full h-full min-h-0 overflow-hidden">
       
       <header class="hw-module-header px-6 relative group">
         <div class="flex items-center gap-2">
@@ -47,13 +43,13 @@ export default function LabEngine() {
           />
 
           {/* Right Sidebar: Output Preview */}
-          <div className="w-80 bg-hw-panel border-l-2 border-hw-border shadow-md flex flex-col h-full shrink-0 z-20">
-            <div className="bg-hw-module-inset border-b-2 border-hw-border p-3 shadow-inner">
+          <div className="w-80 bg-hw-panel border-l-2 border-hw-border shadow-md flex flex-col h-full shrink-0 z-20 min-h-0 overflow-hidden">
+            <div className="bg-hw-module-inset border-b-2 border-hw-border p-3 shadow-inner shrink-0">
               <h3 className="font-mono text-xs font-bold text-hw-accent-orange tracking-widest uppercase">OUTPUT_VIEW</h3>
               <p className="font-mono text-[9px] text-hw-text-muted mt-1 uppercase">Live WebGL Shader</p>
             </div>
             
-            <div className="p-4 flex-1 flex flex-col gap-4 min-h-0">
+            <div className="p-4 flex-1 flex flex-col gap-4 min-h-0 overflow-hidden">
               
               <div className="w-full aspect-square bg-hw-screen border-4 border-hw-border-screen rounded-lg overflow-hidden shadow-[inset_0_0_20px_rgba(0,0,0,1)] relative group shrink-0">
                 <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPjxyZWN0IHdpZHRoPSI0IiBoZWlnaHQ9IjEiIGZpbGw9IiMwMDAiIGZpbGwtb3BhY2l0eT0iMC4yIi8+PC9zdmc+')] opacity-30 z-20 pointer-events-none mix-blend-overlay"></div>
@@ -65,7 +61,7 @@ export default function LabEngine() {
                 />
               </div>
 
-              <div className="bg-hw-screen-light border border-hw-border-screen rounded p-3 text-[9px] font-mono text-[#5f5f5f] overflow-y-auto custom-scrollbar flex-1 shadow-inner">
+              <div className="bg-hw-screen-light border border-hw-border-screen rounded p-3 text-[9px] font-mono text-[#5f5f5f] overflow-y-auto overflow-x-hidden custom-scrollbar flex-1 shadow-inner min-h-0">
                 <div className="text-hw-accent-blue mb-2 font-bold tracking-widest uppercase">// COMPILED GLSL</div>
                 <pre className="whitespace-pre-wrap break-words">{shaderCode}</pre>
               </div>
