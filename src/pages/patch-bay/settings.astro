@@ -24,13 +24,16 @@ if (Astro.request.method === "POST") {
       role: data.get("role")?.toString() || "",
       location: data.get("location")?.toString() || "",
       bio: data.get("bio")?.toString() || "",
+      resumeFile: identity.resumeFile || "Ayush_Parashar_Resume.pdf",
     };
     
     const resumeFile = data.get("resume");
     if (resumeFile && typeof resumeFile === 'object' && 'arrayBuffer' in resumeFile && resumeFile.size > 0) {
+      const originalName = (resumeFile as File).name || "Ayush_Parashar_Resume.pdf";
       const buffer = await resumeFile.arrayBuffer();
-      const resumePath = path.join(process.cwd(), 'public/Ayush_Parashar_Resume.pdf');
+      const resumePath = path.join(process.cwd(), 'public', originalName);
       await fs.writeFile(resumePath, Buffer.from(buffer));
+      identity.resumeFile = originalName;
     }
     
     await fs.mkdir(path.dirname(dataPath), { recursive: true });

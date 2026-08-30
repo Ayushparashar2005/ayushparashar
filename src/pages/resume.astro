@@ -2,6 +2,22 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SynthShell from '../components/common/SynthShell.astro';
 import ModulePanel from '../components/synth/ModulePanel.astro';
+import fs from 'node:fs/promises';
+import path from 'node:path';
+
+let resumeFileName = "Ayush_Parashar_Resume.pdf";
+try {
+  const dataPath = path.join(process.cwd(), 'src/data/identity.json');
+  const content = await fs.readFile(dataPath, 'utf-8');
+  const identity = JSON.parse(content);
+  if (identity.resumeFile) {
+    resumeFileName = identity.resumeFile;
+  }
+} catch (e) {
+  // Ignore, use default
+}
+
+const resumeUrl = `/${resumeFileName}`;
 ---
 
 <BaseLayout title="ayush.wav | RESUME_EXPORT">
@@ -37,15 +53,15 @@ import ModulePanel from '../components/synth/ModulePanel.astro';
                         <span class="w-2 h-2 rounded-full bg-hw-accent-blue animate-pulse shadow-[0_0_5px_rgba(0,170,255,0.6)] shrink-0"></span>
                         DATA_BANK_EXPORT
                      </div>
-                     <div class="text-[10px] sm:text-xs md:text-sm font-mono font-bold text-hw-text-main mt-1 md:mt-2 tracking-wider bg-hw-sticker border border-hw-border px-2 sm:px-3 py-1 shadow-sm truncate w-full">Ayush_Parashar_CV_v2.pdf</div>
+                     <div class="text-[10px] sm:text-xs md:text-sm font-mono font-bold text-hw-text-main mt-1 md:mt-2 tracking-wider bg-hw-sticker border border-hw-border px-2 sm:px-3 py-1 shadow-sm truncate w-full">{resumeFileName}</div>
                   </div>
                </div>
                
                <div class="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
-                  <a href="/Ayush_Parashar_Resume.pdf" target="_blank" rel="noopener noreferrer" class="hw-button w-full sm:w-auto h-10 px-4 flex items-center justify-center text-[10px] font-bold !bg-hw-sticker hover:text-hw-accent-blue transition-colors">
+                  <a href={resumeUrl} target="_blank" rel="noopener noreferrer" class="hw-button w-full sm:w-auto h-10 px-4 flex items-center justify-center text-[10px] font-bold !bg-hw-sticker hover:text-hw-accent-blue transition-colors">
                     OPEN IN NEW TAB
                   </a>
-                  <a href="/Ayush_Parashar_Resume.pdf" download="Ayush_Parashar_Resume.pdf" class="hw-button w-full sm:w-auto h-10 px-4 flex items-center justify-center font-bold !bg-hw-accent-orange !text-white !border-hw-accent-orange hover:!bg-[#e64a00] transition-all text-[10px] shadow-[0_4px_0_#cc4400,0_5px_5px_rgba(0,0,0,0.3)] active:shadow-[0_0px_0_#cc4400,0_0px_0px_rgba(0,0,0,0.3)] active:translate-y-1">
+                  <a href={resumeUrl} download={resumeFileName} class="hw-button w-full sm:w-auto h-10 px-4 flex items-center justify-center font-bold !bg-hw-accent-orange !text-white !border-hw-accent-orange hover:!bg-[#e64a00] transition-all text-[10px] shadow-[0_4px_0_#cc4400,0_5px_5px_rgba(0,0,0,0.3)] active:shadow-[0_0px_0_#cc4400,0_0px_0px_rgba(0,0,0,0.3)] active:translate-y-1">
                     DOWNLOAD NOW
                   </a>
                </div>
@@ -69,9 +85,9 @@ import ModulePanel from '../components/synth/ModulePanel.astro';
                </div>
 
                <iframe 
-                  src="/Ayush_Parashar_Resume.pdf#navpanes=0&view=Fit" 
+                  src={`${resumeUrl}#navpanes=0&view=Fit`} 
                   class="relative z-10 w-full h-full border-none rounded-sm bg-hw-sticker"
-                  title="Ayush Parashar Resume"
+                  title={`${resumeFileName} Viewer`}
                ></iframe>
             </div>
 
