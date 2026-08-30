@@ -1,7 +1,7 @@
 import { useRef, useState } from 'preact/hooks';
 import { useNodeGraph } from './useNodeGraph';
 import NodeLibrary from './NodeLibrary';
-import NodeCanvas, { NodeCanvasRef } from './NodeCanvas';
+import NodeCanvas, { type NodeCanvasRef } from './NodeCanvas';
 import WebGLPreview from './WebGLPreview';
 
 export default function LabEngine() {
