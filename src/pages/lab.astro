@@ -1,0 +1,13 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SynthShell from '../components/common/SynthShell.astro';
+import LabEngine from '../islands/lab/LabEngine';
+---
+
+<BaseLayout title="ayush.wav | LAB">
+  <SynthShell activePreset="lab">
+    <div class="w-full h-full p-4 md:p-8 flex items-center justify-center">
+      <LabEngine client:only="preact" />
+    </div>
+  </SynthShell>
+</BaseLayout>
