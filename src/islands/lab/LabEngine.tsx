@@ -11,7 +11,7 @@ export default function LabEngine() {
   } = useNodeGraph();
 
   return (
-    <section class="hw-module flex flex-col w-full max-w-7xl h-[85vh] shrink-0 min-h-0">
+    <section class="hw-module flex flex-col w-full max-w-7xl h-[calc(100vh-100px)] shrink-0 min-h-0">
       <div class="absolute top-1.5 left-1.5 w-1.5 h-1.5 rounded-full bg-hw-screw border border-hw-screw-border shadow-[0_1px_0_rgba(255,255,255,0.1)]"></div>
       <div class="absolute top-1.5 right-1.5 w-1.5 h-1.5 rounded-full bg-hw-screw border border-hw-screw-border shadow-[0_1px_0_rgba(255,255,255,0.1)]"></div>
       <div class="absolute bottom-1.5 left-1.5 w-1.5 h-1.5 rounded-full bg-hw-screw border border-hw-screw-border shadow-[0_1px_0_rgba(255,255,255,0.1)]"></div>

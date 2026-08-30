@@ -4,47 +4,31 @@ import { NodeDefinitions } from './nodeDefinitions';
 
 interface NodeProps {
   node: NodeState;
-  onMove: (id: string, x: number, y: number) => void;
+  scale: number;
+  onMove: (id: string, dx: number, dy: number) => void;
   onUpdateData: (id: string, data: any) => void;
   onRemove: (id: string) => void;
   onJackMouseDown: (e: MouseEvent, nodeId: string, jackId: string, type: 'in' | 'out') => void;
   onJackMouseUp: (nodeId: string, jackId: string, type: 'in' | 'out') => void;
 }
 
-export default function Node({ node, onMove, onUpdateData, onRemove, onJackMouseDown, onJackMouseUp }: NodeProps) {
+export default function Node({ node, scale, onMove, onUpdateData, onRemove, onJackMouseDown, onJackMouseUp }: NodeProps) {
   const def = NodeDefinitions[node.type];
   const nodeRef = useRef<HTMLDivElement>(null);
   
   const [isDragging, setIsDragging] = useState(false);
-  const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
 
   const handlePointerDown = (e: PointerEvent) => {
     if ((e.target as HTMLElement).closest('.jack') || (e.target as HTMLElement).closest('input') || (e.target as HTMLElement).closest('button')) {
       return;
     }
     setIsDragging(true);
-    if (nodeRef.current) {
-      const rect = nodeRef.current.getBoundingClientRect();
-      setDragOffset({
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top
-      });
-    }
     (e.target as HTMLElement).setPointerCapture(e.pointerId);
   };
 
   const handlePointerMove = (e: PointerEvent) => {
     if (!isDragging) return;
-    
-    // Get parent offset (the canvas)
-    const canvas = nodeRef.current?.parentElement;
-    if (canvas) {
-      const canvasRect = canvas.getBoundingClientRect();
-      // x, y should be relative to canvas
-      const x = e.clientX - canvasRect.left - dragOffset.x;
-      const y = e.clientY - canvasRect.top - dragOffset.y;
-      onMove(node.id, x, y);
-    }
+    onMove(node.id, e.movementX / scale, e.movementY / scale);
   };
 
   const handlePointerUp = (e: PointerEvent) => {

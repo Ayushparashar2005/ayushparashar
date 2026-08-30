@@ -17,8 +17,8 @@ export function useNodeGraph() {
     setNodes(n => [...n, { id, type, position: { x, y } }]);
   }, []);
 
-  const moveNode = useCallback((id: string, x: number, y: number) => {
-    setNodes(n => n.map(node => node.id === id ? { ...node, position: { x, y } } : node));
+  const moveNode = useCallback((id: string, dx: number, dy: number) => {
+    setNodes(n => n.map(node => node.id === id ? { ...node, position: { x: node.position.x + dx, y: node.position.y + dy } } : node));
   }, []);
 
   const updateNodeData = useCallback((id: string, data: any) => {
