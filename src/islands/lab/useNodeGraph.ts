@@ -123,6 +123,12 @@ void main() {
     };
 
     compile();
+
+    // Compile Audio Graph
+    import('./audioGraph').then(({ AudioGraph }) => {
+      AudioGraph.compile(nodes, edges);
+    });
+
   }, [nodes, edges]);
 
   return {

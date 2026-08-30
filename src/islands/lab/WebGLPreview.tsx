@@ -20,6 +20,13 @@ export default function WebGLPreview({ fragmentShaderCode, className, nodes }: W
   const glRef = useRef<WebGLRenderingContext | null>(null);
   const programRef = useRef<WebGLProgram | null>(null);
   const animationRef = useRef<number>(0);
+  const liveInputsRef = useRef<any>(null);
+
+  useEffect(() => {
+    import('./liveInputs').then(({ LiveInputs }) => {
+      liveInputsRef.current = LiveInputs;
+    });
+  }, []);
 
   useEffect(() => {
     if (!canvasRef.current) return;
@@ -123,16 +130,28 @@ export default function WebGLPreview({ fragmentShaderCode, className, nodes }: W
       }
 
       // Set custom uniforms for nodes
+      const liveInputs = liveInputsRef.current;
       nodes.forEach(node => {
         if (node.type === 'COLOR' && node.customData?.color) {
           const loc = gl.getUniformLocation(program, `u_${node.id}_color`);
           if (loc !== null) {
-            // parse hex color
             const hex = node.customData.color.replace('#', '');
             const r = parseInt(hex.substring(0, 2), 16) / 255;
             const g = parseInt(hex.substring(2, 4), 16) / 255;
             const b = parseInt(hex.substring(4, 6), 16) / 255;
             gl.uniform3f(loc, r, g, b);
+          }
+        }
+        if (node.type === 'MIC_IN' && liveInputs) {
+          const loc = gl.getUniformLocation(program, `u_${node.id}_vol`);
+          if (loc !== null) {
+            gl.uniform1f(loc, liveInputs.micVolume);
+          }
+        }
+        if (node.type === 'MIDI_IN' && liveInputs) {
+          const loc = gl.getUniformLocation(program, `u_${node.id}_val`);
+          if (loc !== null) {
+            gl.uniform1f(loc, liveInputs.midiValue);
           }
         }
       });

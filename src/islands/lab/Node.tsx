@@ -85,6 +85,32 @@ export default function Node({ node, scale, onMove, onUpdateData, onRemove, onJa
             />
           </div>
         )}
+        {node.type === 'MIC_IN' && (
+          <div className="flex justify-center mb-2">
+            <button 
+              className="hw-button text-[9px] px-2 py-1"
+              onClick={async () => {
+                const { LiveInputs } = await import('./liveInputs');
+                LiveInputs.requestMic();
+              }}
+            >
+              ACTIVATE MIC
+            </button>
+          </div>
+        )}
+        {node.type === 'MIDI_IN' && (
+          <div className="flex justify-center mb-2">
+            <button 
+              className="hw-button text-[9px] px-2 py-1"
+              onClick={async () => {
+                const { LiveInputs } = await import('./liveInputs');
+                LiveInputs.requestMidi();
+              }}
+            >
+              CONNECT MIDI
+            </button>
+          </div>
+        )}
 
         <div className="flex justify-between w-full h-full relative z-10">
           

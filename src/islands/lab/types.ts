@@ -1,4 +1,4 @@
-export type SignalType = 'float' | 'vec3';
+export type SignalType = 'float' | 'vec3' | 'audio';
 
 export interface NodeInput {
   id: string;
