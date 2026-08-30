@@ -19,7 +19,7 @@ export default function NodeLibrary({ onAddNode }: NodeLibraryProps) {
           <button
             key={def.type}
             onClick={() => onAddNode(def.type, 100, 100)} // Default add position
-            className="w-full text-left bg-hw-module border border-hw-border hover:border-hw-accent-orange px-3 py-2 rounded shadow-sm hover:shadow-md transition-all group relative overflow-hidden"
+            className="w-full text-left bg-hw-module border border-hw-border hover:border-hw-accent-orange px-3 py-2 rounded shadow-sm hover:shadow-md transition-all group relative overflow-hidden shrink-0 min-h-[34px]"
           >
             {/* Scanline hover effect */}
             <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPjxyZWN0IHdpZHRoPSI0IiBoZWlnaHQ9IjEiIGZpbGw9IiMwMDAiIGZpbGwtb3BhY2l0eT0iMC4yIi8+PC9zdmc+')] opacity-0 group-hover:opacity-20 transition-opacity pointer-events-none"></div>
