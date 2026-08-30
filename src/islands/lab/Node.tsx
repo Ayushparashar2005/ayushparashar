@@ -1,9 +1,10 @@
 import { useState, useRef, useEffect } from 'preact/hooks';
-import type { NodeState } from './types';
+import type { NodeState, EdgeState } from './types';
 import { NodeDefinitions } from './nodeDefinitions';
 
 interface NodeProps {
   node: NodeState;
+  edges: EdgeState[];
   scale: number;
   onMove: (id: string, dx: number, dy: number) => void;
   onUpdateData: (id: string, data: any) => void;
@@ -12,7 +13,7 @@ interface NodeProps {
   onJackMouseUp: (nodeId: string, jackId: string, type: 'in' | 'out') => void;
 }
 
-export default function Node({ node, scale, onMove, onUpdateData, onRemove, onJackMouseDown, onJackMouseUp }: NodeProps) {
+export default function Node({ node, edges, scale, onMove, onUpdateData, onRemove, onJackMouseDown, onJackMouseUp }: NodeProps) {
   const def = NodeDefinitions[node.type];
   const nodeRef = useRef<HTMLDivElement>(null);
   
@@ -115,23 +116,46 @@ export default function Node({ node, scale, onMove, onUpdateData, onRemove, onJa
         <div className="flex justify-between w-full h-full relative z-10">
           
           {/* Inputs */}
-          <div className="flex flex-col gap-3 justify-around min-h-[40px]">
-            {def.inputs.map(inp => (
-              <div key={inp.id} className="flex items-center gap-2 relative">
-                {/* Jack */}
-                <div 
-                  className="jack w-4 h-4 rounded-full bg-black border-2 border-[#555] shadow-[inset_0_2px_4px_rgba(0,0,0,0.8),0_1px_1px_rgba(255,255,255,0.3)] flex items-center justify-center cursor-crosshair -ml-5 absolute z-20"
-                  data-node-id={node.id}
-                  data-jack-id={inp.id}
-                  data-jack-type="in"
-                  onMouseDown={(e) => onJackMouseDown(e as unknown as MouseEvent, node.id, inp.id, 'in')}
-                  onMouseUp={() => onJackMouseUp(node.id, inp.id, 'in')}
-                >
-                  <div className="w-1 h-1 rounded-full bg-[#111]"></div>
+          <div className="flex flex-col gap-3 justify-around min-h-[40px] flex-1">
+            {def.inputs.map(inp => {
+              const isConnected = edges.some(e => e.targetNodeId === node.id && e.targetInputId === inp.id);
+              return (
+                <div key={inp.id} className="flex items-center gap-2 relative">
+                  {/* Jack */}
+                  <div 
+                    className="jack w-4 h-4 rounded-full bg-black border-2 border-[#555] shadow-[inset_0_2px_4px_rgba(0,0,0,0.8),0_1px_1px_rgba(255,255,255,0.3)] flex items-center justify-center cursor-crosshair -ml-5 absolute z-20"
+                    data-node-id={node.id}
+                    data-jack-id={inp.id}
+                    data-jack-type="in"
+                    onMouseDown={(e) => onJackMouseDown(e as unknown as MouseEvent, node.id, inp.id, 'in')}
+                    onMouseUp={() => onJackMouseUp(node.id, inp.id, 'in')}
+                  >
+                    <div className="w-1 h-1 rounded-full bg-[#111]"></div>
+                  </div>
+                  <span className="hw-label ml-1" title={inp.type}>{inp.name}</span>
+                  
+                  {/* Inline Slider for unconnected floats */}
+                  {!isConnected && inp.type === 'float' && inp.min !== undefined && (
+                    <div className="flex items-center gap-1 ml-auto mr-2">
+                      <input 
+                        type="range"
+                        min={inp.min}
+                        max={inp.max}
+                        step={inp.step || 0.01}
+                        value={node.customData?.[inp.id] ?? inp.defaultValue}
+                        onInput={(e) => onUpdateData(node.id, { [inp.id]: parseFloat((e.target as HTMLInputElement).value) })}
+                        onPointerDown={(e) => e.stopPropagation()}
+                        className="w-16 h-1 bg-hw-border rounded appearance-none cursor-pointer"
+                        style={{ accentColor: 'var(--hw-accent-orange)' }}
+                      />
+                      <span className="text-[8px] font-mono text-hw-text-muted w-6 text-right">
+                        {Number(node.customData?.[inp.id] ?? inp.defaultValue).toFixed(1)}
+                      </span>
+                    </div>
+                  )}
                 </div>
-                <span className="hw-label ml-1" title={inp.type}>{inp.name}</span>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           {/* Outputs */}

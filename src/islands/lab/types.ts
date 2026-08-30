@@ -5,6 +5,9 @@ export interface NodeInput {
   name: string;
   type: SignalType;
   defaultValue?: number | number[]; // e.g. 0.0 or [0,0,0]
+  min?: number;
+  max?: number;
+  step?: number;
 }
 
 export interface NodeOutput {

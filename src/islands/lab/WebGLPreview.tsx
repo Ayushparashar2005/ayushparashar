@@ -4,6 +4,7 @@ interface WebGLPreviewProps {
   fragmentShaderCode: string;
   className?: string;
   nodes: any[];
+  onError?: (err: string | null) => void;
 }
 
 const vertexShaderSource = `
@@ -15,7 +16,7 @@ const vertexShaderSource = `
   }
 `;
 
-export default function WebGLPreview({ fragmentShaderCode, className, nodes }: WebGLPreviewProps) {
+export default function WebGLPreview({ fragmentShaderCode, className, nodes, onError }: WebGLPreviewProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const glRef = useRef<WebGLRenderingContext | null>(null);
   const programRef = useRef<WebGLProgram | null>(null);
@@ -64,7 +65,9 @@ export default function WebGLPreview({ fragmentShaderCode, className, nodes }: W
       gl.shaderSource(shader, source);
       gl.compileShader(shader);
       if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-        console.error('Shader compile error:', gl.getShaderInfoLog(shader));
+        const info = gl.getShaderInfoLog(shader);
+        console.error('Shader compile error:', info);
+        onError?.(`Shader Compile Error:\n${info}`);
         gl.deleteShader(shader);
         return null;
       }
@@ -83,10 +86,13 @@ export default function WebGLPreview({ fragmentShaderCode, className, nodes }: W
     gl.linkProgram(program);
 
     if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
-      console.error('Program link error:', gl.getProgramInfoLog(program));
+      const info = gl.getProgramInfoLog(program);
+      console.error('Program link error:', info);
+      onError?.(`Program Link Error:\n${info}`);
       return;
     }
 
+    onError?.(null); // Clear errors
     programRef.current = program;
 
     // Cleanup old shaders

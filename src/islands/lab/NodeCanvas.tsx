@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'preact/hooks';
+import { forwardRef, useImperativeHandle } from 'preact/compat';
 import type { NodeState, EdgeState } from './types';
 import Node from './Node';
 
@@ -10,15 +11,73 @@ interface NodeCanvasProps {
   onRemoveNode: (id: string) => void;
   onAddEdge: (edge: Omit<EdgeState, 'id'>) => void;
   onRemoveEdge: (id: string) => void;
+  onAddNode: (type: string, x: number, y: number) => void;
 }
 
-export default function NodeCanvas({ nodes, edges, onMoveNode, onUpdateNodeData, onRemoveNode, onAddEdge, onRemoveEdge }: NodeCanvasProps) {
+export interface NodeCanvasRef {
+  addNodeAtCenter: (type: string) => void;
+  fitToView: () => void;
+}
+
+const NodeCanvas = forwardRef<NodeCanvasRef, NodeCanvasProps>(({ nodes, edges, onMoveNode, onUpdateNodeData, onRemoveNode, onAddEdge, onRemoveEdge, onAddNode }, ref) => {
   const containerRef = useRef<HTMLDivElement>(null);
   
-  // Viewport Transform (Pan & Zoom)
   const [transform, setTransform] = useState({ x: 0, y: 0, scale: 1 });
   const transformRef = useRef({ x: 0, y: 0, scale: 1 });
   const [isPanning, setIsPanning] = useState(false);
+
+  const fitToView = () => {
+    if (nodes.length === 0 || !containerRef.current) {
+      const next = { x: 0, y: 0, scale: 1 };
+      setTransform(next);
+      transformRef.current = next;
+      return;
+    }
+    
+    let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+    nodes.forEach(n => {
+      minX = Math.min(minX, n.position.x);
+      minY = Math.min(minY, n.position.y);
+      maxX = Math.max(maxX, n.position.x + 200); 
+      maxY = Math.max(maxY, n.position.y + 150);
+    });
+    
+    const padding = 50;
+    minX -= padding;
+    minY -= padding;
+    maxX += padding;
+    maxY += padding;
+    
+    const rect = containerRef.current.getBoundingClientRect();
+    const scaleX = rect.width / (maxX - minX);
+    const scaleY = rect.height / (maxY - minY);
+    let scale = Math.min(scaleX, scaleY);
+    scale = Math.min(Math.max(0.2, scale), 2);
+    
+    const x = (rect.width - (maxX - minX) * scale) / 2 - minX * scale;
+    const y = (rect.height - (maxY - minY) * scale) / 2 - minY * scale;
+    
+    const next = { x, y, scale };
+    setTransform(next);
+    transformRef.current = next;
+  };
+
+  useImperativeHandle(ref, () => ({
+    addNodeAtCenter: (type: string) => {
+      let x = 100;
+      let y = 100;
+      if (containerRef.current) {
+        const rect = containerRef.current.getBoundingClientRect();
+        const t = transformRef.current;
+        const centerX = (rect.width / 2 - t.x) / t.scale;
+        const centerY = (rect.height / 2 - t.y) / t.scale;
+        x = centerX + (Math.random() - 0.5) * 50;
+        y = centerY + (Math.random() - 0.5) * 50;
+      }
+      onAddNode(type, x, y);
+    },
+    fitToView
+  }));
 
   // Connection state
   const [isConnecting, setIsConnecting] = useState(false);
@@ -179,6 +238,14 @@ export default function NodeCanvas({ nodes, edges, onMoveNode, onUpdateNodeData,
       onPointerLeave={handlePointerUp}
       onWheel={handleWheel}
     >
+      <button 
+        className="absolute top-4 right-4 z-30 hw-button text-[10px] px-2 py-1 shadow-md bg-hw-panel/90 backdrop-blur"
+        onClick={() => fitToView()}
+        id="fitToViewBtn"
+      >
+        [⊡] FIT TO VIEW
+      </button>
+      
       <div 
         className="absolute inset-0 origin-top-left pointer-events-none"
         style={{ transform: `translate(${transform.x}px, ${transform.y}px) scale(${transform.scale})` }}
@@ -199,6 +266,7 @@ export default function NodeCanvas({ nodes, edges, onMoveNode, onUpdateNodeData,
           <Node
             key={node.id}
             node={node}
+            edges={edges}
             scale={transform.scale}
             onMove={onMoveNode}
             onUpdateData={onUpdateNodeData}
@@ -210,4 +278,6 @@ export default function NodeCanvas({ nodes, edges, onMoveNode, onUpdateNodeData,
       </div>
     </div>
   );
-}
+});
+
+export default NodeCanvas;

@@ -1,7 +1,7 @@
 import { NodeDefinitions } from './nodeDefinitions';
 
 interface NodeLibraryProps {
-  onAddNode: (type: string, x: number, y: number) => void;
+  onAddNode: (type: string, x?: number, y?: number) => void;
 }
 
 export default function NodeLibrary({ onAddNode }: NodeLibraryProps) {
@@ -18,7 +18,7 @@ export default function NodeLibrary({ onAddNode }: NodeLibraryProps) {
         {nodeTypes.map(def => (
           <button
             key={def.type}
-            onClick={() => onAddNode(def.type, 100, 100)} // Default add position
+            onClick={() => onAddNode(def.type)}
             className="w-full text-left bg-hw-module border border-hw-border hover:border-hw-accent-orange px-3 py-2 rounded shadow-sm hover:shadow-md transition-all group relative overflow-hidden shrink-0 min-h-[34px]"
           >
             {/* Scanline hover effect */}

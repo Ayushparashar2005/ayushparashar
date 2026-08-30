@@ -95,7 +95,8 @@ export function useNodeGraph() {
           } else {
             // Default value format
             if (inp.type === 'float') {
-              inputArgs[inp.id] = (inp.defaultValue as number).toFixed(2);
+              const val = node.customData?.[inp.id] !== undefined ? node.customData[inp.id] : inp.defaultValue;
+              inputArgs[inp.id] = (val as number).toFixed(2);
             } else if (inp.type === 'vec3') {
               const [r, g, b] = (inp.defaultValue as number[]);
               inputArgs[inp.id] = `vec3(${r.toFixed(2)}, ${g.toFixed(2)}, ${b.toFixed(2)})`;

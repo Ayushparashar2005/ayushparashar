@@ -34,7 +34,7 @@ export const NodeDefinitions: Record<string, NodeDefinition> = {
     type: 'OSCILLATOR',
     name: 'LFO',
     inputs: [
-      { id: 'freq', name: 'FREQ', type: 'float', defaultValue: 1.0 }
+      { id: 'freq', name: 'FREQ', type: 'float', defaultValue: 1.0, min: 0.1, max: 20.0, step: 0.1 }
     ],
     outputs: [{ id: 'out', name: 'OUT', type: 'float' }],
     generateGLSL: (inputs, nodeId) => `
@@ -70,7 +70,7 @@ export const NodeDefinitions: Record<string, NodeDefinition> = {
     name: 'MULT (FLOAT)',
     inputs: [
       { id: 'a', name: 'A', type: 'vec3', defaultValue: [1.0, 1.0, 1.0] },
-      { id: 'b', name: 'B (FLT)', type: 'float', defaultValue: 1.0 }
+      { id: 'b', name: 'B (FLT)', type: 'float', defaultValue: 1.0, min: -10.0, max: 10.0, step: 0.1 }
     ],
     outputs: [{ id: 'out', name: 'OUT', type: 'vec3' }],
     generateGLSL: (inputs, nodeId) => `
@@ -92,8 +92,8 @@ export const NodeDefinitions: Record<string, NodeDefinition> = {
     name: 'CIRCLE',
     inputs: [
       { id: 'uv', name: 'UV', type: 'vec3', defaultValue: [0.0, 0.0, 0.0] },
-      { id: 'radius', name: 'RADIUS', type: 'float', defaultValue: 0.5 },
-      { id: 'blur', name: 'BLUR', type: 'float', defaultValue: 0.01 }
+      { id: 'radius', name: 'RADIUS', type: 'float', defaultValue: 0.5, min: 0.0, max: 2.0, step: 0.01 },
+      { id: 'blur', name: 'BLUR', type: 'float', defaultValue: 0.01, min: 0.0, max: 1.0, step: 0.01 }
     ],
     outputs: [{ id: 'out', name: 'OUT', type: 'vec3' }],
     generateGLSL: (inputs, nodeId) => `
@@ -109,7 +109,7 @@ export const NodeDefinitions: Record<string, NodeDefinition> = {
     inputs: [
       { id: 'a', name: 'A', type: 'vec3', defaultValue: [0.0, 0.0, 0.0] },
       { id: 'b', name: 'B', type: 'vec3', defaultValue: [1.0, 1.0, 1.0] },
-      { id: 't', name: 'T', type: 'float', defaultValue: 0.5 }
+      { id: 't', name: 'T', type: 'float', defaultValue: 0.5, min: 0.0, max: 1.0, step: 0.01 }
     ],
     outputs: [{ id: 'out', name: 'OUT', type: 'vec3' }],
     generateGLSL: (inputs, nodeId) => `
@@ -121,7 +121,7 @@ export const NodeDefinitions: Record<string, NodeDefinition> = {
     name: 'NOISE 2D',
     inputs: [
       { id: 'uv', name: 'UV', type: 'vec3', defaultValue: [0.0, 0.0, 0.0] },
-      { id: 'scale', name: 'SCALE', type: 'float', defaultValue: 10.0 }
+      { id: 'scale', name: 'SCALE', type: 'float', defaultValue: 10.0, min: 0.1, max: 100.0, step: 0.1 }
     ],
     outputs: [{ id: 'out', name: 'OUT', type: 'float' }],
     generateGLSL: (inputs, nodeId) => `
@@ -143,7 +143,7 @@ export const NodeDefinitions: Record<string, NodeDefinition> = {
     name: 'PIXELATE',
     inputs: [
       { id: 'uv', name: 'UV', type: 'vec3', defaultValue: [0.0, 0.0, 0.0] },
-      { id: 'pixels', name: 'PIXELS', type: 'float', defaultValue: 50.0 }
+      { id: 'pixels', name: 'PIXELS', type: 'float', defaultValue: 50.0, min: 1.0, max: 200.0, step: 1.0 }
     ],
     outputs: [{ id: 'out', name: 'OUT', type: 'vec3' }],
     generateGLSL: (inputs, nodeId) => `
@@ -155,7 +155,7 @@ export const NodeDefinitions: Record<string, NodeDefinition> = {
     name: 'FRACTAL KALEIDOSCOPE',
     inputs: [
       { id: 'uv', name: 'UV', type: 'vec3', defaultValue: [0.0, 0.0, 0.0] },
-      { id: 'segments', name: 'SEGMENTS', type: 'float', defaultValue: 6.0 }
+      { id: 'segments', name: 'SEGMENTS', type: 'float', defaultValue: 6.0, min: 1.0, max: 24.0, step: 1.0 }
     ],
     outputs: [{ id: 'out', name: 'OUT', type: 'vec3' }],
     generateGLSL: (inputs, nodeId) => `
@@ -198,7 +198,7 @@ export const NodeDefinitions: Record<string, NodeDefinition> = {
   SYNTH_OSC: {
     type: 'SYNTH_OSC',
     name: 'SYNTH OSC',
-    inputs: [{ id: 'freq', name: 'FREQ', type: 'float', defaultValue: 440.0 }],
+    inputs: [{ id: 'freq', name: 'FREQ', type: 'float', defaultValue: 440.0, min: 20.0, max: 2000.0, step: 1.0 }],
     outputs: [{ id: 'out', name: 'OUT', type: 'audio' }],
     generateGLSL: (inputs, nodeId) => `// Audio node`
   }

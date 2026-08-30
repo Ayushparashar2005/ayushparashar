@@ -1,6 +1,7 @@
+import { useRef, useState } from 'preact/hooks';
 import { useNodeGraph } from './useNodeGraph';
 import NodeLibrary from './NodeLibrary';
-import NodeCanvas from './NodeCanvas';
+import NodeCanvas, { NodeCanvasRef } from './NodeCanvas';
 import WebGLPreview from './WebGLPreview';
 
 export default function LabEngine() {
@@ -9,6 +10,17 @@ export default function LabEngine() {
     addNode, moveNode, updateNodeData, removeNode, 
     addEdge, removeEdge 
   } = useNodeGraph();
+
+  const canvasRef = useRef<NodeCanvasRef>(null);
+  const [compileError, setCompileError] = useState<string | null>(null);
+
+  const handleAddNode = (type: string) => {
+    if (canvasRef.current) {
+      canvasRef.current.addNodeAtCenter(type);
+    } else {
+      addNode(type, 100, 100);
+    }
+  };
 
   return (
     <section class="flex flex-col flex-1 w-full h-full min-h-0 overflow-hidden">
@@ -29,10 +41,11 @@ export default function LabEngine() {
         <div class="relative z-10 h-full flex flex-row gap-0 min-h-0 overflow-hidden rounded-b-xl border-t border-hw-border">
           
           {/* Left Sidebar: Node Library */}
-          <NodeLibrary onAddNode={addNode} />
+          <NodeLibrary onAddNode={handleAddNode} />
 
           {/* Center: Canvas */}
           <NodeCanvas 
+            ref={canvasRef}
             nodes={nodes} 
             edges={edges} 
             onMoveNode={moveNode} 
@@ -40,6 +53,7 @@ export default function LabEngine() {
             onRemoveNode={removeNode} 
             onAddEdge={addEdge} 
             onRemoveEdge={removeEdge} 
+            onAddNode={addNode}
           />
 
           {/* Right Sidebar: Output Preview */}
@@ -57,11 +71,18 @@ export default function LabEngine() {
                 <WebGLPreview 
                   fragmentShaderCode={shaderCode} 
                   nodes={nodes}
+                  onError={setCompileError}
                   className="w-full h-full object-cover block relative z-10"
                 />
               </div>
 
-              <div className="bg-hw-screen-light border border-hw-border-screen rounded p-3 text-[9px] font-mono text-[#5f5f5f] overflow-y-auto overflow-x-hidden custom-scrollbar flex-1 shadow-inner min-h-0">
+              <div className="bg-hw-screen-light border border-hw-border-screen rounded p-3 text-[9px] font-mono text-[#5f5f5f] overflow-y-auto overflow-x-hidden custom-scrollbar flex-1 shadow-inner min-h-0 relative">
+                {compileError ? (
+                  <div className="absolute inset-0 bg-red-900/90 text-red-100 p-3 overflow-y-auto z-20 break-all whitespace-pre-wrap">
+                    <div className="font-bold text-red-300 mb-2">// FATAL SHADER ERROR</div>
+                    {compileError}
+                  </div>
+                ) : null}
                 <div className="text-hw-accent-blue mb-2 font-bold tracking-widest uppercase">// COMPILED GLSL</div>
                 <pre className="whitespace-pre-wrap break-words">{shaderCode}</pre>
               </div>
