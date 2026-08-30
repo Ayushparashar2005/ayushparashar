@@ -1,17 +1,24 @@
 ---
 import PatchBayLayout from '../../layouts/PatchBayLayout.astro';
-import fs from 'node:fs/promises';
-import path from 'node:path';
+import { db } from '../../db';
+import { identity as identitySchema } from '../../db/schema';
+import { eq } from 'drizzle-orm';
 
-const dataPath = path.join(process.cwd(), 'src/data/identity.json');
+let identityData = { name: "Ayush Parashar", role: "Engineering Student", location: "Bahadurgarh, IN", bio: "", resumeFileName: "Ayush_Parashar_Resume.pdf" };
 
-// Read existing data
-let identity = { name: "Ayush Parashar", role: "Engineering Student", location: "Bahadurgarh, IN", bio: "" };
 try {
-  const content = await fs.readFile(dataPath, 'utf-8');
-  identity = JSON.parse(content);
+  const existingRecords = await db.select().from(identitySchema).where(eq(identitySchema.id, 'main'));
+  if (existingRecords.length > 0) {
+    identityData = {
+       name: existingRecords[0].name,
+       role: existingRecords[0].role,
+       location: existingRecords[0].location,
+       bio: existingRecords[0].bio,
+       resumeFileName: existingRecords[0].resumeFileName || "Ayush_Parashar_Resume.pdf"
+    };
+  }
 } catch (e) {
-  // Ignore, use default
+  console.error("Failed to load identity from DB:", e);
 }
 
 let success = false;
@@ -19,25 +26,38 @@ let success = false;
 if (Astro.request.method === "POST") {
   try {
     const data = await Astro.request.formData();
-    identity = {
+    const updateData: any = {
+      id: 'main',
       name: data.get("name")?.toString() || "",
       role: data.get("role")?.toString() || "",
       location: data.get("location")?.toString() || "",
       bio: data.get("bio")?.toString() || "",
-      resumeFile: identity.resumeFile || "Ayush_Parashar_Resume.pdf",
+      updatedAt: new Date()
     };
+    
+    identityData.name = updateData.name;
+    identityData.role = updateData.role;
+    identityData.location = updateData.location;
+    identityData.bio = updateData.bio;
     
     const resumeFile = data.get("resume");
     if (resumeFile && typeof resumeFile === 'object' && 'arrayBuffer' in resumeFile && resumeFile.size > 0) {
       const originalName = (resumeFile as File).name || "Ayush_Parashar_Resume.pdf";
       const buffer = await resumeFile.arrayBuffer();
-      const resumePath = path.join(process.cwd(), 'public', originalName);
-      await fs.writeFile(resumePath, Buffer.from(buffer));
-      identity.resumeFile = originalName;
+      const base64String = Buffer.from(buffer).toString('base64');
+      
+      updateData.resumeFileName = originalName;
+      updateData.resumeFileData = base64String;
+      identityData.resumeFileName = originalName;
+    }
+
+    const existingRecords = await db.select().from(identitySchema).where(eq(identitySchema.id, 'main'));
+    if (existingRecords.length > 0) {
+      await db.update(identitySchema).set(updateData).where(eq(identitySchema.id, 'main'));
+    } else {
+      await db.insert(identitySchema).values(updateData);
     }
     
-    await fs.mkdir(path.dirname(dataPath), { recursive: true });
-    await fs.writeFile(dataPath, JSON.stringify(identity, null, 2));
     success = true;
   } catch (error) {
     console.error(error);
@@ -56,22 +76,22 @@ if (Astro.request.method === "POST") {
 
       <div class="flex flex-col gap-2">
         <label class="text-hw-text-muted font-mono text-xs">DISPLAY NAME</label>
-        <input name="name" type="text" value={identity.name} class="bg-hw-module border border-hw-border rounded px-3 py-2 text-hw-text-main font-mono text-sm focus:outline-none focus:border-hw-accent-orange" />
+        <input name="name" type="text" value={identityData.name} class="bg-hw-module border border-hw-border rounded px-3 py-2 text-hw-text-main font-mono text-sm focus:outline-none focus:border-hw-accent-orange" />
       </div>
 
       <div class="flex flex-col gap-2 mt-2">
         <label class="text-hw-text-muted font-mono text-xs">ROLE</label>
-        <input name="role" type="text" value={identity.role} class="bg-hw-module border border-hw-border rounded px-3 py-2 text-hw-text-main font-mono text-sm focus:outline-none focus:border-hw-accent-orange" />
+        <input name="role" type="text" value={identityData.role} class="bg-hw-module border border-hw-border rounded px-3 py-2 text-hw-text-main font-mono text-sm focus:outline-none focus:border-hw-accent-orange" />
       </div>
 
       <div class="flex flex-col gap-2 mt-2">
         <label class="text-hw-text-muted font-mono text-xs">LOCATION</label>
-        <input name="location" type="text" value={identity.location} class="bg-hw-module border border-hw-border rounded px-3 py-2 text-hw-text-main font-mono text-sm focus:outline-none focus:border-hw-accent-orange" />
+        <input name="location" type="text" value={identityData.location} class="bg-hw-module border border-hw-border rounded px-3 py-2 text-hw-text-main font-mono text-sm focus:outline-none focus:border-hw-accent-orange" />
       </div>
 
       <div class="flex flex-col gap-2 mt-2">
         <label class="text-hw-text-muted font-mono text-xs">BIO (FULL)</label>
-        <textarea name="bio" rows="6" class="bg-hw-module border border-hw-border rounded px-3 py-2 text-hw-text-main font-mono text-sm focus:outline-none focus:border-hw-accent-orange leading-relaxed">{identity.bio}</textarea>
+        <textarea name="bio" rows="6" class="bg-hw-module border border-hw-border rounded px-3 py-2 text-hw-text-main font-mono text-sm focus:outline-none focus:border-hw-accent-orange leading-relaxed">{identityData.bio}</textarea>
       </div>
 
       <div class="flex flex-col gap-2 mt-4 pt-4 border-t border-hw-border">

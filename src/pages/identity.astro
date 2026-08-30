@@ -4,21 +4,29 @@ import SynthShell from '../components/common/SynthShell.astro';
 import ModulePanel from '../components/synth/ModulePanel.astro';
 import SynthKnob from '../components/interactive/SynthKnob.astro';
 import GenerativeArt from '../components/interactive/GenerativeArt.astro';
-import fs from 'node:fs/promises';
-import path from 'node:path';
+import { db } from '../db';
+import { identity as identitySchema } from '../db/schema';
+import { eq } from 'drizzle-orm';
 
-const dataPath = path.join(process.cwd(), 'src/data/identity.json');
 let identity = {
   name: "Ayush Parashar",
   role: "Engineering Student",
   location: "Bahadurgarh, IN",
   bio: "A passionate engineering student from Bahadurgarh, building innovative solutions with modern technologies. Thriving at the intersection of design and development to turn ideas into impactful digital experiences. I am constantly learning and experimenting with cutting-edge tech, with a goal to work on projects that make a real difference — especially in healthcare and accessibility tech."
 };
+
 try {
-  const content = await fs.readFile(dataPath, 'utf-8');
-  identity = JSON.parse(content);
+  const existingRecords = await db.select().from(identitySchema).where(eq(identitySchema.id, 'main'));
+  if (existingRecords.length > 0) {
+    identity = {
+      name: existingRecords[0].name,
+      role: existingRecords[0].role,
+      location: existingRecords[0].location,
+      bio: existingRecords[0].bio,
+    };
+  }
 } catch (e) {
-  // Use default if file doesn't exist yet
+  // Use default if not found
 }
 ---
 

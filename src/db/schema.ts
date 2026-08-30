@@ -131,3 +131,14 @@ export const messages = pgTable("messages", {
     status: text("status").default("UNREAD").notNull(),
     createdAt: timestamp("created_at").defaultNow().notNull()
 });
+
+export const identity = pgTable("identity", {
+    id: text("id").primaryKey(), // We'll just use 'main'
+    name: text("name").notNull(),
+    role: text("role").notNull(),
+    location: text("location").notNull(),
+    bio: text("bio").notNull(),
+    resumeFileName: text("resume_file_name"),
+    resumeFileData: text("resume_file_data"), // Base64 encoded PDF
+    updatedAt: timestamp("updated_at").defaultNow().notNull()
+});
