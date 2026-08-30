@@ -30,6 +30,35 @@ export const NodeDefinitions: Record<string, NodeDefinition> = {
       vec3 val_${nodeId}_out = vec3(v_uv, 0.0);
     `
   },
+  ROTATE_UV: {
+    type: 'ROTATE_UV',
+    name: 'ROTATE UV',
+    inputs: [
+      { id: 'uv', name: 'UV', type: 'vec3', defaultValue: [0.0, 0.0, 0.0] },
+      { id: 'angle', name: 'ANGLE', type: 'float', defaultValue: 0.0, min: 0.0, max: 6.28318, step: 0.01 }
+    ],
+    outputs: [{ id: 'out', name: 'UV', type: 'vec3' }],
+    generateGLSL: (inputs, nodeId) => `
+      float c_${nodeId} = cos(${inputs.angle});
+      float s_${nodeId} = sin(${inputs.angle});
+      mat2 rot_${nodeId} = mat2(c_${nodeId}, -s_${nodeId}, s_${nodeId}, c_${nodeId});
+      vec2 st_${nodeId} = ${inputs.uv}.xy - 0.5;
+      st_${nodeId} = rot_${nodeId} * st_${nodeId} + 0.5;
+      vec3 val_${nodeId}_out = vec3(st_${nodeId}, 0.0);
+    `
+  },
+  TILE_UV: {
+    type: 'TILE_UV',
+    name: 'TILE UV',
+    inputs: [
+      { id: 'uv', name: 'UV', type: 'vec3', defaultValue: [0.0, 0.0, 0.0] },
+      { id: 'tiles', name: 'TILES', type: 'float', defaultValue: 2.0, min: 1.0, max: 20.0, step: 1.0 }
+    ],
+    outputs: [{ id: 'out', name: 'UV', type: 'vec3' }],
+    generateGLSL: (inputs, nodeId) => `
+      vec3 val_${nodeId}_out = vec3(fract(${inputs.uv}.xy * ${inputs.tiles}), 0.0);
+    `
+  },
   OSCILLATOR: {
     type: 'OSCILLATOR',
     name: 'LFO',
@@ -63,6 +92,94 @@ export const NodeDefinitions: Record<string, NodeDefinition> = {
     outputs: [{ id: 'out', name: 'OUT', type: 'vec3' }],
     generateGLSL: (inputs, nodeId) => `
       vec3 val_${nodeId}_out = ${inputs.a} * ${inputs.b};
+    `
+  },
+  FLOAT_CONST: {
+    type: 'FLOAT_CONST',
+    name: 'FLOAT CONST',
+    inputs: [
+      { id: 'val', name: 'VAL', type: 'float', defaultValue: 1.0, min: -100.0, max: 100.0, step: 0.1 }
+    ],
+    outputs: [{ id: 'out', name: 'OUT', type: 'float' }],
+    generateGLSL: (inputs, nodeId) => `
+      float val_${nodeId}_out = ${inputs.val};
+    `
+  },
+  VEC3_CONST: {
+    type: 'VEC3_CONST',
+    name: 'VEC3 CONST',
+    inputs: [
+      { id: 'r', name: 'R', type: 'float', defaultValue: 1.0, min: 0.0, max: 1.0, step: 0.01 },
+      { id: 'g', name: 'G', type: 'float', defaultValue: 1.0, min: 0.0, max: 1.0, step: 0.01 },
+      { id: 'b', name: 'B', type: 'float', defaultValue: 1.0, min: 0.0, max: 1.0, step: 0.01 }
+    ],
+    outputs: [{ id: 'out', name: 'OUT', type: 'vec3' }],
+    generateGLSL: (inputs, nodeId) => `
+      vec3 val_${nodeId}_out = vec3(${inputs.r}, ${inputs.g}, ${inputs.b});
+    `
+  },
+  MATH_REMAP: {
+    type: 'MATH_REMAP',
+    name: 'REMAP',
+    inputs: [
+      { id: 'val', name: 'VAL', type: 'float', defaultValue: 0.0 },
+      { id: 'inMin', name: 'IN MIN', type: 'float', defaultValue: 0.0, min: -10.0, max: 10.0, step: 0.1 },
+      { id: 'inMax', name: 'IN MAX', type: 'float', defaultValue: 1.0, min: -10.0, max: 10.0, step: 0.1 },
+      { id: 'outMin', name: 'OUT MIN', type: 'float', defaultValue: 0.0, min: -10.0, max: 10.0, step: 0.1 },
+      { id: 'outMax', name: 'OUT MAX', type: 'float', defaultValue: 1.0, min: -10.0, max: 10.0, step: 0.1 }
+    ],
+    outputs: [{ id: 'out', name: 'OUT', type: 'float' }],
+    generateGLSL: (inputs, nodeId) => `
+      float val_${nodeId}_out = ${inputs.outMin} + (${inputs.val} - ${inputs.inMin}) * (${inputs.outMax} - ${inputs.outMin}) / (${inputs.inMax} - ${inputs.inMin});
+    `
+  },
+  MATH_ABS: {
+    type: 'MATH_ABS',
+    name: 'ABS',
+    inputs: [
+      { id: 'val', name: 'VAL', type: 'float', defaultValue: -1.0 }
+    ],
+    outputs: [{ id: 'out', name: 'OUT', type: 'float' }],
+    generateGLSL: (inputs, nodeId) => `
+      float val_${nodeId}_out = abs(${inputs.val});
+    `
+  },
+  MATH_CLAMP: {
+    type: 'MATH_CLAMP',
+    name: 'CLAMP',
+    inputs: [
+      { id: 'val', name: 'VAL', type: 'float', defaultValue: 0.0 },
+      { id: 'min', name: 'MIN', type: 'float', defaultValue: 0.0, min: -10.0, max: 10.0, step: 0.1 },
+      { id: 'max', name: 'MAX', type: 'float', defaultValue: 1.0, min: -10.0, max: 10.0, step: 0.1 }
+    ],
+    outputs: [{ id: 'out', name: 'OUT', type: 'float' }],
+    generateGLSL: (inputs, nodeId) => `
+      float val_${nodeId}_out = clamp(${inputs.val}, ${inputs.min}, ${inputs.max});
+    `
+  },
+  MATH_STEP: {
+    type: 'MATH_STEP',
+    name: 'STEP',
+    inputs: [
+      { id: 'edge', name: 'EDGE', type: 'float', defaultValue: 0.5, min: 0.0, max: 1.0, step: 0.01 },
+      { id: 'val', name: 'VAL', type: 'float', defaultValue: 0.0 }
+    ],
+    outputs: [{ id: 'out', name: 'OUT', type: 'float' }],
+    generateGLSL: (inputs, nodeId) => `
+      float val_${nodeId}_out = step(${inputs.edge}, ${inputs.val});
+    `
+  },
+  MATH_SMOOTHSTEP: {
+    type: 'MATH_SMOOTHSTEP',
+    name: 'SMOOTHSTEP',
+    inputs: [
+      { id: 'edge0', name: 'EDGE 0', type: 'float', defaultValue: 0.0, min: 0.0, max: 1.0, step: 0.01 },
+      { id: 'edge1', name: 'EDGE 1', type: 'float', defaultValue: 1.0, min: 0.0, max: 1.0, step: 0.01 },
+      { id: 'val', name: 'VAL', type: 'float', defaultValue: 0.0 }
+    ],
+    outputs: [{ id: 'out', name: 'OUT', type: 'float' }],
+    generateGLSL: (inputs, nodeId) => `
+      float val_${nodeId}_out = smoothstep(${inputs.edge0}, ${inputs.edge1}, ${inputs.val});
     `
   },
   MATH_MULT_FLOAT: {
@@ -166,6 +283,90 @@ export const NodeDefinitions: Record<string, NodeDefinition> = {
       angle_${nodeId} = abs(angle_${nodeId} - (6.28318 / ${inputs.segments}) / 2.0);
       vec2 uv_fractal_${nodeId} = vec2(cos(angle_${nodeId}), sin(angle_${nodeId})) * radius_${nodeId} + 0.5;
       vec3 val_${nodeId}_out = vec3(uv_fractal_${nodeId}, 0.0);
+    `
+  },
+  FEEDBACK: {
+    type: 'FEEDBACK',
+    name: 'FEEDBACK (PREV FRAME)',
+    inputs: [
+      { id: 'uv', name: 'UV', type: 'vec3', defaultValue: [0.0, 0.0, 0.0] }
+    ],
+    outputs: [{ id: 'out', name: 'OUT', type: 'vec3' }],
+    getUniforms: () => `uniform sampler2D u_feedback;`,
+    generateGLSL: (inputs, nodeId) => `
+      vec3 val_${nodeId}_out = texture2D(u_feedback, ${inputs.uv}.xy).rgb;
+    `
+  },
+  WAVE: {
+    type: 'WAVE',
+    name: 'SINE WAVE',
+    inputs: [
+      { id: 'uv', name: 'UV', type: 'vec3', defaultValue: [0.0, 0.0, 0.0] },
+      { id: 'freq', name: 'FREQ', type: 'float', defaultValue: 10.0, min: 1.0, max: 100.0, step: 0.1 },
+      { id: 'phase', name: 'PHASE', type: 'float', defaultValue: 0.0, min: 0.0, max: 6.28318, step: 0.01 }
+    ],
+    outputs: [{ id: 'out', name: 'OUT', type: 'float' }],
+    generateGLSL: (inputs, nodeId) => `
+      float val_${nodeId}_out = sin(${inputs.uv}.x * ${inputs.freq} + ${inputs.phase}) * 0.5 + 0.5;
+    `
+  },
+  HSL_TO_RGB: {
+    type: 'HSL_TO_RGB',
+    name: 'HSL TO RGB',
+    inputs: [
+      { id: 'h', name: 'HUE', type: 'float', defaultValue: 0.0, min: 0.0, max: 1.0, step: 0.01 },
+      { id: 's', name: 'SAT', type: 'float', defaultValue: 1.0, min: 0.0, max: 1.0, step: 0.01 },
+      { id: 'l', name: 'LIT', type: 'float', defaultValue: 0.5, min: 0.0, max: 1.0, step: 0.01 }
+    ],
+    outputs: [{ id: 'out', name: 'RGB', type: 'vec3' }],
+    generateGLSL: (inputs, nodeId) => `
+      vec3 hsl_${nodeId} = vec3(${inputs.h}, ${inputs.s}, ${inputs.l});
+      vec3 rgb_${nodeId} = clamp(abs(mod(hsl_${nodeId}.x * 6.0 + vec3(0.0, 4.0, 2.0), 6.0) - 3.0) - 1.0, 0.0, 1.0);
+      vec3 val_${nodeId}_out = hsl_${nodeId}.z + hsl_${nodeId}.y * (rgb_${nodeId} - 0.5) * (1.0 - abs(2.0 * hsl_${nodeId}.z - 1.0));
+    `
+  },
+  GRADIENT: {
+    type: 'GRADIENT',
+    name: 'LINEAR GRADIENT',
+    inputs: [
+      { id: 'uv', name: 'UV', type: 'vec3', defaultValue: [0.0, 0.0, 0.0] },
+      { id: 'colorA', name: 'COLOR A', type: 'vec3', defaultValue: [0.0, 0.0, 0.0] },
+      { id: 'colorB', name: 'COLOR B', type: 'vec3', defaultValue: [1.0, 1.0, 1.0] },
+      { id: 'angle', name: 'ANGLE', type: 'float', defaultValue: 0.0, min: 0.0, max: 6.28318, step: 0.01 }
+    ],
+    outputs: [{ id: 'out', name: 'OUT', type: 'vec3' }],
+    generateGLSL: (inputs, nodeId) => `
+      float c_${nodeId} = cos(${inputs.angle});
+      float s_${nodeId} = sin(${inputs.angle});
+      vec2 dir_${nodeId} = vec2(c_${nodeId}, s_${nodeId});
+      float t_${nodeId} = dot(${inputs.uv}.xy - 0.5, dir_${nodeId}) + 0.5;
+      vec3 val_${nodeId}_out = mix(${inputs.colorA}, ${inputs.colorB}, clamp(t_${nodeId}, 0.0, 1.0));
+    `
+  },
+  VORONOI: {
+    type: 'VORONOI',
+    name: 'VORONOI',
+    inputs: [
+      { id: 'uv', name: 'UV', type: 'vec3', defaultValue: [0.0, 0.0, 0.0] },
+      { id: 'scale', name: 'SCALE', type: 'float', defaultValue: 5.0, min: 1.0, max: 50.0, step: 0.1 }
+    ],
+    outputs: [{ id: 'out', name: 'OUT', type: 'float' }],
+    generateGLSL: (inputs, nodeId) => `
+      vec2 st_${nodeId} = ${inputs.uv}.xy * ${inputs.scale};
+      vec2 i_${nodeId} = floor(st_${nodeId});
+      vec2 f_${nodeId} = fract(st_${nodeId});
+      float m_dist_${nodeId} = 1.0;
+      for (int y= -1; y <= 1; y++) {
+          for (int x= -1; x <= 1; x++) {
+              vec2 neighbor = vec2(float(x),float(y));
+              vec2 p = i_${nodeId} + neighbor;
+              vec2 pt = fract(sin(vec2(dot(p, vec2(127.1, 311.7)), dot(p, vec2(269.5,183.3)))) * 43758.5453);
+              vec2 diff = neighbor + pt - f_${nodeId};
+              float dist = length(diff);
+              m_dist_${nodeId} = min(m_dist_${nodeId}, dist);
+          }
+      }
+      float val_${nodeId}_out = m_dist_${nodeId};
     `
   },
   MIC_IN: {

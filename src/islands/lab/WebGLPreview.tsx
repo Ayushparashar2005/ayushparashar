@@ -22,6 +22,8 @@ export default function WebGLPreview({ fragmentShaderCode, className, nodes, onE
   const programRef = useRef<WebGLProgram | null>(null);
   const animationRef = useRef<number>(0);
   const liveInputsRef = useRef<any>(null);
+  const feedbackTexRef = useRef<WebGLTexture | null>(null);
+  const startTimeRef = useRef<number>(performance.now());
 
   useEffect(() => {
     import('./liveInputs').then(({ LiveInputs }) => {
@@ -48,6 +50,16 @@ export default function WebGLPreview({ fragmentShaderCode, className, nodes, onE
        1.0,  1.0,
     ]);
     gl.bufferData(gl.ARRAY_BUFFER, positions, gl.STATIC_DRAW);
+
+    // Setup feedback texture
+    const fbTex = gl.createTexture();
+    gl.bindTexture(gl.TEXTURE_2D, fbTex);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, canvas.width, canvas.height, 0, gl.RGBA, gl.UNSIGNED_BYTE, null);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+    feedbackTexRef.current = fbTex;
 
     return () => {
       cancelAnimationFrame(animationRef.current);
@@ -104,8 +116,6 @@ export default function WebGLPreview({ fragmentShaderCode, className, nodes, onE
     const gl = glRef.current;
     if (!gl) return;
 
-    let startTime = performance.now();
-
     const render = (time: number) => {
       const program = programRef.current;
       if (!program) {
@@ -127,12 +137,23 @@ export default function WebGLPreview({ fragmentShaderCode, className, nodes, onE
       // Set standard uniforms
       const timeLocation = gl.getUniformLocation(program, "u_time");
       if (timeLocation !== null) {
-        gl.uniform1f(timeLocation, (time - startTime) * 0.001);
+        gl.uniform1f(timeLocation, (time - startTimeRef.current) * 0.001);
       }
 
       const resLocation = gl.getUniformLocation(program, "u_resolution");
       if (resLocation !== null) {
         gl.uniform2f(resLocation, gl.canvas.width, gl.canvas.height);
+      }
+
+      // Bind feedback texture to texture unit 0
+      const fbTex = feedbackTexRef.current;
+      if (fbTex) {
+        gl.activeTexture(gl.TEXTURE0);
+        gl.bindTexture(gl.TEXTURE_2D, fbTex);
+        const fbLoc = gl.getUniformLocation(program, "u_feedback");
+        if (fbLoc !== null) {
+          gl.uniform1i(fbLoc, 0);
+        }
       }
 
       // Set custom uniforms for nodes
@@ -163,6 +184,13 @@ export default function WebGLPreview({ fragmentShaderCode, className, nodes, onE
       });
 
       gl.drawArrays(gl.TRIANGLES, 0, 6);
+
+      // Copy rendered result to feedback texture for the next frame
+      if (fbTex) {
+        gl.bindTexture(gl.TEXTURE_2D, fbTex);
+        gl.copyTexImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 0, 0, gl.canvas.width, gl.canvas.height, 0);
+      }
+
       animationRef.current = requestAnimationFrame(render);
     };
 
