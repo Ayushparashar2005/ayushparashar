@@ -1,3 +1,5 @@
+import { audioBridge } from './AudioBridge';
+
 export type Waveform = 'sine' | 'square' | 'sawtooth' | 'triangle';
 
 export interface SynthParams {
@@ -325,6 +327,9 @@ export class SynthEngine {
     this.rebuildEffectsRouting();
 
     this.analyser.connect(this.ctx.destination);
+    
+    // Connect to global bridge for visuals
+    audioBridge.connectAnalyser(this.analyser);
     
     // Init Global LFO
     this.globalLFO = this.ctx.createOscillator();

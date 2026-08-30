@@ -58,14 +58,32 @@ export default function LabEngine() {
 
           {/* Right Sidebar: Output Preview */}
           <div className="w-80 bg-hw-panel border-l-2 border-hw-border shadow-md flex flex-col h-full shrink-0 z-20 min-h-0 overflow-hidden">
-            <div className="bg-hw-module-inset border-b-2 border-hw-border p-3 shadow-inner shrink-0">
-              <h3 className="font-mono text-xs font-bold text-hw-accent-orange tracking-widest uppercase">OUTPUT_VIEW</h3>
-              <p className="font-mono text-[9px] text-hw-text-muted mt-1 uppercase">Live WebGL Shader</p>
+            <div className="bg-hw-module-inset border-b-2 border-hw-border p-3 shadow-inner shrink-0 flex justify-between items-center">
+              <div>
+                <h3 className="font-mono text-xs font-bold text-hw-accent-orange tracking-widest uppercase">OUTPUT_VIEW</h3>
+                <p className="font-mono text-[9px] text-hw-text-muted mt-1 uppercase">Live WebGL Shader</p>
+              </div>
+              <button 
+                onClick={() => {
+                  const el = document.getElementById('webgl-preview-container');
+                  if (el) {
+                    if (document.fullscreenElement) {
+                      document.exitFullscreen();
+                    } else {
+                      el.requestFullscreen();
+                    }
+                  }
+                }}
+                className="px-2 py-1 bg-hw-bg border border-hw-border hover:bg-hw-accent-orange hover:text-white transition-colors text-[9px] font-mono text-hw-text-muted rounded"
+                title="Fullscreen Preview"
+              >
+                [⊞] FULL
+              </button>
             </div>
             
             <div className="p-4 flex-1 flex flex-col gap-4 min-h-0 overflow-hidden">
               
-              <div className="w-full aspect-square bg-hw-screen border-4 border-hw-border-screen rounded-lg overflow-hidden shadow-[inset_0_0_20px_rgba(0,0,0,1)] relative group shrink-0">
+              <div id="webgl-preview-container" className="w-full aspect-square bg-hw-screen border-4 border-hw-border-screen rounded-lg overflow-hidden shadow-[inset_0_0_20px_rgba(0,0,0,1)] relative group shrink-0">
                 <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPjxyZWN0IHdpZHRoPSI0IiBoZWlnaHQ9IjEiIGZpbGw9IiMwMDAiIGZpbGwtb3BhY2l0eT0iMC4yIi8+PC9zdmc+')] opacity-30 z-20 pointer-events-none mix-blend-overlay"></div>
                 
                 <WebGLPreview 

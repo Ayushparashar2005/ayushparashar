@@ -389,6 +389,66 @@ export const NodeDefinitions: Record<string, NodeDefinition> = {
       float val_${nodeId}_val = u_${nodeId}_val;
     `
   },
+  FFT_IN: {
+    type: 'FFT_IN',
+    name: 'SYNTH FFT',
+    inputs: [],
+    outputs: [
+      { id: 'bass', name: 'BASS', type: 'float' },
+      { id: 'mid', name: 'MID', type: 'float' },
+      { id: 'treble', name: 'TREBLE', type: 'float' },
+      { id: 'peak', name: 'PEAK', type: 'float' }
+    ],
+    getUniforms: (nodeId) => `
+uniform float u_${nodeId}_bass;
+uniform float u_${nodeId}_mid;
+uniform float u_${nodeId}_treble;
+uniform float u_${nodeId}_peak;
+    `,
+    generateGLSL: (inputs, nodeId) => `
+      float val_${nodeId}_bass = u_${nodeId}_bass;
+      float val_${nodeId}_mid = u_${nodeId}_mid;
+      float val_${nodeId}_treble = u_${nodeId}_treble;
+      float val_${nodeId}_peak = u_${nodeId}_peak;
+    `
+  },
+  SYNTH_AMP: {
+    type: 'SYNTH_AMP',
+    name: 'SYNTH AMP',
+    inputs: [],
+    outputs: [{ id: 'amp', name: 'AMP', type: 'float' }],
+    getUniforms: (nodeId) => `uniform float u_${nodeId}_amp;`,
+    generateGLSL: (inputs, nodeId) => `
+      float val_${nodeId}_amp = u_${nodeId}_amp;
+    `
+  },
+  SYNTH_ENV: {
+    type: 'SYNTH_ENV',
+    name: 'SYNTH ENV',
+    inputs: [],
+    outputs: [{ id: 'env', name: 'ENV', type: 'float' }],
+    getUniforms: (nodeId) => `uniform float u_${nodeId}_env;`,
+    generateGLSL: (inputs, nodeId) => `
+      float val_${nodeId}_env = u_${nodeId}_env;
+    `
+  },
+  SYNTH_NOTE: {
+    type: 'SYNTH_NOTE',
+    name: 'SYNTH NOTE',
+    inputs: [],
+    outputs: [
+      { id: 'pitch', name: 'PITCH', type: 'float' },
+      { id: 'gate', name: 'GATE', type: 'float' }
+    ],
+    getUniforms: (nodeId) => `
+uniform float u_${nodeId}_pitch;
+uniform float u_${nodeId}_gate;
+    `,
+    generateGLSL: (inputs, nodeId) => `
+      float val_${nodeId}_pitch = u_${nodeId}_pitch;
+      float val_${nodeId}_gate = u_${nodeId}_gate;
+    `
+  },
   AUDIO_OUT: {
     type: 'AUDIO_OUT',
     name: 'AUDIO SINK',

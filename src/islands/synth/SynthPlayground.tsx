@@ -29,7 +29,11 @@ const SCALES: Record<string, number[]> = {
 };
 const KEYS = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
 
-export function SynthPlayground() {
+export interface SynthPlaygroundProps {
+  mode?: 'full' | 'instrument';
+}
+
+export function SynthPlayground({ mode = 'full' }: SynthPlaygroundProps) {
   const [params, setParams] = useState<SynthParams>(DEFAULT_PARAMS);
   const [isEngineReady, setIsEngineReady] = useState(false);
   
@@ -702,30 +706,32 @@ export function SynthPlayground() {
     <div className="w-full max-w-[1000px] mx-auto flex flex-col gap-4 p-3 md:p-5 bg-hw-panel dark:bg-[#111] border-4 border-hw-border rounded-xl shadow-2xl relative">
       
       {/* Sequencer Module */}
-      <div className="hw-module bg-hw-bg dark:bg-[#050505] border-2 border-hw-border rounded-md shadow-sm overflow-hidden flex flex-col">
-         <TopBar 
-            isPlaying={isPlaying}
-            isRecording={isRecording}
-            metronomeEnabled={metronomeEnabled}
-            bpm={dawBpm}
-            timeSignature={timeSignature}
-            currentTimeString={currentTimeString}
-            onPlayToggle={handlePlayToggle}
-            onRecordToggle={handleRecordToggle}
-            onStop={handleStop}
-            onMetronomeToggle={() => setMetronomeEnabled(!metronomeEnabled)}
-            onBpmChange={setDawBpm}
-            onTimeSignatureChange={setTimeSignature}
-            onExportWav={handleExportWav}
-            onExportMidi={handleExportMidi}
-            onSave={handleSave}
-            onLoad={handleLoad}
-            canUndo={historyState.canUndo}
-            canRedo={historyState.canRedo}
-            onUndo={handleUndo}
-            onRedo={handleRedo}
-         />
-      </div>
+      {mode === 'full' && (
+        <div className="hw-module bg-hw-bg dark:bg-[#050505] border-2 border-hw-border rounded-md shadow-sm overflow-hidden flex flex-col">
+           <TopBar 
+              isPlaying={isPlaying}
+              isRecording={isRecording}
+              metronomeEnabled={metronomeEnabled}
+              bpm={dawBpm}
+              timeSignature={timeSignature}
+              currentTimeString={currentTimeString}
+              onPlayToggle={handlePlayToggle}
+              onRecordToggle={handleRecordToggle}
+              onStop={handleStop}
+              onMetronomeToggle={() => setMetronomeEnabled(!metronomeEnabled)}
+              onBpmChange={setDawBpm}
+              onTimeSignatureChange={setTimeSignature}
+              onExportWav={handleExportWav}
+              onExportMidi={handleExportMidi}
+              onSave={handleSave}
+              onLoad={handleLoad}
+              canUndo={historyState.canUndo}
+              canRedo={historyState.canRedo}
+              onUndo={handleUndo}
+              onRedo={handleRedo}
+           />
+        </div>
+      )}
       
       {/* Main Content Area */}
       <PatchProvider>
@@ -868,36 +874,37 @@ export function SynthPlayground() {
           </div>
         ) : (
           <>
-          <div className="flex bg-hw-bg dark:bg-[#050505] p-2 min-h-[420px] rounded-xl border-2 border-hw-border">
-            <TrackList 
-               tracks={tracks}
-               activeTrackId={activeTrackId}
-               onTrackSelect={setActiveTrackId}
-               onAddTrack={handleAddTrack}
-               onDeleteTrack={handleDeleteTrack}
-               onToggleMute={handleToggleMute}
-               onToggleSolo={handleToggleSolo}
-            />
-            <div className="flex-1 flex flex-col relative min-w-0">
-               <div className="absolute top-1 right-1 z-50 flex gap-1">
-                 <button onClick={() => setTimelineZoom(z => Math.max(0.25, z - 0.25))} className="w-6 h-5 rounded text-[10px] font-mono border transition-colors bg-[#222] text-[#888] border-[#333] hover:bg-[#333] hover:text-white">-</button>
-                 <span className="w-8 h-5 flex items-center justify-center text-[9px] font-mono text-hw-accent-orange bg-black rounded border border-[#333]">{(timelineZoom * 100).toFixed(0)}%</span>
-                 <button onClick={() => setTimelineZoom(z => Math.min(4, z + 0.25))} className="w-6 h-5 rounded text-[10px] font-mono border transition-colors bg-[#222] text-[#888] border-[#333] hover:bg-[#333] hover:text-white">+</button>
-               </div>
-               <Timeline 
-                  tracks={tracks}
-                  currentTick={currentTick}
-                  totalMeasures={500}
-                  pixelsPerMeasure={100 * timelineZoom}
-                  timeSignature={timeSignature}
-                  onSeek={handleSeek}
-                  onClipDoubleClick={handleClipDoubleClick}
-                  onTrackClick={handleTrackClick}
-                  onClipDelete={handleClipDelete}
-               />
+          {mode === 'full' && (
+            <div className="flex bg-hw-bg dark:bg-[#050505] p-2 min-h-[420px] rounded-xl border-2 border-hw-border">
+              <TrackList 
+                 tracks={tracks}
+                 activeTrackId={activeTrackId}
+                 onTrackSelect={setActiveTrackId}
+                 onAddTrack={handleAddTrack}
+                 onDeleteTrack={handleDeleteTrack}
+                 onToggleMute={handleToggleMute}
+                 onToggleSolo={handleToggleSolo}
+              />
+              <div className="flex-1 flex flex-col relative min-w-0">
+                 <div className="absolute top-1 right-1 z-50 flex gap-1">
+                   <button onClick={() => setTimelineZoom(z => Math.max(0.25, z - 0.25))} className="w-6 h-5 rounded text-[10px] font-mono border transition-colors bg-[#222] text-[#888] border-[#333] hover:bg-[#333] hover:text-white">-</button>
+                   <span className="w-8 h-5 flex items-center justify-center text-[9px] font-mono text-hw-accent-orange bg-black rounded border border-[#333]">{(timelineZoom * 100).toFixed(0)}%</span>
+                   <button onClick={() => setTimelineZoom(z => Math.min(4, z + 0.25))} className="w-6 h-5 rounded text-[10px] font-mono border transition-colors bg-[#222] text-[#888] border-[#333] hover:bg-[#333] hover:text-white">+</button>
+                 </div>
+                 <Timeline 
+                    tracks={tracks}
+                    currentTick={currentTick}
+                    totalMeasures={500}
+                    pixelsPerMeasure={100 * timelineZoom}
+                    timeSignature={timeSignature}
+                    onSeek={handleSeek}
+                    onClipDoubleClick={handleClipDoubleClick}
+                    onTrackClick={handleTrackClick}
+                    onClipDelete={handleClipDelete}
+                 />
+              </div>
             </div>
-          </div>
-
+          )}
             
           {/* Keyboard Area */}
           <div className="mt-4 flex flex-col gap-2 relative z-10">
@@ -938,7 +945,7 @@ export function SynthPlayground() {
       </PatchProvider>
       
       {/* Bottom Navigation Tabs */}
-      <div className="flex flex-col sm:flex-row bg-[#111] border-2 border-hw-border rounded-lg overflow-hidden shadow-sm mt-2">
+      <div className="flex flex-col sm:flex-row bg-[#111] border-2 border-hw-border rounded-lg overflow-hidden shadow-sm mt-2 shrink-0">
          <button 
            onClick={() => setActiveTab('instrument')} 
            className={`flex-1 py-2 sm:py-3 px-2 sm:px-4 font-mono text-[9px] sm:text-xs font-bold transition-colors border-b-2 sm:border-b-0 sm:border-r-2 border-hw-border ${activeTab === 'instrument' ? 'bg-hw-accent-orange text-white shadow-[0_4px_15px_rgba(255,85,0,0.4)]' : 'bg-[#181818] text-hw-text-muted hover:bg-[#222]'}`}
@@ -951,12 +958,14 @@ export function SynthPlayground() {
          >
            FX EFFECTS
          </button>
-         <button 
-           onClick={() => setActiveTab('midi')} 
-           className={`flex-1 py-2 sm:py-3 px-2 sm:px-4 font-mono text-[9px] sm:text-xs font-bold transition-colors ${activeTab === 'midi' ? 'bg-hw-accent-orange text-white shadow-[0_4px_15px_rgba(255,85,0,0.4)]' : 'bg-[#181818] text-hw-text-muted hover:bg-[#222]'}`}
-         >
-           MIDI EDITOR
-         </button>
+         {mode === 'full' && (
+           <button 
+             onClick={() => setActiveTab('midi')} 
+             className={`flex-1 py-2 sm:py-3 px-2 sm:px-4 font-mono text-[9px] sm:text-xs font-bold transition-colors ${activeTab === 'midi' ? 'bg-hw-accent-orange text-white shadow-[0_4px_15px_rgba(255,85,0,0.4)]' : 'bg-[#181818] text-hw-text-muted hover:bg-[#222]'}`}
+           >
+             MIDI EDITOR
+           </button>
+         )}
       </div>
 
     </div>

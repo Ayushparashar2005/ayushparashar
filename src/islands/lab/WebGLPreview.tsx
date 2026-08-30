@@ -1,4 +1,5 @@
 import { useRef, useEffect } from 'preact/hooks';
+import { audioBridge } from '../../lib/audio/AudioBridge';
 
 interface WebGLPreviewProps {
   fragmentShaderCode: string;
@@ -180,6 +181,30 @@ export default function WebGLPreview({ fragmentShaderCode, className, nodes, onE
           if (loc !== null) {
             gl.uniform1f(loc, liveInputs.midiValue);
           }
+        }
+        if (node.type === 'FFT_IN') {
+          const locB = gl.getUniformLocation(program, `u_${node.id}_bass`);
+          const locM = gl.getUniformLocation(program, `u_${node.id}_mid`);
+          const locT = gl.getUniformLocation(program, `u_${node.id}_treble`);
+          const locP = gl.getUniformLocation(program, `u_${node.id}_peak`);
+          if (locB) gl.uniform1f(locB, audioBridge.bass);
+          if (locM) gl.uniform1f(locM, audioBridge.mid);
+          if (locT) gl.uniform1f(locT, audioBridge.treble);
+          if (locP) gl.uniform1f(locP, audioBridge.peak);
+        }
+        if (node.type === 'SYNTH_AMP') {
+          const loc = gl.getUniformLocation(program, `u_${node.id}_amp`);
+          if (loc) gl.uniform1f(loc, audioBridge.amp);
+        }
+        if (node.type === 'SYNTH_ENV') {
+          const loc = gl.getUniformLocation(program, `u_${node.id}_env`);
+          if (loc) gl.uniform1f(loc, audioBridge.env);
+        }
+        if (node.type === 'SYNTH_NOTE') {
+          const locP = gl.getUniformLocation(program, `u_${node.id}_pitch`);
+          const locG = gl.getUniformLocation(program, `u_${node.id}_gate`);
+          if (locP) gl.uniform1f(locP, audioBridge.pitch);
+          if (locG) gl.uniform1f(locG, audioBridge.gate);
         }
       });
 
