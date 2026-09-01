@@ -46,24 +46,8 @@ try {
              </div>
 
              <!-- Profile Picture Container -->
-             <div class="w-full aspect-square max-w-[240px] mx-auto bg-hw-module-inset border-2 border-hw-border rounded-lg p-2 shadow-inner relative group shrink-0 mb-6">
-                <!-- Hardware Screws -->
-                <div class="absolute top-2 left-2 w-1.5 h-1.5 rounded-full bg-hw-screw shadow-inner border border-hw-screw-border"></div>
-                <div class="absolute top-2 right-2 w-1.5 h-1.5 rounded-full bg-hw-screw shadow-inner border border-hw-screw-border"></div>
-                <div class="absolute bottom-2 left-2 w-1.5 h-1.5 rounded-full bg-hw-screw shadow-inner border border-hw-screw-border"></div>
-                <div class="absolute bottom-2 right-2 w-1.5 h-1.5 rounded-full bg-hw-screw shadow-inner border border-hw-screw-border"></div>
-                
-                <!-- HUD Brackets -->
-                <div class="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-hw-accent-orange opacity-50"></div>
-                <div class="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-hw-accent-orange opacity-50"></div>
-                <div class="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-hw-accent-orange opacity-50"></div>
-                <div class="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-hw-accent-orange opacity-50"></div>
-
-                <div tabindex="0" class="w-full h-full rounded border-2 border-hw-border overflow-hidden filter grayscale contrast-125 group-hover:grayscale-0 focus:grayscale-0 transition-all duration-700 shadow-sm relative">
-                  <!-- Scanlines -->
-                  <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPjxyZWN0IHdpZHRoPSI0IiBoZWlnaHQ9IjEiIGZpbGw9IiMwMDAiIGZpbGwtb3BhY2l0eT0iMC4xIi8+PC9zdmc+')] opacity-50 z-10 pointer-events-none mix-blend-overlay"></div>
-                  <img src="/profile.jpg" alt={identity.name} class="w-full h-full object-cover relative z-0" />
-                </div>
+             <div class="w-32 h-32 md:w-40 md:h-40 mx-auto rounded-full overflow-hidden border-4 border-hw-border shadow-sm shrink-0 mb-6 group bg-hw-sticker relative flex items-center justify-center">
+                <img src="/profile.jpg" alt={identity.name} class="w-full h-full object-cover filter grayscale contrast-125 group-hover:grayscale-0 transition-all duration-700 relative z-0" />
              </div>
 
              <!-- Specs Data Sheet -->
@@ -104,30 +88,22 @@ try {
              <div class="flex-grow p-4 md:p-6 min-h-0 flex flex-col relative">
                 <div class="text-[10px] font-sans font-bold text-hw-text-muted tracking-[0.2em] uppercase border-b-2 border-hw-border pb-2 mb-4 flex justify-between items-center shrink-0">
                     <span class="flex items-center gap-2">
-                       <div class="w-1.5 h-1.5 rounded-full bg-[#00ffee] shadow-[0_0_5px_rgba(0,255,238,0.5)]"></div>
+                       <div class="w-1.5 h-1.5 rounded-full bg-hw-accent-orange shadow-[0_0_5px_rgba(255,85,0,0.5)]"></div>
                        USER_MANIFEST
                     </span>
                     <span class="text-[8px] bg-hw-sticker border border-hw-border px-1">READ_ONLY</span>
                 </div>
 
-                <div class="flex-grow bg-hw-screen border-4 border-hw-border-screen rounded-lg relative shadow-[inset_0_0_20px_rgba(0,0,0,1)] overflow-hidden flex flex-col group min-h-0">
-                   <!-- LCD Scanlines -->
-                   <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPjxyZWN0IHdpZHRoPSI0IiBoZWlnaHQ9IjEiIGZpbGw9IiMwMDAiIGZpbGwtb3BhY2l0eT0iMC4yIi8+PC9zdmc+')] opacity-30 z-20 pointer-events-none mix-blend-overlay"></div>
-                   <!-- Edge Shadow -->
-                   <div class="absolute inset-0 shadow-[inset_0_0_40px_rgba(0,0,0,0.8)] z-20 pointer-events-none"></div>
-
+                <div class="flex-grow bg-hw-sticker border-2 border-hw-border rounded-lg relative shadow-sm overflow-hidden flex flex-col group min-h-0">
                    <!-- Background Generative Art -->
-                   <div class="absolute inset-0 opacity-40 mix-blend-screen z-0 filter blur-[1px]">
+                   <div class="absolute inset-0 z-0">
                      <GenerativeArt projectId="identity-page" />
                    </div>
 
                    <!-- Screen Content -->
-                   <div class="relative z-10 flex-grow p-5 md:p-8 overflow-y-auto custom-scrollbar flex flex-col">
-                      <div class="text-xs md:text-sm font-mono text-[#00ffee] leading-relaxed text-justify drop-shadow-[0_0_5px_rgba(0,255,238,0.5)] flex-grow">
-                         <span class="text-[#00aaff] font-bold">> SYSTEM_BOOT... OK</span><br/>
-                         <span class="text-[#00aaff] font-bold">> LOADING_MANIFEST...</span><br/><br/>
+                   <div class="relative z-10 flex-grow p-5 md:p-8 overflow-y-auto custom-scrollbar flex flex-col items-center justify-center">
+                      <div class="text-xs md:text-sm font-mono text-hw-text-main leading-relaxed text-left md:text-justify max-w-2xl bg-hw-sticker/80 backdrop-blur-[2px] p-4 rounded-sm border border-hw-border/50 shadow-sm">
                          {identity.bio}
-                         <span class="animate-pulse">_</span>
                       </div>
                    </div>
                 </div>
