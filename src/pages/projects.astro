@@ -17,17 +17,17 @@ const featuredProjects = await db.select().from(projects).where(eq(projects.stat
       
       <div class="grid grid-cols-1 xl:grid-cols-2 gap-4 pb-12">
         {featuredProjects.map((project: any, idx: number) => (
-          <ModulePanel title={`SYNTH ${idx + 1} // ${project.title}`} className="h-auto md:h-[250px] shrink-0">
-            <div class="flex flex-col md:flex-row h-full gap-4 items-stretch md:items-center px-4 bg-hw-module rounded-sm py-4 md:py-2">
+          <ModulePanel title={`SYNTH ${idx + 1} // ${project.title}`} className="h-auto sm:h-[250px] shrink-0">
+            <div class="flex flex-col sm:flex-row h-full gap-4 items-stretch sm:items-center px-4 bg-hw-module rounded-sm py-4 sm:py-2">
               
               <!-- Knobs section -->
-              <div class="flex flex-row md:flex-col justify-center items-center gap-8 md:gap-3 h-auto md:h-full pb-4 md:pb-0 pr-0 md:pr-4 border-b-2 md:border-b-0 md:border-r-2 border-hw-border w-full md:w-auto">
+              <div class="flex flex-row sm:flex-col justify-center items-center gap-8 sm:gap-3 h-auto sm:h-full pb-4 sm:pb-0 pr-0 sm:pr-4 border-b-2 sm:border-b-0 sm:border-r-2 border-hw-border w-full sm:w-auto">
                 <SynthKnob id="vol" label="VOL" projectId={project.id.toString()} initialValue={0.3} />
                 <SynthKnob id="freq" label="FREQ" projectId={project.id.toString()} initialValue={0.2} />
               </div>
 
               <!-- Information Display Panel -->
-              <div class="flex-grow w-full md:w-auto min-h-[200px] h-auto md:h-full bg-hw-sticker border-2 border-hw-border rounded-lg relative shadow-inner overflow-hidden p-4 flex flex-col">
+              <div class="flex-grow w-full sm:w-auto min-h-[200px] sm:min-h-0 h-auto sm:h-full bg-hw-sticker border-2 border-hw-border rounded-lg relative shadow-inner overflow-hidden p-4 flex flex-col">
                  <div class="text-[10px] font-mono font-bold text-hw-accent-orange mb-2 border-b-2 border-hw-border pb-2 flex justify-between gap-4">
                    <span class="shrink-0">> {project.category?.toUpperCase() || 'N/A'}</span>
                    <span class="text-hw-text-muted truncate">[ {project.tech?.join(', ') || 'N/A'} ]</span>
@@ -43,7 +43,7 @@ const featuredProjects = await db.select().from(projects).where(eq(projects.stat
               </div>
               
               <!-- Output routing -->
-              <div class="w-full md:w-24 h-auto md:h-full flex flex-col sm:flex-row md:flex-col items-stretch md:items-center justify-center gap-4 pt-4 md:pt-0 pl-0 md:pl-4 border-t-2 md:border-t-0 md:border-l-2 border-hw-border">
+              <div class="w-full sm:w-24 h-auto sm:h-full flex flex-col items-stretch justify-center gap-4 pt-4 sm:pt-0 pl-0 sm:pl-4 border-t-2 sm:border-t-0 sm:border-l-2 border-hw-border">
                 <a href={`https://github.com/${project.githubUrl}`} class="hw-button w-full h-12 flex items-center justify-center text-[10px] !bg-hw-sticker">GITHUB</a>
                 <a href={project.liveUrl || '#'} class="hw-button w-full h-12 flex items-center justify-center text-[10px] !bg-hw-accent-orange !text-white !border-hw-accent-orange shadow-sm hover:!bg-[#e64a00]">LIVE</a>
               </div>

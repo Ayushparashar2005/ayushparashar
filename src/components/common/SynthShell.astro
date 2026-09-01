@@ -8,8 +8,8 @@ interface Props {
 const { activePreset } = Astro.props;
 ---
 
-<div class="w-full h-[100dvh] p-2 md:p-6 flex flex-col justify-center items-center bg-hw-bg/80 y2k-checker">
-  <div class="hw-panel-container w-full max-w-[1400px] h-full md:max-h-[950px] grid grid-rows-[auto_minmax(0,1fr)_24px] rounded-xl overflow-hidden ring-1 ring-hw-border relative shadow-2xl">
+<div class="w-full h-[100dvh] p-2 sm:p-3 md:p-6 flex flex-col justify-center items-center bg-hw-bg/80 y2k-checker overflow-x-hidden">
+  <div class="hw-panel-container w-full max-w-[1400px] h-full sm:max-h-[950px] grid grid-rows-[auto_minmax(0,1fr)_24px] rounded-xl overflow-hidden ring-1 ring-hw-border relative shadow-2xl">
     
     <!-- ROW 1: Header & Bezel -->
     <div class="flex flex-col bg-hw-bg/90 relative z-20 shadow-sm border-b border-hw-border shrink-0">

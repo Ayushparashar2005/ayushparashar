@@ -19,6 +19,7 @@ export interface NodeOutput {
 export interface NodeDefinition {
   type: string;
   name: string;
+  description?: string;
   inputs: NodeInput[];
   outputs: NodeOutput[];
   // A function that returns the GLSL snippet for this node

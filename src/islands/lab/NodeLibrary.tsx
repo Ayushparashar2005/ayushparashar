@@ -39,6 +39,12 @@ export default function NodeLibrary({ onAddNode }: NodeLibraryProps) {
                 <span className="ml-auto">OUT: {def.outputs.map(o => o.name).join(',')}</span>
               )}
             </div>
+            
+            {def.description && (
+              <div className="mt-2 text-[9px] font-sans text-hw-text-muted leading-tight opacity-70 group-hover:opacity-100 transition-opacity break-words whitespace-normal text-left">
+                {def.description}
+              </div>
+            )}
           </button>
         ))}
       </div>

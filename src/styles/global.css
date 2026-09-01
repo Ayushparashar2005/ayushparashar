@@ -62,6 +62,7 @@
 html, body {
   @apply bg-hw-bg text-hw-text-main font-sans antialiased transition-colors duration-300;
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
 /* Hardware specific styles */
@@ -196,4 +197,11 @@ html, body {
 .custom-scrollbar {
   scrollbar-width: thin;
   scrollbar-color: var(--hw-screw-border) var(--hw-module);
+}
+
+.scrollbar-none {
+  scrollbar-width: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
 }

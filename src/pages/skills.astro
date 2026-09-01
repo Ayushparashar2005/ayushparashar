@@ -13,10 +13,10 @@ const allCerts = await db.select().from(certifications).orderBy(asc(certificatio
 
 <BaseLayout title="ayush.wav | SKILLS & CERTS">
   <SynthShell activePreset="skills">
-    <div class="w-full h-auto lg:h-full flex flex-col lg:flex-row gap-4 p-4">
+    <div class="w-full h-full flex flex-col md:flex-row gap-4 p-4 overflow-y-auto custom-scrollbar md:overflow-hidden">
       
       <!-- Skills Matrix -->
-      <ModulePanel title="TAPE // SKILLS_MATRIX" className="w-full lg:w-1/2 h-auto lg:h-full lg:max-h-[800px] shrink-0 min-h-0">
+      <ModulePanel title="TAPE // SKILLS_MATRIX" className="w-full md:w-1/2 h-[450px] md:h-full md:max-h-[800px] shrink-0 min-h-0">
          <div class="flex flex-col gap-4 h-full p-4 overflow-hidden min-h-0">
             <!-- Hardware Toggles -->
             <div class="flex gap-2 md:gap-4 mb-2 shrink-0 bg-hw-module-inset p-2 rounded border-2 border-hw-border shadow-inner" id="skill-tabs">
@@ -58,7 +58,7 @@ const allCerts = await db.select().from(certifications).orderBy(asc(certificatio
       </ModulePanel>
 
       <!-- Certifications -->
-      <ModulePanel title="MEM // CERTIFICATIONS" className="w-full lg:w-1/2 h-auto lg:h-full lg:max-h-[800px] shrink-0 min-h-0">
+      <ModulePanel title="MEM // CERTIFICATIONS" className="w-full md:w-1/2 h-[450px] md:h-full md:max-h-[800px] shrink-0 min-h-0">
          <div class="flex flex-col h-full p-4 overflow-hidden min-h-0">
             <div class="text-xs font-sans font-bold text-hw-text-muted tracking-[0.2em] uppercase border-b-2 border-hw-border pb-3 mb-6 shrink-0 flex items-center gap-3">
               <div class="w-2 h-2 rounded-full bg-hw-text-muted"></div>
@@ -76,7 +76,7 @@ const allCerts = await db.select().from(certifications).orderBy(asc(certificatio
                        
                        <span class="text-[11px] md:text-sm font-mono font-bold text-hw-text-main leading-tight pr-8 tracking-wide z-10 mt-3">{cert.title.toUpperCase()}</span>
                        <div class="flex justify-between items-end mt-1 pt-2 border-t border-hw-border border-dashed pr-8 z-10">
-                          <span class="text-[8px] font-mono text-hw-text-muted uppercase tracking-widest truncate max-w-[80px] md:max-w-full">{cert.issuer}</span>
+                          <span class="text-[8px] font-mono text-hw-text-muted uppercase tracking-widest truncate max-w-[100px] sm:max-w-[160px] md:max-w-full">{cert.issuer}</span>
                           <span class="text-[8px] font-mono font-bold text-hw-accent-orange bg-black border border-hw-border px-1 shadow-inner shrink-0">[{cert.date}]</span>
                        </div>
                      </div>

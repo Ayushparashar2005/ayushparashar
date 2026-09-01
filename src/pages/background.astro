@@ -14,14 +14,14 @@ const myWork = allExperience.filter((e: any) => !e.company.includes('University'
 
 <BaseLayout title="ayush.wav | BACKGROUND">
   <SynthShell activePreset="background">
-    <div class="w-full h-auto lg:h-full flex flex-col p-4 md:p-8">
+    <div class="w-full h-full p-4 md:p-8 overflow-y-auto custom-scrollbar flex flex-col">
       
       <!-- Background Full Width -->
-      <ModulePanel title="SEQ // BACKGROUND" className="w-full h-[800px] lg:h-full lg:max-h-[800px] shrink-0 min-h-0">
-         <div class="flex flex-col lg:flex-row h-full overflow-hidden divide-y-2 lg:divide-y-0 lg:divide-x-2 divide-hw-border min-h-0">
+      <ModulePanel title="SEQ // BACKGROUND" className="w-full h-auto lg:h-full lg:max-h-[800px] shrink-0 min-h-0">
+         <div class="flex flex-col lg:flex-row h-auto lg:h-full lg:overflow-hidden divide-y-2 lg:divide-y-0 lg:divide-x-2 divide-hw-border min-h-0">
             
             <!-- Experience Column -->
-            <div class="w-full lg:w-1/2 p-4 md:p-6 flex flex-col h-1/2 lg:h-full min-h-0 relative">
+            <div class="w-full lg:w-1/2 p-4 md:p-6 flex flex-col h-[400px] sm:h-[450px] lg:h-full min-h-0 relative shrink-0 lg:shrink">
               <div class="text-xs font-sans font-bold text-hw-text-muted tracking-[0.2em] uppercase border-b-2 border-hw-border pb-3 mb-4 shrink-0 flex items-center gap-3">
                 <div class="w-2 h-2 rounded-full bg-hw-accent-orange shadow-[0_0_5px_rgba(255,85,0,0.5)]"></div>
                 EXPERIENCE_LOG
@@ -58,7 +58,7 @@ const myWork = allExperience.filter((e: any) => !e.company.includes('University'
             </div>
             
             <!-- Education Column -->
-            <div class="w-full lg:w-1/2 p-4 md:p-6 flex flex-col h-1/2 lg:h-full min-h-0 relative">
+            <div class="w-full lg:w-1/2 p-4 md:p-6 flex flex-col h-[400px] sm:h-[450px] lg:h-full min-h-0 relative shrink-0 lg:shrink">
               <div class="text-xs font-sans font-bold text-hw-text-muted tracking-[0.2em] uppercase border-b-2 border-hw-border pb-3 mb-4 shrink-0 flex items-center gap-3">
                 <div class="w-2 h-2 rounded-full bg-hw-accent-blue shadow-[0_0_5px_rgba(0,170,255,0.5)]"></div>
                 EDUCATION_LOG

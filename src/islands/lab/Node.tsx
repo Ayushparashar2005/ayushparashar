@@ -59,17 +59,22 @@ export default function Node({ node, edges, scale, onMove, onUpdateData, onRemov
       <div className="absolute bottom-1 right-1 w-1.5 h-1.5 rounded-full bg-hw-screw border border-hw-screw-border shadow-inner z-10"></div>
 
       {/* Header */}
-      <div className="hw-module-header cursor-grab active:cursor-grabbing pb-1 pt-1.5 px-3">
+      <div className="hw-module-header cursor-grab active:cursor-grabbing pb-1 pt-1.5 px-3 group">
         <div className="flex items-center gap-1.5">
           <div className="w-1.5 h-1.5 rounded-full bg-hw-accent-orange animate-pulse"></div>
-          <span>{def.name}</span>
+          <span title={def.description}>{def.name}</span>
         </div>
-        <button 
-          className="text-hw-text-muted hover:text-red-500 transition-colors w-4 h-4 flex items-center justify-center font-bold"
-          onClick={() => onRemove(node.id)}
-        >
-          ×
-        </button>
+        <div className="flex items-center gap-2">
+          {def.description && (
+            <span className="text-[9px] text-hw-text-muted opacity-0 group-hover:opacity-100 transition-opacity cursor-help" title={def.description}>[?]</span>
+          )}
+          <button 
+            className="text-hw-text-muted hover:text-red-500 transition-colors w-4 h-4 flex items-center justify-center font-bold"
+            onClick={() => onRemove(node.id)}
+          >
+            ×
+          </button>
+        </div>
       </div>
 
       {/* Body */}
